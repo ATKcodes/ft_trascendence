@@ -8,7 +8,9 @@ WORKDIR /app
 COPY Pipfile Pipfile.lock /app/
 
 # Installa le dipendenze
-RUN pip install pipenv && pip install django && pipenv install --system --deploy
+RUN pip install pipenv
+RUN pip install django
+RUN pipenv install --system --deploy
 
 # Copia il resto del codice nella directory di lavoro
 COPY . /app
@@ -17,4 +19,4 @@ COPY . /app
 ENV DJANGO_SETTINGS_MODULE=trascendence.settings
 
 # Avvia il server Django
-CMD ["python3", "trascendence/manage.py", "runserver", "9000"]
+CMD ["python3", "trascendence/manage.py", "runserver", "0.0.0.0:9000"]
