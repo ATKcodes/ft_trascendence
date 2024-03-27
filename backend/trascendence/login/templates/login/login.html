@@ -9,19 +9,19 @@
 	<style>
 
         body {
-            background-color: #DFA100; 
+            background-color: #DFA100;
         }
 		.btn-custom-brown {
             background-color: #4F4537; /* Change this to your preferred color */
-            color: #ffffff; /* Change this to your preferred color */	
+            color: #ffffff; /* Change this to your preferred color */
         }
 		.btn-custom-white {
 			background-color: #B6A999; /* Change this to your preferred color */
-			color: #4F4537; /* Change this to your preferred color */	
+			color: #4F4537; /* Change this to your preferred color */
 		}
 		.btn-custom-42 {
 			background-color: #2c2c34; /* Change this to your preferred color */
-			color: #00babc; /* Change this to your preferred color */	
+			color: #00babc; /* Change this to your preferred color */
 		}
 		.div-login {
  			position: absolute;
@@ -48,8 +48,8 @@
 		.font-Despairs {
 			font-family: 'Despairs';
 		}
-		/* 
-		Possible color palette : 
+		/*
+		Possible color palette :
 		#DFA100 Main Yellow/Orange Color
 		#B6A999 Light Gray Color
 		#4F4537 Dark Brown Color
@@ -67,13 +67,13 @@
 	<p><strong>P O N G</strong></p>
 	</div>
 	<div class = "div-login rounded border">
-	<form action="/login/thank-you" method="POST">
+	<form action="" method="POST">
 		{% csrf_token %}
 		<input class="px-1 mt-4 mb-2 ms-3 me-5" type="text" name="username" placeholder="Nick">
 		<input class="px-1 mt-2 ms-3 me-5 mb-2" type="text" name="password" placeholder="Password">
 		<button class = "btn btn-custom-brown mb-0 ms-3 me-5" type = "submit" >Login</button>
 		<button class = "btn btn-custom-brown mb-0 ms-3">Register</button> <br>
-		<a href="" class="btn btn-custom-42 mt-2 ms-3 mb-3" type = "button"><span class = "white">Login with </span>42</a> <!-- Inserire link API 42 --> 
+		<a href="" class="btn btn-custom-42 mt-2 ms-3 mb-3" type = "button"><span class = "white">Login with </span>42</a> <!-- Inserire link API 42 -->
 	</form>
 	</div>
 
