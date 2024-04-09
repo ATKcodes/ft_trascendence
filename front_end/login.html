@@ -83,10 +83,15 @@
         type="text"
         placeholder="Password"
       /><br>
-      <button class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
+      <button id = "remove-login-button" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
         Login
       </button>
-      <button
+	  <script>
+		document.getElementById("remove-login-button").addEventListener("click", function() {
+			window.parent.removeLogin();
+		});
+	</script>
+	  <button
         type="button"
         class="btn btn-custom-brown mb-0 ms-3"
         data-bs-toggle="modal"
