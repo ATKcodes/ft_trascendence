@@ -11,11 +11,69 @@
 	<body style="height: 100vh;"> <!-- Set the body height to 100vh -->
         <iframe id="login" src="login.html" style="height: 100%; width: 100%; border: none;"></iframe>
         <iframe id="main-page" src="main-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
-        <script>
-            function removeLogin() {
-                document.getElementById("login").style.display = "none";
-                document.getElementById("main-page").style.display = "block";
-            }
+        <iframe id ="profile" src="profile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<script>
+		function goToMain() {
+			document.getElementById("login").style.display = "none";
+			document.getElementById("main-page").style.display = "block";
+			document.getElementById("profile").style.display = "none";
+			document.getElementById("game-page").style.display = "none";
+
+			// Change the URL to 'main-page.html'
+			history.pushState({page: 'main-page'}, null, 'main-page.html');
+		}
+
+		// Handle the back and forward navigation
+		window.onpopstate = function(event) {
+			if (event.state) {
+				// Hide all iframes
+				document.getElementById("login").style.display = "none";
+				document.getElementById("main-page").style.display = "none";
+				document.getElementById("profile").style.display = "none";
+				document.getElementById("game-page").style.display = "none";
+
+				// Show the iframe of the current page
+				document.getElementById(event.state.page).style.display = "block";
+			}
+		};
+		function goToProfile() {
+			document.getElementById("game-page").style.display = "none";
+			document.getElementById("main-page").style.display = "none";
+			document.getElementById("profile").style.display = "block";
+	
+			// Change the URL to 'profile.html'
+			history.pushState({page: 'profile'}, null, 'profile.html');
+  		}
+		function goToGame() {
+			document.getElementById("main-page").style.display = "none";
+			document.getElementById("game-page").style.display = "block";
+
+	        // Change the URL to 'game-page.html'
+			history.pushState({page: 'game-page'}, null, 'game-page.html');
+		}
+		function goToLogin() {
+			document.getElementById("main-page").style.display = "none";
+			document.getElementById("login").style.display = "block";
+
+	        // Change the URL to 'game-page.html'
+			history.pushState({page: 'login'}, null, 'login.html');
+		}
+		
+    	window.onload = function() {
+        	// Change the URL to 'login.html'
+        	history.replaceState({page: 'spa-manager'}, null, 'login.html');
+    	};
+
+    	// Handle the back and forward navigation
+    	window.onpopstate = function(event) {
+        	if (event.state) {
+            	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
+            	if (event.state.page === 'spa-manager') {
+                	history.replaceState({page: 'spa-manager'}, null, 'login.html');
+            	}
+        	}
+    	};
         </script>
   </body>
 </html>

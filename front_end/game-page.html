@@ -181,15 +181,15 @@
 	<!-- Bootstrap JS -->
 </head>
 <body>
-	<img src="srcs/download.jpeg" alt="Avatar" class="avatar" id="dropdownMenuButton">
+	<img src="srcs/download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
 	<h5 class = "userleft">User1</h5>
-	<h2 id="invisibleButton" class="div-title" style="user-select:none;">PONG</h2>
+	<h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
 	<script>
-	document.getElementById('invisibleButton').onclick = function() {
-		alert('Button clicked!');
-	}
+		document.getElementById("go_to_main").addEventListener("click", function() {
+			window.parent.goToMain();
+		});
 	</script>
-	<img src="srcs/download.jpeg" alt="Avatar" class="avatar2" id="dropdownMenuButton">
+	<img src="srcs/download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
 	<h5 class = "userright">User2</h5>
 	<div class="game">
 		<button type="button" class="btn btn-left btn-lg btn-block">Play 1v1</button>
@@ -200,11 +200,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- Il tuo codice JavaScript qui -->
+
 <script>
-	$(document).ready(function(){
-		$('#dropdownMenuButton').click(function(){
-			$('#dialog').dialog();
-		});
-	});
 </script>
 </html>

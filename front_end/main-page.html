@@ -156,26 +156,30 @@
       src="srcs/download.jpeg"
       alt="Avatar"
       class="avatar"
-      id="dropdownMenuButton"
+      id="go_to_profle"
     />
-    <div class="dialog" id="dialog" title="Dialogo" style="display: none">
-      <p>Questo è un dialogo di esempio.</p>
-    </div>
+    <script>
+      document.getElementById("go_to_profle").addEventListener("click", function() {
+        window.parent.goToProfile();
+      });
+    </script>
     <div class="game">
-      <button type="button" class="btn btn-primary btn-lg btn-block">
+      <button id = "go_to_game" type="button" class="btn btn-primary btn-lg btn-block">
         Play
       </button>
+      <script>
+        document.getElementById("go_to_game").addEventListener("click", function() {
+          window.parent.goToGame();
+        });
+      </script>
     </div>
+    <button id = "go_to_login" class = "btn">Logout</button>
+    <script>
+        document.getElementById("go_to_login").addEventListener("click", function() {
+        window.parent.goToLogin();
+    });
+    </script>
   </body>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-  <!-- Il tuo codice JavaScript qui -->
-  <script>
-    $(document).ready(function () {
-      $("#dropdownMenuButton").click(function () {
-        $("#dialog").dialog();
-      });
-    });
-  </script>
 </html>

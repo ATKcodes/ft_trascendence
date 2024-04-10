@@ -47,7 +47,12 @@
     }
 </style>
 <body>
-    <h2 class="div-title">PONG</h2>
+    <h2 id ="go_to_main" class="div-title">PONG</h2>
+    <script>
+		document.getElementById("go_to_main").addEventListener("click", function() {
+			window.parent.goToMain();
+		});
+	</script>
     <div class="img-fluid">
         <img class="image" src="download.jpeg" alt="Responsive image">
         <h3 class="nickname">Mvolpi</h3>
