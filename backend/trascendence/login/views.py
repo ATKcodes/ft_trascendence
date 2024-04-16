@@ -4,10 +4,13 @@ from .models import User
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView   
-from .serializers import UserSerializer, CreateUserSerializer
+from .serializers import UserSerializer
 from rest_framework.decorators import api_view
 from django.http import JsonResponse, HttpResponse
-from rest_framework.parsers import JSONParser  
+from rest_framework.parsers import JSONParser 
+from rest_framework.authtoken.views import ObtainAuthToken 
+from rest_framework.settings import api_settings
+from rest_framework.exceptions import AuthenticationFailed
 
 @api_view(['GET', 'POST'])
 def user_list(request):
@@ -46,4 +49,25 @@ def user_detail(request, pk):
     elif request.method == 'DELETE':
         user.delete()
         return HttpResponse(status=204)
- 
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+class LoginView(APIView):
+    def post(self, request):
+        email = request.data['email']
+        password = request.data['password']
+        
+        user = User.objects.filter(email=email).first()
+
+        if user is None:
+            raise AuthenticationFailed('User not found')
+        
+        if not user.check_password(password):
+            raise AuthenticationFailed('Wrong password')
+        
+        return Response({'message': 'Logged in'})
