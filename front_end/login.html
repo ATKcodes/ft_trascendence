@@ -77,12 +77,29 @@
       <p><strong>P O N G</strong></p>
     </div>
     <div class="div-login rounded border">
-      <input class="px-1 mt-4 mb-2 ms-3 me-5" type="text" placeholder="Nick" /><br>
+      <input id = "nickInput" class="px-1 mt-4 mb-2 ms-3 me-5" type="text" placeholder="Nick" /><br>
+	  <script>
+		const nickInput = document.getElementById('nickInput');
+	
+		nickInput.addEventListener('input', (event) => {
+			const nickValue = event.target.value;
+			console.log(nickValue);
+		});
+	</script>
       <input
+	  	id = "passwordInput"
         class="px-1 mt-2 ms-3 me-5 mb-2"
-        type="text"
+        type="password"
         placeholder="Password"
       /><br>
+	  <script>
+			const passwordInput = document.getElementById('passwordInput');
+	
+			passwordInput.addEventListener('input', (event) => {
+			const passwordValue = event.target.value;
+			console.log(passwordValue);
+		});
+	  </script>
       <button id = "go_to_main" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
         Login
       </button>
@@ -106,6 +123,7 @@
         tabindex="-1"
         aria-labelledby="registerModalLabel"
         aria-hidden="true"
+		style="--bs-modal-header-border-color: #dfa100;--bs-modal-footer-border-color:  #dfa100;"
       >
         <div class="modal-dialog">
           <div class="modal-content">
