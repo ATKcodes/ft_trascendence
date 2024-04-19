@@ -9,10 +9,6 @@
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body style="height: 100vh;"> <!-- Set the body height to 100vh -->
-        <iframe id="login" src="login.html" style="height: 100%; width: 100%; border: none;"></iframe>
-        <iframe id="main-page" src="main-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
-        <iframe id ="profile" src="profile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
-		<iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
 		function goToMain() {
 			document.getElementById("login").style.display = "none";
@@ -98,7 +94,10 @@
             }
         }
     };
-
         </script>
+		 <iframe id="login" src="login.html" style="height: 100%; width: 100%; border: none;"></iframe>
+		 <iframe id="main-page" src="main-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		 <iframe id ="profile" src="profile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		 <iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
   </body>
 </html>

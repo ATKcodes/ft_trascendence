@@ -113,7 +113,7 @@
                 password: passwordInput
             };
     //SET 8000 as a default port
-            fetch('127.0.0.1:8000/login', {
+            fetch('http://127.0.0.1:9000/login/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -126,6 +126,9 @@
                 // Check if login is successful
                 if (data.login === 'successful') {
                     window.parent.goToMain();
+                }
+                else {         
+                  document.getElementById('login-error').style.display = 'block';     
                 }
             })
             .catch((error) => {
@@ -141,6 +144,7 @@
       >
         Register
       </button>
+      <div id="login-error" style="display: none; color: red; font-size: 12px;  height: 1%;">Login unsuccessful. Please try again.</div> 
       <!-- Register Modal -->
       <div
         class="modal fade"
