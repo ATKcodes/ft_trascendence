@@ -11,6 +11,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.authtoken.views import ObtainAuthToken 
 from rest_framework.settings import api_settings
 from rest_framework.exceptions import AuthenticationFailed
+import jwt, datetime
 
 @api_view(['GET', 'POST'])
 def user_list(request):
@@ -70,4 +71,13 @@ class LoginView(APIView):
         if not user.check_password(password):
             raise AuthenticationFailed('Wrong password')
         
-        return Response({'message': 'Logged in'})
+        payload = {
+            'id': user.id,
+            'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'iat' : datetime.datetime.utcnow()
+        }
+
+        token = jwt.encode(payload, 'secret', algorithm='HS256')      
+        
+        return Response({'jwt': token})
+    
