@@ -1,0 +1,19 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend/
+    ports:
+      - "8080:80"
+  db:
+    build: ./db/
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_PASSWORD: mypassword
+  backend:
+    build: ./backend/
+    ports:
+      - "9000:9000"
+    environment:
+      DJANGO_SETTINGS_MODULE: trascendence.settings
