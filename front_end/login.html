@@ -103,11 +103,36 @@
       <button id = "go_to_main" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
         Login
       </button>
-	  <script>
-		document.getElementById("go_to_main").addEventListener("click", function() {
-			window.parent.goToMain();
-		});
-	</script>
+      <script>
+        document.getElementById("go_to_main").addEventListener("click", function() {
+            const nickInput = document.getElementById('nickInput').value;
+            const passwordInput = document.getElementById('passwordInput').value;
+    
+            const data = {
+                username: nickInput,
+                password: passwordInput
+            };
+    //SET 8000 as a default port
+            fetch('127.0.0.1:8000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Check if login is successful
+                if (data.login === 'successful') {
+                    window.parent.goToMain();
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 	  <button
         type="button"
         class="btn btn-custom-brown mb-0 ms-3"
