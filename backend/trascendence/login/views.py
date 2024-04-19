@@ -58,6 +58,8 @@ class RegisterView(APIView):
         return Response(serializer.data)
     
 class LoginView(APIView):
+    def get(self, request):
+        return Response('/login/login.html')
     def post(self, request):
         username = request.data['username']
         password = request.data['password']
@@ -65,11 +67,11 @@ class LoginView(APIView):
         user = User.objects.filter(username=username).first()
 
         if user is None:
-            raise AuthenticationFailed('User not found')
+            raise AuthenticationFailed('Unsuccessful')
         
         if not user.check_password(password):
-            raise AuthenticationFailed('Wrong password')
+            raise AuthenticationFailed('Unsuccessful')
             
         
-        return Response({'message': 'Logged in'})
+        return Response({"login": "successful"})
     

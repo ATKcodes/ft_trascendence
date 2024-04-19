@@ -127,6 +127,9 @@
                 if (data.login === 'successful') {
                     window.parent.goToMain();
                 }
+                else {         
+                  document.getElementById('login-error').style.display = 'block';     
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -141,6 +144,7 @@
       >
         Register
       </button>
+      <div id="login-error" style="display: none; color: red; font-size: 12px;  height: 1%;">Login unsuccessful. Please try again.</div> 
       <!-- Register Modal -->
       <div
         class="modal fade"
