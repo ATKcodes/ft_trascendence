@@ -5,12 +5,15 @@ from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView   
 from .serializers import UserSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser 
-from rest_framework.authtoken.views import ObtainAuthToken 
+from rest_framework.authtoken.models import Token
 from rest_framework.settings import api_settings
 from rest_framework.exceptions import AuthenticationFailed
+from django.contrib.auth import authenticate
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET', 'POST'])
 def user_list(request):
@@ -58,20 +61,40 @@ class RegisterView(APIView):
         return Response(serializer.data)
     
 class LoginView(APIView):
-    def get(self, request):
-        return Response('/login/login.html')
     def post(self, request):
         username = request.data['username']
         password = request.data['password']
         
-        user = User.objects.filter(username=username).first()
+        authenticate_user = authenticate(username=username, password=password)
 
-        if user is None:
-            raise AuthenticationFailed('Unsuccessful')
+        if authenticate_user is not None:
+            user = User.objects.get(username=username)
+            serializer = UserSerializer(user)
+
+            response_data = {
+                "user": serializer.data
+            }
+
+            token, created_token = Token.objects.get_or_create(user=user)
+
+            if token:
+                response_data["token"] = token.key
+            elif created_token:
+                response_data["token"] = created_token.key
+            return Response(response_data)
+        return Response({"detail": "Invalid credentials"})
+
         
-        if not user.check_password(password):
-            raise AuthenticationFailed('Unsuccessful')
-            
-        
-        return Response({"login": "successful"})
-    
+
+@api_view(['GET'])  
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def TestView(request):
+    return Response({"detail": "You are authenticated"})
+
+@api_view(['GET'])  
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    request.user.auth_token.delete()
+    return Response({"detail": "You are logged out"})
