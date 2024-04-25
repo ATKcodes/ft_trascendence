@@ -58,8 +58,8 @@
       .modal-content {
         background-color: #dfa100;
       }
-      /* 
-		Possible color palette : 
+      /*
+		Possible color palette :
 		#DFA100 Main Yellow/Orange Color
 		#B6A999 Light Gray Color
 		#4F4537 Dark Brown Color
@@ -80,7 +80,7 @@
       <input id = "nickInput" class="px-1 mt-4 mb-2 ms-3 me-5" type="text" placeholder="Nick" /><br>
 	  <script>
 		const nickInput = document.getElementById('nickInput');
-	
+
 		nickInput.addEventListener('input', (event) => {
 			const nickValue = event.target.value;
 			console.log(nickValue);
@@ -94,7 +94,7 @@
       /><br>
 	  <script>
 			const passwordInput = document.getElementById('passwordInput');
-	
+
 			passwordInput.addEventListener('input', (event) => {
 			const passwordValue = event.target.value;
 			console.log(passwordValue);
@@ -107,13 +107,13 @@
         document.getElementById("go_to_main").addEventListener("click", function() {
             const nickInput = document.getElementById('nickInput').value;
             const passwordInput = document.getElementById('passwordInput').value;
-    
+
             const data = {
                 username: nickInput,
                 password: passwordInput
             };
     //SET 8000 as a default port
-            fetch('http://127.0.0.1:9000/login/login/', {
+            fetch('http://127.0.0.1:8000/login/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,8 +127,8 @@
                 if (data.login === 'successful') {
                     window.parent.goToMain();
                 }
-                else {         
-                  document.getElementById('login-error').style.display = 'block';     
+                else {
+                  document.getElementById('login-error').style.display = 'block';
                 }
             })
             .catch((error) => {
@@ -144,7 +144,7 @@
       >
         Register
       </button>
-      <div id="login-error" style="display: none; color: red; font-size: 12px;  height: 1%;">Login unsuccessful. Please try again.</div> 
+      <div id="login-error" style="display: none; color: red; font-size: 12px;  height: 1%;">Login unsuccessful. Please try again.</div>
       <!-- Register Modal -->
       <div
         class="modal fade"

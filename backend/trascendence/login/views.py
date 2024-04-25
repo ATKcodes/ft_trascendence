@@ -3,17 +3,19 @@ from rest_framework import generics, status
 from .models import User
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView   
+from rest_framework.views import APIView
 from .serializers import UserSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.http import JsonResponse, HttpResponse
-from rest_framework.parsers import JSONParser 
+from rest_framework.parsers import JSONParser
 from rest_framework.authtoken.models import Token
 from rest_framework.settings import api_settings
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import authenticate
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import authentication
+from rest_framework import exceptions
 
 @api_view(['GET', 'POST'])
 def user_list(request):
@@ -31,7 +33,7 @@ def user_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def user_detail(request, pk):
-    
+
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
@@ -59,12 +61,12 @@ class RegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
+
 class LoginView(APIView):
     def post(self, request):
         username = request.data['username']
         password = request.data['password']
-        
+
         authenticate_user = authenticate(username=username, password=password)
 
         if authenticate_user is not None:
@@ -84,17 +86,40 @@ class LoginView(APIView):
             return Response(response_data)
         return Response({"detail": "Invalid credentials"})
 
-        
 
-@api_view(['GET'])  
+
+@api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def TestView(request):
-    return Response({"detail": "You are authenticated"})
+    return Response({"detail": "You are authenticfewfated"})
 
-@api_view(['GET'])  
+@api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def logout(request):
     request.user.auth_token.delete()
     return Response({"detail": "You are logged out"})
+
+
+class TokenAuthentication(APIView):
+    def get(self, request):
+        keyword = 'Bearer'
+        auth_header = request.headers.get('Authorization')
+
+        if not auth_header:
+            return Response({"detail": "Invalid authentication header"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            prefix, token = auth_header.split(' ', 1)
+            if prefix.lower() != keyword.lower():
+                raise AuthenticationFailed('Invalid authentication header')
+        except ValueError:
+            raise AuthenticationFailed('Invalid token format')
+
+        try:
+            user = Token.objects.get(key=token).user
+        except Token.DoesNotExist:
+            raise AuthenticationFailed('Invalid token')
+
+        return Response({"detail": "You are authenticated"})
