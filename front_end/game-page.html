@@ -80,18 +80,6 @@
 		margin: 0 auto;
 		text-align: center;
 	}
-	.game 
-	{
-		position: absolute;
-		width: 96%;
-		height: 90%;
-		left: 2%;
-		right: 2%;
-		top: 8%;
-		bottom: 10%;
-		background-color: #000000;
-		color: #ffffff;
-	}
 	.btn-left {
 		font-weight: lighter;
 		font-size :110%;
@@ -177,6 +165,47 @@
 		margin: 0 auto;
 		text-align: center;
 	}
+	#pong-game {
+    	position: relative;
+		width: 96%;
+		height: 90%;
+		left: 2%;
+		right: 2%;
+		top: 8%;
+		bottom: 10%;
+		background-color: #000000;
+		color: #ffffff;
+	    border: 1px solid black;
+	}
+
+	#ball {
+		position: absolute;
+		height: 10px;
+		width: 10px;
+		background: black;
+		color : white;
+	}
+
+	#paddleA, #paddleB {
+		position: absolute;
+		height: 80px;
+		width: 10px;
+		background: black;
+		color : white;
+	}
+
+	#paddleA {
+		left: 0;
+	}
+
+	#paddleB {
+		right: 0;
+	}
+
+	#ball, #paddleA, #paddleB {
+		background: white;
+   		z-index: 2;
+}
 	</style>
 	<!-- Bootstrap JS -->
 </head>
@@ -191,9 +220,12 @@
 	</script>
 	<img src="srcs/download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
 	<h5 class = "userright">User2</h5>
-	<div class="game">
-		<button type="button" class="btn btn-left btn-lg btn-block">Play Pong</button>
-		<button type="button" class="btn btn-right btn-lg btn-block">Play Tris</button>
+	<div id  = "pong-game">
+		<div id="ball"></div>
+		<div id="paddleA"></div>
+		<div id="paddleB"></div>
+		<button id = "play-pong" type="button" class="btn btn-left btn-lg btn-block">Play Pong</button>
+		<button id = "play-tris" type="button" class="btn btn-right btn-lg btn-block">Play Tris</button>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -202,5 +234,71 @@
 <!-- Il tuo codice JavaScript qui -->
 
 <script>
+	var pongGame;
+	window.onload = function(){
+	pongGame = {
+		game: document.getElementById('pong-game'),
+		ball: document.getElementById('ball'),
+		paddleA: document.getElementById('paddleA'),
+		paddleB: document.getElementById('paddleB'),
+		ballPos: {x: 0, y: 0},
+		paddleAPos: {y: 0},
+		paddleBPos: {y: 0},
+	    ballSpeed: {x: 2, y: 2},
+
+		update: function() {
+        // Update the position of the ball
+        this.ballPos.x += this.ballSpeed.x;
+        this.ballPos.y += this.ballSpeed.y;
+
+        // Collision detection with the game boundaries
+        if (this.ballPos.x < 0 || this.ballPos.x + this.ball.offsetWidth > this.game.offsetWidth) {
+            this.ballSpeed.x *= -1; // Reverse the horizontal direction
+        }
+        if (this.ballPos.y < 0 || this.ballPos.y + this.ball.offsetHeight > this.game.offsetHeight) {
+            this.ballSpeed.y *= -1; // Reverse the vertical direction
+        }
+
+        // Collision detection with the paddles
+        if ((this.ballPos.x < this.paddleA.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleAPos.y && this.ballPos.y < this.paddleAPos.y + this.paddleA.offsetHeight) ||
+            (this.ballPos.x + this.ball.offsetWidth > this.game.offsetWidth - this.paddleB.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleBPos.y && this.ballPos.y < this.paddleBPos.y + this.paddleB.offsetHeight)) {
+            this.ballSpeed.x *= -1; // Reverse the horizontal direction
+        }
+    },
+
+	draw: function() {
+    // Update the position of the ball
+    this.ball.style.top = this.ballPos.y + 'px';
+    this.ball.style.left = this.ballPos.x + 'px';
+
+    // Update the position of paddle A
+    this.paddleA.style.top = this.paddleAPos.y + 'px';
+
+    // Update the position of paddle B
+    this.paddleB.style.top = this.paddleBPos.y + 'px';
+},
+
+    loop: function() {
+        pongGame.update();
+        pongGame.draw();
+        requestAnimationFrame(pongGame.loop);
+    },
+
+    start: function() {
+        pongGame.loop();
+    }
+};
+
+	pongGame.ballPos = {x: pongGame.game.offsetWidth/2, y: pongGame.game.offsetHeight/2},
+    pongGame.paddleAPos = {y: pongGame.game.offsetHeight/2 - pongGame.paddleA.offsetHeight/2},
+    pongGame.paddleBPos = {y: pongGame.game.offsetHeight/2 - pongGame.paddleB.offsetHeight/2},
+
+
+document.getElementById("play-pong").addEventListener("click", function() {
+    document.getElementById("play-pong").style.display = "none";
+    document.getElementById("play-tris").style.display = "none";
+    pongGame.start();
+});
+}
 </script>
 </html>
