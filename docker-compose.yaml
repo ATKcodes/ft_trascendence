@@ -4,13 +4,6 @@ services:
     build: ./front_end/
     ports:
       - "8080:80"
-  db:
-    build: ./db/
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_DB: postre
-      POSTGRES_PASSWORD: mypassword
   backend:
     depends_on:
       - db
@@ -19,3 +12,12 @@ services:
       - "9000:9000"
     environment:
       DJANGO_SETTINGS_MODULE: trascendence.settings
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
