@@ -1,7 +1,7 @@
 version: '3'
 services:
   frontend:
-    build: ./frontend/
+    build: ./front_end/
     ports:
       - "8080:80"
   db:
@@ -9,9 +9,11 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: postre
       POSTGRES_PASSWORD: mypassword
   backend:
+    depends_on:
+      - db
     build: ./backend/
     ports:
       - "9000:9000"
