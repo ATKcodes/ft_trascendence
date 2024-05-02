@@ -9,7 +9,7 @@ services:
       - db
     build: ./backend/
     ports:
-      - "9000:9000"
+      - "8001:8001"
     environment:
       DJANGO_SETTINGS_MODULE: trascendence.settings
       POSTGRES_DB: postgres
