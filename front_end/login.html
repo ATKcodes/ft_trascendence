@@ -109,38 +109,36 @@
             });
     </script>
     <!-- COMMENTED SO THAT THE FRONT END WORKS, WILL BE UNCOMMENTED LATER WHEN THE WHOLE SITE WORKS
-    <script>
-         document.getElementById("go_to_main").addEventListener("click", function() {
-             const nickInput = document.getElementById('nickInput').value;
-             const passwordInput = document.getElementById('passwordInput').value;
+      <script>
+        document.getElementById("go_to_main").addEventListener("click", function() {
+            const nickInput = document.getElementById('nickInput').value;
+            const passwordInput = document.getElementById('passwordInput').value;
     
-             const data = {
-                 username: nickInput,
-                 password: passwordInput
-             };
-     //SET 9000 as a default port
-             fetch('http://127.0.0.1:9000/login/login/', {
-                 method: 'POST',
-                 headers: {
-                     'Content-Type': 'application/json',
-                 },
-                 body: JSON.stringify(data),
-             })
-             .then(response => response.json())
-             .then(data => {
-               console.log('Success:', data);
-                 // Check if login is successful
-                 if (data.login === 'successful') {
-                     window.parent.goToMain();
-                 }
-                 else {         
-                   document.getElementById('login-error').style.display = 'block';     
-                 }
-             })
-             .catch((error) => {
-                 console.error('Error:', error);
-             });
-         });
+            const data = {
+                username: nickInput,
+                password: passwordInput
+            };
+    //SET 8000 as a default port
+            fetch('http://127.0.0.1:8001/login/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Check if login is successful
+                if (data.response === 'successful') {
+                    console.log('Login successful');
+                    window.parent.goToMain();
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
     </script>
     -->
 	  <button
@@ -174,13 +172,13 @@
             </div>
             <div class="modal-body">
               <input
-                id="nick"
+                id="Registernick"
                 class="px-1 mt-2 ms-3 me-5 mb-2"
                 type="text"
                 placeholder="Nick"
               />
               <input
-                id="password"
+                id="Registerpassword"
                 class="px-1 mt-2 ms-3 me-5 mb-2"
                 type="password"
                 placeholder="Password"
@@ -191,6 +189,9 @@
                 type="password"
                 placeholder="Repeat Password"
               />
+              <p id="successMessage" style="display: none; color: green">
+                Registration successful.
+              </p>
               <p id="passwordError" style="display: none; color: red">
                 Passwords do not match.
               </p>
@@ -213,13 +214,39 @@
 
       <script>
         document.getElementById("registerButton").onclick = function () {
-          var password = document.getElementById("password").value;
-          var repeatPassword = document.getElementById("repeatPassword").value;
+          const Registerpassword = document.getElementById("Registerpassword").value;
+          const repeatPassword = document.getElementById("repeatPassword").value;
+          const RegisterNick = document.getElementById("Registernick").value;
 
-          if (password !== repeatPassword) {
+          if (Registerpassword !== repeatPassword) {
             document.getElementById("passwordError").style.display = "block";
           } else {
             document.getElementById("passwordError").style.display = "none";
+            const RegisterData = {
+                username: RegisterNick,
+                password: Registerpassword
+            };
+            fetch('http://127.0.0.1:8001/login/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(RegisterData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Check if register is successful
+                if (data.response === 'successful') {
+                  document.getElementById("successMessage").style.display = "block";
+                }
+                else if (data.response === 'user with this username already exists.') {
+                  alert("Username already exists.");
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
           }
         };
       </script>
