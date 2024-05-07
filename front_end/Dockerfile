@@ -5,7 +5,7 @@ FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy the HTML file to the Nginx document root
-COPY login.html /usr/share/nginx/html
+COPY *.html /usr/share/nginx/html
 
 # Copy the CSS file to the Nginx document root
 COPY styles.css /usr/share/nginx/html

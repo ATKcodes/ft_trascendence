@@ -58,13 +58,12 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response({"response": "successful"})
     
 class LoginView(APIView):
     def post(self, request):
         username = request.data['username']
         password = request.data['password']
-        
         authenticate_user = authenticate(username=username, password=password)
 
         if authenticate_user is not None:
@@ -75,18 +74,15 @@ class LoginView(APIView):
                 "user": serializer.data
             }
 
-            token, created_token = Token.objects.get_or_create(user=user)
-
-            if token:
-                response_data["token"] = token.key
-            elif created_token:
-                response_data["token"] = created_token.key
-            return Response(response_data)
+            token, created = Token.objects.get_or_create(user=user)
+            response = Response({"response": "successful"})
+            response.set_cookie('token', token.key, httponly=True)
+            return response
         return Response({"detail": "Invalid credentials"})
 
         
 
-@api_view(['GET'])  
+@api_view(['POST'])  
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def TestView(request):
