@@ -77,8 +77,7 @@ class LoginView(APIView):
             }
 
             token, created = Token.objects.get_or_create(user=user)
-            response = Response({"response": "successful"})
-            response.set_cookie('token', token.key, httponly=True)
+            response = Response({"response": "successful", "token": token.key})
             return response
         return Response({"detail": "Invalid credentials"})
 
@@ -96,25 +95,3 @@ def logout(request):
     request.user.auth_token.delete()
     return Response({"detail": "You are logged out"})
 
-
-class TokenAuthentication(APIView):
-    def get(self, request):
-        keyword = 'Bearer'
-        auth_header = request.headers.get('Authorization')
-
-        if not auth_header:
-            return Response({"detail": "Invalid authentication header"}, status=status.HTTP_401_UNAUTHORIZED)
-
-        try:
-            prefix, token = auth_header.split(' ', 1)
-            if prefix.lower() != keyword.lower():
-                raise AuthenticationFailed('Invalid authentication header')
-        except ValueError:
-            raise AuthenticationFailed('Invalid token format')
-
-        try:
-            user = Token.objects.get(key=token).user
-        except Token.DoesNotExist:
-            raise AuthenticationFailed('Invalid token')
-
-        return Response({"detail": "You are authenticated"})
