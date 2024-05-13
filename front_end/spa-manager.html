@@ -21,7 +21,7 @@
 			document.getElementById("game-page").style.display = "none";
 
 			// Change the URL to 'main-page.html'
-			history.pushState({page: 'main-page'}, null, 'main-page.html');
+			history.pushState({page: 'main-page'}, null, 'main-page');
 		}
 
 		// Handle the back and forward navigation
@@ -43,34 +43,56 @@
 			document.getElementById("profile").style.display = "block";
 	
 			// Change the URL to 'profile.html'
-			history.pushState({page: 'profile'}, null, 'profile.html');
+			history.pushState({page: 'profile'}, null, 'profile');
   		}
 		function goToGame() {
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("game-page").style.display = "block";
 
 	        // Change the URL to 'game-page.html'
-			history.pushState({page: 'game-page'}, null, 'game-page.html');
+			history.pushState({page: 'game-page'}, null, 'game-page');
 		}
 		function goToLogin() {
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("login").style.display = "block";
 
 	        // Change the URL to 'game-page.html'
-			history.pushState({page: 'login'}, null, 'login.html');
+			history.pushState({page: 'login'}, null, 'login');
 		}
 
     	window.onload = function() {
-        	// Change the URL to 'login.html'
-        	history.replaceState({page: 'spa-manager'}, null, 'login.html');
-    	};
+        	// Change the URL to 'login'
+        	history.replaceState({page: 'spa-manager'}, null, 'login');
+			// Get the current URL
+			var url = window.location.href;
+
+			// Hide all pages
+			document.getElementById("game-page").style.display = "none";
+			document.getElementById("main-page").style.display = "none";
+			document.getElementById("profile").style.display = "none";
+			document.getElementById("login").style.display = "none";
+
+			// Show the page based on the URL
+			if (url.includes('spa-manager')) {
+				history.replaceState({page: 'spa-manager'}, null, 'login');
+				document.getElementById("login").style.display = "block";
+			} else if (url.includes('profile')) {
+				document.getElementById("profile").style.display = "block";
+			} else if (url.includes('game-page')) {
+				document.getElementById("game-page").style.display = "block";
+			} else if (url.includes('login')) {
+				document.getElementById("login").style.display = "block";
+			} else if (url.includes('main-page')) {
+				document.getElementById("main-page").style.display = "block";
+			}
+		};
 
     	// Handle the back and forward navigation
     	window.onpopstate = function(event) {
         	if (event.state) {
             	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
             	if (event.state.page === 'spa-manager') {
-                	history.replaceState({page: 'spa-manager'}, null, 'login.html');
+                	history.replaceState({page: 'spa-manager'}, null, 'login');
             	}
         	}
     	};
@@ -85,7 +107,7 @@
 
             // Show the page based on the state object
             if (event.state.page === 'spa-manager') {
-                history.replaceState({page: 'spa-manager'}, null, 'login.html');
+                history.replaceState({page: 'spa-manager'}, null, 'login');
                 document.getElementById("login").style.display = "block";
             } else if (event.state.page === 'profile') {
                 document.getElementById("profile").style.display = "block";
