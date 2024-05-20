@@ -215,6 +215,7 @@
 	<h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
 	<script>
 		document.getElementById("go_to_main").addEventListener("click", function() {
+			localStorage.setItem('lastPage', "main-page");
 			window.parent.goToMain();
 		});
 	</script>
@@ -248,16 +249,15 @@
 		ballPos: {x: 0, y: 0},
 		paddleAPos: {y: 0},
 		paddleBPos: {y: 0},
-	    ballSpeed: {x: 5, y: 5},
+	    ballSpeed: {x: 8, y: 8},
 		paddleASpeed: 0,
     	paddleBSpeed: 0,
     	paddleSpeed: 4,
 		scoreA: 0,
    		scoreB: 0,
 		bouncecounter: 0,
-		balllimitfaster: 5,
+		balllimitfaster: 2,
 		ballaccelleration: 1,
-		balldefaultcoefficient: 1,
 
 		update: function() {
         // Update the position of the ball
@@ -298,17 +298,21 @@
         }
 		if (this.bouncecounter == this.balllimitfaster){
 			this.balllimitfaster = this.balllimitfaster * 2;
-			this.ballSpeed.x *= this.ballaccelleration;
-			this.ballSpeed.y *= this.ballaccelleration;
-			this.ballaccelleration = this.ballaccelleration - (this.ballaccelleration - this.balldefaultcoefficient / 2);
+			this.ballSpeed.x = this.ballSpeed.x + 1;
+			this.ballSpeed.y = this.ballSpeed.y + 1;
 		}
     },
 
 	resetBall: function() {
+		console.log(this.bouncecounter);
+		console.log(this.ballSpeed.x);
         // Reset ball position to the center of the game area
         this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
         this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
         // Optionally, reset ball speed or direction
+		this.ballSpeed.x = 8;
+		this.ballSpeed.y = 8;
+		this.bouncecounter = 0;
 	},
 
 	draw: function() {

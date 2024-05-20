@@ -219,6 +219,7 @@
         <button id = "go_to_login" class = "btn">Logout</button>
         <script>
             document.getElementById("go_to_login").addEventListener("click", function() {
+            localStorage.setItem('lastPage', "login");
             window.parent.goToLogin();
         });
         </script>
@@ -226,6 +227,7 @@
       </div>
     <script>
       document.getElementById("go_to_profle").addEventListener("click", function() {
+        localStorage.setItem('lastPage', "profile");
         window.parent.goToProfile();
       });
     </script>
@@ -235,6 +237,7 @@
       </button>
       <script>
         document.getElementById("go_to_game").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "profile");
           window.parent.goToGame();
         });
       </script>

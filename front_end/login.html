@@ -118,7 +118,7 @@
                 username: nickInput,
                 password: passwordInput
             };
-    //SET 8000 as a default port
+    //SET 8001 as a default port
             fetch('http://127.0.0.1:8001/login/login/', {
                 method: 'POST',
                 headers: {
@@ -126,18 +126,21 @@
                 },
                 body: JSON.stringify(data),
             })
-            .then(response => response.json())
+            .then(response => response.json()) // Parse the JSON response
             .then(data => {
-                console.log('Success:', data);
-                // Check if login is successful
-                if (data.response === 'successful') {
+                console.log('Success:', data); // Debugging: Log the data to see its structure
+                if(data.token) {
+                    localStorage.setItem('userToken', data.token); // Correctly access and store the token
                     console.log('Login successful');
+                    localStorage.setItem('lastPage', "main-page");
                     window.parent.goToMain();
+                } else if(data.detail) {
+                    console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
+                } else {
+                    console.error('Token not found in response');
                 }
             })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+            .catch(error => console.error('Error:', error));
         });
     </script>
     -->
@@ -238,10 +241,10 @@
                 console.log('Success:', data);
                 // Check if register is successful
                 if (data.response === 'successful') {
-                  document.getElementById("successMessage").style.display = "block";
+                    document.getElementById("successMessage").style.display = "block";
                 }
                 else if (data.response === 'user with this username already exists.') {
-                  alert("Username already exists.");
+                    alert("Username already exists.");
                 }
             })
             .catch((error) => {
