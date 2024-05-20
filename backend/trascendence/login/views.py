@@ -75,8 +75,7 @@ class LoginView(APIView):
             }
 
             token, created = Token.objects.get_or_create(user=user)
-            response = Response({"response": "successful"})
-            response.set_cookie('token', token.key, httponly=True)
+            response = Response({"response": "successful", "token": token.key})
             return response
         return Response({"detail": "Invalid credentials"})
 

@@ -50,6 +50,7 @@
     <h2 id ="go_to_main" class="div-title">PONG</h2>
     <script>
 		document.getElementById("go_to_main").addEventListener("click", function() {
+            localStorage.setItem('lastPage', "main-page");
 			window.parent.goToMain();
 		});
 	</script>
