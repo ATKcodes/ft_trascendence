@@ -16,6 +16,10 @@ RUN rm /etc/nginx/conf.d/default.conf
 # Copy the HTML file to the Nginx document root
 COPY *.html /usr/share/nginx/html
 
+COPY Despairs-X3Wxo.ttf /usr/share/nginx/html
+
+COPY download.jpeg /usr/share/nginx/html
+
 # Copy the CSS file to the Nginx document root
 COPY styles.css /usr/share/nginx/html
 
