@@ -94,6 +94,62 @@
 		text-align: center;
 		border-color: #ffffff;
 	}
+	.btn-left-top {
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		left: 20%;
+		top: 40%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-left-bottom {
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		left: 20%;
+		top: 50%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-right-top{
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 20%;
+		top: 40%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-right-bottom{
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 20%;
+		top: 50%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
 	.btn-right {
 		font-weight: lighter;
 		font-size :110%;
@@ -107,6 +163,10 @@
 		margin: 0 auto;
 		text-align: center;
 		border-color: #ffffff;
+	}
+	.btn-nohover:hover {
+		visibility: visible !important;
+        opacity: 1 !important;
 	}
 	.open_text {
 		font-size: 200%;
@@ -122,7 +182,7 @@
 		color: #ffffff;
 	}
 	.select {
-		background-image: url('srcs/download.jpeg');
+		background-image: url('download.jpeg');
 		border-radius: 50%;
 		color: #000000;
 		position: absolute;
@@ -207,10 +267,9 @@
    		z-index: 2;
 }
 	</style>
-	<!-- Bootstrap JS -->
 </head>
 <body>
-	<img src="srcs/download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
+	<img src="download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
 	<h5 class = "userleft">User1</h5>
 	<h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
 	<script>
@@ -219,25 +278,30 @@
 			window.parent.goToMain();
 		});
 	</script>
-	<img src="srcs/download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
-	<h5 class = "userright">User2</h5>
-	<div id  = "pong-game">
-		<div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 0; padding: 10px;">
-			<div><span id="scoreA" style="font-size: 24px;">0</span></div>
-			<div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px;">0</span></div>
+	<img src="download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
+	<h5 id = "userright"class = "userright">User2</h5>
+	<div id="pong-game"></div>
+		<div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 7%; padding: 10px; ">
+			<div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
+			<div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white;">0</span></div>
+		</div>
 		</div>
 		<div id="ball"></div>
 		<div id="paddleA"></div>
 		<div id="paddleB"></div>
-		<button id = "play-pong" type="button" class="btn btn-left btn-lg btn-block">Play Pong</button>
-		<button id = "play-tris" type="button" class="btn btn-right btn-lg btn-block">Play Tris</button>
+		<input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+		<button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;" >Submit</button>
+		<button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
+		<button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
+		<button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
+		<button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
+		<button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
+		<button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
+	</div>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!-- Il tuo codice JavaScript qui -->
-
 <script>
 	var pongGame;
 	window.onload = function(){
@@ -377,7 +441,35 @@ document.addEventListener('keyup', function(event) {
 document.getElementById("play-pong").addEventListener("click", function() {
     document.getElementById("play-pong").style.display = "none";
     document.getElementById("play-tris").style.display = "none";
-    pongGame.start();
+	
+	// Show the new buttons
+	document.getElementById("play-1v1").style.display = "block";
+    document.getElementById("play-4players").style.display = "block";
+    document.getElementById("play-vs-ia").style.display = "block";
+    document.getElementById("play-tournament").style.display = "block";
+    
+});
+document.getElementById("play-1v1").addEventListener("click", function(){
+	document.getElementById("play-1v1").style.display = "none";
+    document.getElementById("play-4players").style.display = "none";
+    document.getElementById("play-vs-ia").style.display = "none";
+    document.getElementById("play-tournament").style.display = "none";
+	document.getElementById("player2-username").style.display = "block";
+    document.getElementById("submit-username").style.display = "block";
+});
+document.getElementById("submit-username").addEventListener("click", function() {
+    var username = document.getElementById("player2-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userright").textContent = username;
+		document.getElementById("player2-username").style.display = "none";
+		document.getElementById("submit-username").style.display = "none";
+        // Start the game
+        pongGame.start();
+    } else {
+        alert("Please enter a username for player 2.");
+    }
 });
 }
 </script>
