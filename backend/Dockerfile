@@ -28,4 +28,4 @@ ENV DJANGO_SETTINGS_MODULE=trascendence.settings
 # CMD [ "./wait-for.sh", "db", "5432", "--", "python", "trascendence/manage.py", "migrate", "runserver", "0.0.0.0:9000"]
 # CMD [ "./wait-for.sh", "db", "5432", "--", "python3", "trascendence/manage.py", "migrate", "&&", "python3", "trascendence/manage.py", "runserver", "0.0.0.0:9000"]
 # CMD ["./wait-for.sh", "db", "5432", "--", "sh", "-c", "python trascendence/manage.py migrate && python trascendence/manage.py runserver 0.0.0.0:9000"]
-CMD until PGPASSWORD=$POSTGRES_PASSWORD psql -h db -U $POSTGRES_DB -d $POSTGRES_USER -c '\q'; do echo "Postgres is unavailable - sleeping"; sleep 1; done && python3 trascendence/manage.py migrate && python3 trascendence/manage.py runserver 0.0.0.0:8001
+CMD until PGPASSWORD=$POSTGRES_PASSWORD psql -h db -U $POSTGRES_DB -d $POSTGRES_USER -c '\q'; do echo "Postgres is unavailable - sleeping"; sleep 1; done && python3 trascendence/manage.py makemigrations && python3 trascendence/manage.py migrate && python3 trascendence/manage.py runserver 0.0.0.0:8001
