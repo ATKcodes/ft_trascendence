@@ -23,11 +23,35 @@ from rest_framework import exceptions
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def Change_Player(request):
-    # Get the user from the request
     user = request.user
-    # Get the new player value from the request data
-    # Update the player field of the user
-    user.player = "valerio"
+    user.player = request.data['player']
     user.save()
     # Return a success response
     return Response({'player': user.player}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])  
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def WinLose_count(request):
+    user = request.user
+    if request.data['game'] == 'pong':
+        if request.data['win'] == 'true':
+            user.wins_pong += 1
+        else:
+            user.loses_pong += 1
+        user.winrate_pong = user.wins_pong /  user.loses_pong
+        user.save()
+    elif request.data['game'] == 'tictactoe':
+        if request.data['win'] == 'true':
+            user.wins_tictactoe += 1
+        else:
+            user.loses_tictactoe += 1
+        user.winrate_tictactoe = user.wins_tictactoe / user.loses_tictactoe
+        user.save()
+    
+    return Response({'pong': {'wins': user.wins_pong, 'loses': user.loses_pong, 'winrate': user.winrate_pong}, 'tictactoe': {'wins': user.wins_tictactoe, 'loses': user.loses_tictactoe, 'winrate': user.winrate_tictactoe}}, status=status.HTTP_200_OK)
+
+
+
+
+

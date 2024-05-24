@@ -16,6 +16,8 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import authentication
 from rest_framework import exceptions
+import requests
+from requests.auth import HTTPBasicAuth
 
 @api_view(['GET', 'POST'])
 def user_list(request):
@@ -88,10 +90,31 @@ class LoginView(APIView):
 def TestView(request):
     return Response({"detail": "You are authenticfewfated"})
 
-@api_view(['GET'])
+@api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def logout(request):
     request.user.auth_token.delete()
     return Response({"detail": "You are logged out"})
 
+
+
+def get_42token(request):
+    data = {
+        'grant_type': 'authorization_code',
+        'client_id': 'u-s4t2ud-a8a7afc615b7c393b1a141953798a4f72bfd49e80f8464df3f2ac1838557eefe',
+        'client_secret': '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',
+        'code': 'fee85417f63d998c07a584402fa84f4e599b09194fa437a9dab95bc9aff18f27',
+        'redirect_uri': 'http://127.0.0.1:8080/main-page.html',
+    }
+    response = requests.post('https://api.intra.42.fr/oauth/token', data=data)
+    if response.status_code == 200:
+        response2 = requests.get('https://api.intra.42.fr/v2/me', headers={'Authorization': 'Bearer ' + response.json()['access_token']})
+        username = response2.json()['login']
+        if not User.objects.filter(username=username).exists():
+            serializer = UserSerializer(data={'username': username})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        return JsonResponse({'access_token': response.json()['access_token']})
+    else:
+        return JsonResponse({'error': 'Failed to get access token'}, status=400)

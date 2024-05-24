@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User (AbstractUser):
     username = models.CharField(max_length=250, unique=True)
-    password = models.CharField(max_length=250)
+    password = models.CharField(max_length=250, blank=True)
     wins_pong = models.IntegerField(default=0)
     loses_pong = models.IntegerField(default=0)
     winrate_pong = models.FloatField(default=0)
@@ -12,3 +12,4 @@ class User (AbstractUser):
     winrate_tictactoe = models.FloatField(default=0)
     player = models.CharField(max_length=250, blank=True)
     friend_list = models.ManyToManyField('self', blank=True)
+
