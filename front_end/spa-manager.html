@@ -21,7 +21,7 @@
 			document.getElementById("game-page").style.display = "none";
 
 			// Change the URL to 'main-page.html'
-			history.pushState({page: 'main-page'}, null, 'main-page.html');
+			history.pushState({page: 'main-page'}, null, 'main-page');
 		}
 
 		// Handle the back and forward navigation
@@ -43,34 +43,68 @@
 			document.getElementById("profile").style.display = "block";
 	
 			// Change the URL to 'profile.html'
-			history.pushState({page: 'profile'}, null, 'profile.html');
+			history.pushState({page: 'profile'}, null, 'profile');
   		}
 		function goToGame() {
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("game-page").style.display = "block";
 
 	        // Change the URL to 'game-page.html'
-			history.pushState({page: 'game-page'}, null, 'game-page.html');
+			history.pushState({page: 'game-page'}, null, 'game-page');
 		}
 		function goToLogin() {
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("login").style.display = "block";
 
 	        // Change the URL to 'game-page.html'
-			history.pushState({page: 'login'}, null, 'login.html');
+			history.pushState({page: 'login'}, null, 'login');
 		}
 
-    	window.onload = function() {
-        	// Change the URL to 'login.html'
-        	history.replaceState({page: 'spa-manager'}, null, 'login.html');
-    	};
+		window.onload = function() {
+			// Attempt to get the lastPage from localStorage
+			var lastPage = localStorage.getItem('lastPage');
+
+			// Hide all pages
+			document.getElementById("game-page").style.display = "none";
+			document.getElementById("main-page").style.display = "none";
+			document.getElementById("profile").style.display = "none";
+			document.getElementById("login").style.display = "none";
+
+			// Function to show the page based on id
+			function showPage(pageId) {
+				var pageElement = document.getElementById(pageId);
+				if (pageElement) {
+					pageElement.style.display = "block";
+					history.replaceState({page: pageId}, null, pageId);
+				}
+			}
+
+			// If lastPage exists in localStorage, show it
+			if (lastPage && document.getElementById(lastPage)) {
+				showPage(lastPage);
+			} else {
+				// Default behavior based on URL
+				var url = window.location.href;
+				if (url.includes('spa-manager')) {
+					showPage("login"); // Default to login if 'spa-manager' is in the URL but no lastPage is saved
+				} else if (url.includes('profile')) {
+					showPage("profile");
+				} else if (url.includes('game-page')) {
+					showPage("game-page");
+				} else if (url.includes('login')) {
+					showPage("login");
+				} else if (url.includes('main-page')) {
+					showPage("main-page");
+				}
+			}
+		};
 
     	// Handle the back and forward navigation
     	window.onpopstate = function(event) {
         	if (event.state) {
             	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
             	if (event.state.page === 'spa-manager') {
-                	history.replaceState({page: 'spa-manager'}, null, 'login.html');
+                	history.replaceState({page: 'spa-manager'}, null, 'login');
             	}
         	}
     	};
@@ -85,7 +119,7 @@
 
             // Show the page based on the state object
             if (event.state.page === 'spa-manager') {
-                history.replaceState({page: 'spa-manager'}, null, 'login.html');
+                history.replaceState({page: 'spa-manager'}, null, 'login');
                 document.getElementById("login").style.display = "block";
             } else if (event.state.page === 'profile') {
                 document.getElementById("profile").style.display = "block";
@@ -99,6 +133,42 @@
         }
     };
 
-        </script>
+	document.addEventListener('DOMContentLoaded', function() {
+    const userToken = localStorage.getItem('userToken');
+    const lastPage = localStorage.getItem('lastPage') || 'login';
+
+    if (userToken && lastPage !== 'login') {
+        console.log('User token found:', userToken);
+        // Assuming setPageBasedOnState does the actual page showing
+        setPageBasedOnState({page: lastPage});
+    } else {
+        console.log('No user token found, please log in');
+        setPageBasedOnState({page: 'login'});
+    }
+});
+
+function setPageBasedOnState(state) {
+    const pageIds = ["login", "profile", "main-page", "game-page"];
+    pageIds.forEach(id => {
+        const pageElement = document.getElementById(id);
+        if (pageElement) {
+            pageElement.style.display = "none";
+        }
+    });
+    if (state.page && document.getElementById(state.page)) {
+        console.log("Showing page:", state.page);
+        document.getElementById(state.page).style.display = "block";
+        localStorage.setItem('lastPage', state.page); // Correctly update localStorage
+    } else {
+        console.log("No page specified, showing login");
+        document.getElementById("login").style.display = "block";
+    }
+}
+
+	// Handle page state on popstate event
+	window.onpopstate = function(event) {
+		setPageBasedOnState(event.state);
+	};
+	</script>
   </body>
 </html>
