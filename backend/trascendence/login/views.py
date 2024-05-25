@@ -17,6 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import authentication
 from rest_framework import exceptions
 import requests
+import os
 from requests.auth import HTTPBasicAuth
 
 @api_view(['GET', 'POST'])
@@ -102,9 +103,9 @@ def logout(request):
 def get_42token(request):
     data = {
         'grant_type': 'authorization_code',
-        'client_id': 'u-s4t2ud-a8a7afc615b7c393b1a141953798a4f72bfd49e80f8464df3f2ac1838557eefe',
-        'client_secret': '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',
-        'code': '87ea2d6545ba6c9a8bf7bd09a440884dc188d33e19951f3a1cb750f165f530f3',
+        'client_id': os.getenv('CLIENT_ID'),
+        'client_secret': os.getenv('CLIENT_SECRET'),
+        'code': '189efdd7932934b691b523a9b0c738e748ed9a25b7d7262fb77ec10b8cdae342',
         'redirect_uri': 'https://127.0.0.1:8443/main-page.html',
     }
     response = requests.post('https://api.intra.42.fr/oauth/token', data=data)

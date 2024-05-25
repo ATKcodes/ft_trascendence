@@ -63,30 +63,30 @@ def WinLose_count(request):
         user.date_played_tictactoe = datetime.now()
         user.save()
     
-return Response({
-    'pong': {
-        'wins': user.wins_pong, 
-        'loses': user.loses_pong, 
-        'winrate': user.winrate_pong, 
-        'matchHistorypong': {
-            'player': user.player, 
-            'score': user.score, 
-            'player2': user.player2, 
-            'score2': user.score2, 
-            'date': user.date_played
+    return Response({
+        'pong': {
+            'wins': user.wins_pong, 
+            'loses': user.loses_pong, 
+            'winrate': user.winrate_pong, 
+            'matchHistorypong': {
+                'player': user.player, 
+                'score': user.score, 
+                'player2': user.player2, 
+                'score2': user.score2, 
+                'date': user.date_played
+            }
+        }, 
+        'tictactoe': {
+            'wins': user.wins_tictactoe, 
+            'loses': user.loses_tictactoe, 
+            'winrate': user.winrate_tictactoe, 
+            'matchHistorytictactoe': {
+                'player': user.player, 
+                'player2': user.player2, 
+                'date': user.date_played_tictactoe
+            }
         }
-    }, 
-    'tictactoe': {
-        'wins': user.wins_tictactoe, 
-        'loses': user.loses_tictactoe, 
-        'winrate': user.winrate_tictactoe, 
-        'matchHistorytictactoe': {
-            'player': user.player, 
-            'player2': user.player2, 
-            'date': user.date_played_tictactoe
-        }
-    }
-}, status=status.HTTP_200_OK)
+    }, status=status.HTTP_200_OK)
 
 
 
