@@ -269,36 +269,36 @@
 	</style>
 </head>
 <body>
-	<img src="download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
-	<h5 class = "userleft">User1</h5>
-	<h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
-	<script>
-		document.getElementById("go_to_main").addEventListener("click", function() {
-			localStorage.setItem('lastPage', "main-page");
-			window.parent.goToMain();
-		});
-	</script>
-	<img src="download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
-	<h5 id = "userright"class = "userright">User2</h5>
-	<div id="pong-game"></div>
-		<div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 7%; padding: 10px; ">
-			<div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
-			<div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white;">0</span></div>
-		</div>
-		</div>
-		<div id="ball"></div>
-		<div id="paddleA"></div>
-		<div id="paddleB"></div>
-		<input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
-		<button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;" >Submit</button>
-		<button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
-		<button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
-		<button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
-		<button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
-		<button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
-		<button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
-	</div>
-	</div>
+    <img src="download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
+    <h5 class = "userleft">User1</h5>
+    <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
+    <script>
+        document.getElementById("go_to_main").addEventListener("click", function() {
+            localStorage.setItem('lastPage', "main-page");
+            window.parent.goToMain();
+        });
+    </script>
+    <img src="download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
+    <h5 id = "userright"class = "userright">User2</h5>
+    <div id="pong-game">
+        <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
+            <div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
+            <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white;">0</span></div>
+        </div>
+        <div id="ball"></div>
+        <div id="paddleA"></div>
+        <div id="paddleB"></div>
+    </div>
+    <input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+    <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+    <button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
+    <button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
+    <button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
+    <button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
+    <button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
+    <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
+	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
+	<button id = "NextMatch" style = "display: none;" class = "btn btn-left btn-lg btn-block"></button>
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -365,7 +365,69 @@
 			this.ballSpeed.x = this.ballSpeed.x + 1;
 			this.ballSpeed.y = this.ballSpeed.y + 1;
 		}
+		// Check if player A has reached 5 points
+		if (this.scoreA >= 5) {
+			this.endGame(document.querySelector('.userleft').textContent);
+       		return;
+		// Check if player B has reached 5 points
+		if (this.scoreB >= 5) {
+        this.endGame(document.querySelector('.userright').textContent);
+        return;
+    }
+    }
+
     },
+	endGame: function(winner) {
+    // Reset the ball
+    this.resetBall();
+	this.ballSpeed.x = 0;
+	this.ballSpeed.y = 0;
+	this.ball.style.display = "none";
+	this.paddleA.style.display = "none";
+	this.paddleB.style.display = "none";
+	win = true;
+
+	if (winner = document.querySelector('.userleft').textContent)
+	{
+		win = true;
+	}
+	else 
+	{
+		win = false;
+	}
+
+    // Save match data
+    var matchData = {
+		token:localStorage.getItem('token'),
+		game: "pong",
+		win: win,
+		score: this.scoreA,
+        scoreplayer2: this.scoreB,
+   		player2: document.querySelector('.userright').textContent, // Get User2 name
+        date: new Date().toISOString(),
+    };
+	this.scoreA = 0;
+	this.scoreB = 0;
+    var jsonMatchData = JSON.stringify(matchData);
+
+	// COMMENTED SO THAT THE FRONT END WORKS
+    // Send jsonMatchData to your backend
+	// fetch('https://your-backend-url.com', {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	},
+	// 	body: jsonMatchData
+	// }).then(response => {
+	// 	if (response.ok) {
+	// 		console.log('Match data sent successfully');
+	// 	} else {
+	// 		console.error('Error sending match data:', response.statusText);
+	// 	}
+	// }).catch(error => {
+	// 	console.error('Network error:', error);
+	// });
+},
 
 	resetBall: function() {
 		console.log(this.bouncecounter);
@@ -457,6 +519,7 @@ document.getElementById("play-1v1").addEventListener("click", function(){
 	document.getElementById("player2-username").style.display = "block";
     document.getElementById("submit-username").style.display = "block";
 });
+//Funzione per cambiare il nick dell'user2.
 document.getElementById("submit-username").addEventListener("click", function() {
     var username = document.getElementById("player2-username").value;
 
