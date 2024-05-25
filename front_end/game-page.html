@@ -310,6 +310,7 @@
 	var pongGame;
 	window.onload = function(){
 	pongGame = {
+		gameMode: "1v1",
 		game: document.getElementById('pong-game'),
 		ball: document.getElementById('ball'),
 		paddleA: document.getElementById('paddleA'),
@@ -334,8 +335,20 @@
 
 		// Update the position of the paddles
 		this.paddleAPos.y += this.paddleASpeed;
+		
+		if (pongGame.gameMode === 'vs-ai') {
+        // Move the right paddle based on the ball's position
+        if (pongGame.ballPos.y > pongGame.paddleBPos.y) {
+            pongGame.paddleBSpeed = pongGame.paddleSpeed;
+        } else if (pongGame.ballPos.y < pongGame.paddleBPos.y) {
+            pongGame.paddleBSpeed = -pongGame.paddleSpeed;
+        } else {
+            pongGame.paddleBSpeed = 0;
+        }
+    } else {
         this.paddleBPos.y += this.paddleBSpeed;
-
+    }
+		this.paddleBPos.y += this.paddleBSpeed;
         // Prevent the paddles from going out of the game area
         this.paddleAPos.y = Math.max(Math.min(this.paddleAPos.y, this.game.offsetHeight - this.paddleA.offsetHeight), 0);
         this.paddleBPos.y = Math.max(Math.min(this.paddleBPos.y, this.game.offsetHeight - this.paddleB.offsetHeight), 0);
@@ -538,7 +551,15 @@ document.getElementById("submit-username").addEventListener("click", function() 
         alert("Please enter a username for player 2.");
     }
 });
-
+document.getElementById("play-vs-ia").addEventListener("click", function(){
+	document.getElementById("userright").textContent = "IA";
+	document.getElementById("play-1v1").style.display = "none";
+    document.getElementById("play-4players").style.display = "none";
+    document.getElementById("play-vs-ia").style.display = "none";
+    document.getElementById("play-tournament").style.display = "none";
+	pongGame.gameMode = "vs-ai";
+	pongGame.start();
+});
 
 //TRIS CODE
 document.getElementById("play-tris").addEventListener("click", function(){
