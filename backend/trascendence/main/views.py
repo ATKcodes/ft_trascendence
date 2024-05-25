@@ -31,19 +31,26 @@ def Change_Player(request):
     # Return a success response
     return Response({'player': user.player}, status=status.HTTP_200_OK)
 
+
 @api_view(['POST'])  
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def WinLose_count(request):
     user = request.user
+    user.player2 = request.data['player2']
     if request.data['game'] == 'pong':
         if request.data['win'] == 'true':
             user.wins_pong += 1
-            user.matchHistorypong.append({'game': 'pong', 'win': True})
+            user.score = request.data['score']
+            user.scoreplayer2 = request.data['scoreplayer2']
+            user.matchHistorypong.append({'game': 'pong', 'win': True, 'score': user.score, 'scoreplayer2': user.scoreplayer2})
         else:
             user.loses_pong += 1
-            user.matchHistorypong.append({'game': 'pong', 'win': False})
-        user.winrate_pong = user.wins_pong /  user.loses_pong
+            user.score = request.data['score']
+            user.scoreplayer2 = request.data['scoreplayer2']
+            user.matchHistorypong.append({'game': 'pong', 'win': False, 'score': user.score, 'scoreplayer2': user.scoreplayer2})
+        user.winrate_pong = user.wins_pong /  (user.wins_pong + user.loses_pong) * 100
+        user.date_played_tictactoe = datetime.now()
         user.save()
     elif request.data['game'] == 'tictactoe':
         if request.data['win'] == 'true':
@@ -52,10 +59,34 @@ def WinLose_count(request):
         else:
             user.loses_tictactoe += 1
             user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': False})
-        user.winrate_tictactoe = user.wins_tictactoe / user.loses_tictactoe
+        user.winrate_tictactoe = user.wins_tictactoe /  (user.wins_tictactoe + user.loses_tictactoe) * 100
+        user.date_played_tictactoe = datetime.now()
         user.save()
     
-    return Response({'pong': {'wins': user.wins_pong, 'loses': user.loses_pong, 'winrate': user.winrate_pong}, 'tictactoe': {'wins': user.wins_tictactoe, 'loses': user.loses_tictactoe, 'winrate': user.winrate_tictactoe}}, status=status.HTTP_200_OK)
+return Response({
+    'pong': {
+        'wins': user.wins_pong, 
+        'loses': user.loses_pong, 
+        'winrate': user.winrate_pong, 
+        'matchHistorypong': {
+            'player': user.player, 
+            'score': user.score, 
+            'player2': user.player2, 
+            'score2': user.score2, 
+            'date': user.date_played
+        }
+    }, 
+    'tictactoe': {
+        'wins': user.wins_tictactoe, 
+        'loses': user.loses_tictactoe, 
+        'winrate': user.winrate_tictactoe, 
+        'matchHistorytictactoe': {
+            'player': user.player, 
+            'player2': user.player2, 
+            'date': user.date_played_tictactoe
+        }
+    }
+}, status=status.HTTP_200_OK)
 
 
 
