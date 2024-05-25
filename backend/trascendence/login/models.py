@@ -11,5 +11,12 @@ class User (AbstractUser):
     loses_tictactoe = models.IntegerField(default=0)
     winrate_tictactoe = models.FloatField(default=0)
     player = models.CharField(max_length=250, blank=True)
+    matchHistorypong = models.JSONField(default=dict)
+    matchHistorytictactoe = models.JSONField(default=dict)
     friend_list = models.ManyToManyField('self', blank=True)
 
+
+    def save(self, *args, **kwargs):
+        if not self.player:
+            self.player = self.username
+        super().save(*args, **kwargs)

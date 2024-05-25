@@ -25,6 +25,8 @@ from rest_framework import exceptions
 def Change_Player(request):
     user = request.user
     user.player = request.data['player']
+    if user.player == '':
+        return Response({'error': 'Player name cannot be empty'}, status=status.HTTP_400_BAD_REQUEST)
     user.save()
     # Return a success response
     return Response({'player': user.player}, status=status.HTTP_200_OK)
@@ -37,15 +39,19 @@ def WinLose_count(request):
     if request.data['game'] == 'pong':
         if request.data['win'] == 'true':
             user.wins_pong += 1
+            user.matchHistorypong.append({'game': 'pong', 'win': True})
         else:
             user.loses_pong += 1
+            user.matchHistorypong.append({'game': 'pong', 'win': False})
         user.winrate_pong = user.wins_pong /  user.loses_pong
         user.save()
     elif request.data['game'] == 'tictactoe':
         if request.data['win'] == 'true':
             user.wins_tictactoe += 1
+            user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': True})
         else:
             user.loses_tictactoe += 1
+            user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': False})
         user.winrate_tictactoe = user.wins_tictactoe / user.loses_tictactoe
         user.save()
     
