@@ -327,6 +327,7 @@
 		bouncecounter: 0,
 		balllimitfaster: 2,
 		ballaccelleration: 1,
+		matchdatasent : 0,
 
 		update: function() {
         // Update the position of the ball
@@ -424,22 +425,10 @@
         date: new Date().toISOString(),
     };
     var jsonMatchData = JSON.stringify(matchData);
-
-	fetch('http://localhost:8001/main/winlose/', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: jsonMatchData
-	}).then(response => {
-		if (response.ok) {
-			console.log('Match data sent successfully');
-		} else {
-			console.error('Error sending match data:', response.statusText);
-		}
-	}).catch(error => {
-		console.error('Network error:', error);
-	});
+	if (matchdatasent === 0)
+	{
+		sendMatchData(jsonMatchData);
+	}
 },
 
 	resetBall: function() {
@@ -477,6 +466,24 @@
         pongGame.loop();
     }
 };
+function sendMatchData(jsonMatchData){
+	fetch('http://localhost:8001/main/winlose/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: jsonMatchData
+		}).then(response => {
+			if (response.ok) {
+				console.log('Match data sent successfully');
+			} else {
+				console.error('Error sending match data:', response.statusText);
+			}
+		}).catch(error => {
+			console.error('Network error:', error);
+		});
+	matchdatasent = 0;
+}
 
 document.addEventListener('keydown', function(event) {
     switch (event.key) {
