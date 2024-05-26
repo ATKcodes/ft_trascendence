@@ -80,7 +80,7 @@ class LoginView(APIView):
             }
 
             token, created = Token.objects.get_or_create(user=user)
-            response = Response({"response": "successful", "token": token.key})
+            response = Response({"response": "successful", "token": token.key, "nickname": user.player})
             return response
         return Response({"detail": "Invalid credentials"})
 

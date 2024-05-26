@@ -104,7 +104,7 @@
       <button id = "go_to_main" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
         Login
       </button>
-    <script>
+      <script>
       document.getElementById("go_to_main").addEventListener("click", function() {
         const nickInput = document.getElementById('nickInput').value;
         const passwordInput = document.getElementById('passwordInput').value;
@@ -125,7 +125,6 @@
         .then(data => {
             console.log('Success:', data); // Debugging: Log the data to see its structure
             if(data.token) {
-				let user = new User(data.nickname, data.token);
                 localStorage.setItem('userToken', data.token); // Correctly access and store the token
                 console.log('Login successful');
                 localStorage.setItem('lastPage', "main-page");
