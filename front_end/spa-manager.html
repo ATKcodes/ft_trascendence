@@ -13,12 +13,15 @@
         <iframe id="main-page" src="main-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
         <iframe id ="profile" src="profile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
+		var validPaths = ['profile', 'game-page', 'login', 'main-page'];
 		function goToMain() {
 			document.getElementById("login").style.display = "none";
 			document.getElementById("main-page").style.display = "block";
 			document.getElementById("profile").style.display = "none";
 			document.getElementById("game-page").style.display = "none";
+			document.getElementById("404").style.display = "none";
 
 			// Change the URL to 'main-page.html'
 			history.pushState({page: 'main-page'}, null, 'main-page');
@@ -32,15 +35,35 @@
 				document.getElementById("main-page").style.display = "none";
 				document.getElementById("profile").style.display = "none";
 				document.getElementById("game-page").style.display = "none";
+				document.getElementById("404").style.display = "none";
 
 				// Show the iframe of the current page
 				document.getElementById(event.state.page).style.display = "block";
-			}
+			} else {
+            // If the path is not valid, show the 404 page
+            goTo404();
+        }
+		function goTo404() {
+			// Hide all pages
+			document.getElementById("game-page").style.display = "none";
+			document.getElementById("main-page").style.display = "none";
+			document.getElementById("profile").style.display = "none";
+			document.getElementById("login").style.display = "none";
+			document.getElementById("404").style.display = "none";
+
+			// Show the 404 page
+			document.getElementById("404").style.display = "block";
+
+			// Change the URL to '404.html'
+			history.pushState({page: '404'}, null, '404');
+		}
 		};
 		function goToProfile() {
 			document.getElementById("game-page").style.display = "none";
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("profile").style.display = "block";
+			document.getElementById("login").style.display = "none";
+			document.getElementById("404").style.display = "none";
 	
 			// Change the URL to 'profile.html'
 			history.pushState({page: 'profile'}, null, 'profile');
@@ -48,6 +71,9 @@
 		function goToGame() {
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("game-page").style.display = "block";
+			document.getElementById("profile").style.display = "none";
+			document.getElementById("login").style.display = "none";
+			document.getElementById("404").style.display = "none";
 
 	        // Change the URL to 'game-page.html'
 			history.pushState({page: 'game-page'}, null, 'game-page');
@@ -55,6 +81,9 @@
 		function goToLogin() {
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("login").style.display = "block";
+			document.getElementById("profile").style.display = "none";
+			document.getElementById("game-page").style.display = "none";
+			document.getElementById("404").style.display = "none";
 
 	        // Change the URL to 'game-page.html'
 			history.pushState({page: 'login'}, null, 'login');
@@ -69,6 +98,7 @@
 			document.getElementById("main-page").style.display = "none";
 			document.getElementById("profile").style.display = "none";
 			document.getElementById("login").style.display = "none";
+			document.getElementById("404").style.display = "none";
 
 			// Function to show the page based on id
 			function showPage(pageId) {
@@ -95,6 +125,8 @@
 					showPage("login");
 				} else if (url.includes('main-page')) {
 					showPage("main-page");
+				} else if (url.includes('404')){
+					showPage("404")
 				}
 			}
 		};
@@ -108,30 +140,6 @@
             	}
         	}
     	};
-		    // Handle the back and forward navigation
-			window.onpopstate = function(event) {
-        if (event.state) {
-            // Hide all pages
-            document.getElementById("game-page").style.display = "none";
-            document.getElementById("main-page").style.display = "none";
-            document.getElementById("profile").style.display = "none";
-            document.getElementById("login").style.display = "none";
-
-            // Show the page based on the state object
-            if (event.state.page === 'spa-manager') {
-                history.replaceState({page: 'spa-manager'}, null, 'login');
-                document.getElementById("login").style.display = "block";
-            } else if (event.state.page === 'profile') {
-                document.getElementById("profile").style.display = "block";
-            } else if (event.state.page === 'game-page') {
-                document.getElementById("game-page").style.display = "block";
-            } else if (event.state.page === 'login') {
-                document.getElementById("login").style.display = "block";
-            } else if (event.state.page === 'main-page') {
-                document.getElementById("main-page").style.display = "block";
-            }
-        }
-    };
 
 	document.addEventListener('DOMContentLoaded', function() {
     const userToken = localStorage.getItem('userToken');
@@ -148,7 +156,7 @@
 });
 
 function setPageBasedOnState(state) {
-    const pageIds = ["login", "profile", "main-page", "game-page"];
+    const pageIds = ["login", "profile", "main-page", "game-page", "404"];
     pageIds.forEach(id => {
         const pageElement = document.getElementById(id);
         if (pageElement) {

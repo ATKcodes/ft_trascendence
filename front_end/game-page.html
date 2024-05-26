@@ -164,6 +164,20 @@
 		text-align: center;
 		border-color: #ffffff;
 	}
+	.btn-center-bottom {
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 40%;
+		top: 55%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
 	.btn-nohover:hover {
 		visibility: visible !important;
         opacity: 1 !important;
@@ -301,8 +315,8 @@
     <button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
     <button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
     <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
-	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
-	<button id = "NextMatch" style = "display: none;" class = "btn btn-left btn-lg btn-block"></button>
+	<div id="winner" class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
+	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom  btn-lg btn-block"></button>
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -348,7 +362,6 @@
     } else {
         this.paddleBPos.y += this.paddleBSpeed;
     }
-		this.paddleBPos.y += this.paddleBSpeed;
         // Prevent the paddles from going out of the game area
         this.paddleAPos.y = Math.max(Math.min(this.paddleAPos.y, this.game.offsetHeight - this.paddleA.offsetHeight), 0);
         this.paddleBPos.y = Math.max(Math.min(this.paddleBPos.y, this.game.offsetHeight - this.paddleB.offsetHeight), 0);
@@ -403,7 +416,7 @@
 	this.paddleA.style.display = "none";
 	this.paddleB.style.display = "none";
 	win = true;
-
+	
 	if (winner = document.querySelector('.userleft').textContent)
 	{
 		win = true;
@@ -415,6 +428,7 @@
 
     // Save match data
     var matchData = {
+		
 		token:localStorage.getItem('token'),
 		game: "pong",
 		win: win,
@@ -426,6 +440,7 @@
 	this.scoreA = 0;
 	this.scoreB = 0;
     var jsonMatchData = JSON.stringify(matchData);
+
 
 	// COMMENTED SO THAT THE FRONT END WORKS
     // Send jsonMatchData to your backend
@@ -444,6 +459,25 @@
 	// }).catch(error => {
 	// 	console.error('Network error:', error);
 	// });
+	
+	// Show the winner
+	document.getElementById('winner').textContent = winner;
+	document.getElementById('winner').style.display = 'block';
+	document.getElementById('NextMatch').textContent = "Next Match";
+	document.getElementById('NextMatch').style.display = 'block';
+	document.getElementById('NextMatch').addEventListener('click', function() {
+		pongGame.scoreA = 0;
+		pongGame.scoreB = 0;
+		pongGame.ballSpeed.x = 8;
+		pongGame.ballSpeed.y = 8;
+		pongGame.bouncecounter = 0;
+		pongGame.balllimitfaster = 2;
+		pongGame.ball.style.display = "block";
+		pongGame.paddleA.style.display = "block";
+		pongGame.paddleB.style.display = "block";
+		document.getElementById('winner').style.display = 'none';
+		document.getElementById('NextMatch').style.display = 'none';
+	});
 },
 
 	resetBall: function() {
