@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe Tournament</title>
+    <style>
+        table {
+    border-collapse: collapse;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    }
+
+    td {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    td:hover {
+        background-color: lightgray;
+    }
+
+    td:empty:before {
+        content: "";
+    }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe Tournament</h1>
+    
+    <form id="playerForm">
+        <label for="player1">Player 1:</label>
+        <input type="text" id="player1" name="player1" required><br>
+        
+        <label for="player2">Player 2:</label>
+        <input type="text" id="player2" name="player2" required><br>
+        
+        <label for="player3">Player 3:</label>
+        <input type="text" id="player3" name="player3" required><br>
+        
+        <input type="submit" value="Start Game">
+    </form>
+    
+    <div id="gameBoard">
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    
+    <script>
+    // Get the game board element
+    const gameBoard = document.getElementById('gameBoard');
+
+    // Get all the cells in the game board
+    const cells = gameBoard.getElementsByTagName('td');
+
+    // Get the player form element
+    const playerForm = document.getElementById('playerForm');
+
+    // Add event listener to the player form submit event
+    playerForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get the player names from the input fields
+        const player1 = document.getElementById('player1').value;
+        const player2 = document.getElementById('player2').value;
+        const player3 = document.getElementById('player3').value;
+
+        // Display the player names on the game board
+        document.getElementById('player1').disabled = true;
+        document.getElementById('player2').disabled = true;
+        document.getElementById('player3').disabled = true;
+
+        // Set the current player
+        let currentPlayer = player1;
+
+        // Add event listener to each cell in the game board
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].addEventListener('click', function() {
+                // Check if the cell is empty
+                if (this.innerHTML === '') {
+                    // Set the current player's symbol (X or O) in the cell
+                    this.innerHTML = currentPlayer === player1 ? 'X' : 'O';
+
+                    // Switch to the next player
+                    currentPlayer = currentPlayer === player1 ? player2 : player3;
+                }
+            });
+        }
+    });
+    // Supponiamo che queste siano le variabili che tengono traccia dei nomi dei giocatori
+    var giocatore1 = 'Giocatore 1';
+    var giocatore2 = 'Giocatore 2';
+
+    // Quando inizia il gioco...
+    document.getElementById('giocatori').textContent = giocatore1 + ' vs ' + giocatore2;
+</script>
+</body>
+</html>

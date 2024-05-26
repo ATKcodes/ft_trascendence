@@ -17,7 +17,7 @@ front:
     ✔ pulsante play pong e play tris @done (5/23/2024, 6:35:28 PM)
 
   profilo nel main-menu:
-    ☐ Pagina profilo da rifare, diviso per tris e per pong, con statistiche e match history. Pulsante per cambiare Nick e Foto @done
+    ✔ Pagina profilo da rifare, diviso per tris e per pong, con statistiche e match history. Pulsante per cambiare Nick e Foto @done (5/26/2024, 12:42:05 PM)
     amici:
       ☐ o socket o chiamata ogni tot secondi L
       ☐ se chiamata ogni tot, chiedete lista tutte le persone, se ci sono nuovi amici perche qualcuno mi ha aggiunto L
@@ -30,11 +30,12 @@ front:
     history:
       ☐ 1v1 pong A
       ☐ torneo pong A
-      ☐ 1v1 tris M
+      ✔ 1v1 tris M @done (5/26/2024, 12:41:54 PM)
+
       ☐ torneo tris M
     ✔ immagine defalut @done (5/23/2024, 6:36:38 PM)
-    ☐ immagine che posso cambiare // in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M
-    ☐ nick che posso cambiare M
+    ☐ immagine che posso cambiare (mandare dati al back per salvari)// in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M
+    ☐ nick che posso cambiare (mandare dati al back per salvari)M
     ✔ tasto indietro @done (5/23/2024, 6:36:43 PM)
 
   x2 game-page html sia per pong che tris:
@@ -48,7 +49,7 @@ front:
     ☐ (pagina) gioco in 4
     ☐ (pagina) torneo che mostra chi gioca ora e prossimo, finita la partita tornare a questa pagina e aggiornare score e posizioni.
     tris:
-      ☐ (pagina) tris, nel main-menu piu pulsanti. scelta, pong, triss.
+      ✔ (pagina) tris, nel main-menu piu pulsanti. scelta, pong, triss. @done (5/26/2024, 12:43:16 PM)
       ☐ torneo?
 
 back:
