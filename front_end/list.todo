@@ -7,7 +7,7 @@ front:
   ☐ utilizzare variabile ambiente per IP V
 
   registrazione/login html:
-    ☐ controlli password e id ? A
+    ✔ controlli password e id ? A @done (5/26/2024, 3:17:30 PM)
     ✔ register bottoni sotto e non di lato optional @done (5/23/2024, 6:35:17 PM)
     ✔ dopo logout rimane in register il nick, register successfull A @done (5/25/2024, 3:57:40 PM)
     ✔ rimane anche nei campi di login A @done (5/25/2024, 3:49:10 PM)
