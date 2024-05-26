@@ -1,0 +1,68 @@
+front:
+  ✔ rendere sito responsive @done (5/23/2024, 6:34:48 PM)
+  ☐ token in ogni chiamata A
+  ✔ tasti indietro ovunque @done (5/23/2024, 6:34:59 PM)
+  ☐ classe user? resettare quando logout A
+  ✔ quando entro nella pagina vedere localstorage se c'e' token entrare @done (5/23/2024, 6:35:07 PM)
+  ☐ utilizzare variabile ambiente per IP V
+
+  registrazione/login html:
+    ☐ controlli password e id ? A
+    ✔ register bottoni sotto e non di lato optional @done (5/23/2024, 6:35:17 PM)
+    ✔ dopo logout rimane in register il nick, register successfull A @done (5/25/2024, 3:57:40 PM)
+    ✔ rimane anche nei campi di login A @done (5/25/2024, 3:49:10 PM)
+
+  main-menu html:
+    ☐ lingue
+    ✔ pulsante play pong e play tris @done (5/23/2024, 6:35:28 PM)
+
+  profilo nel main-menu:
+    ☐ Pagina profilo da rifare, diviso per tris e per pong, con statistiche e match history. Pulsante per cambiare Nick e Foto M
+    amici:
+      ☐ o socket o chiamata ogni tot secondi L
+      ☐ se chiamata ogni tot, chiedete lista tutte le persone, se ci sono nuovi amici perche qualcuno mi ha aggiunto L
+      ☐ tasto aggiungi amici dove cerco e aggiungo Dialog M
+
+    vedere profilo amici:
+      ☐ se clicco sul profilo di un amico lo apre e richiesta di prendere immagine e stat partite. IN DUBBIO
+
+  profilo html:
+    history:
+      ☐ 1v1 pong A
+      ☐ torneo pong A
+      ☐ 1v1 tris M
+      ☐ torneo tris M
+    ✔ immagine defalut @done (5/23/2024, 6:36:38 PM)
+    ☐ immagine che posso cambiare // in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M
+    ☐ nick che posso cambiare M
+    ✔ tasto indietro @done (5/23/2024, 6:36:43 PM)
+
+  x2 game-page html sia per pong che tris:
+    ✔ togliere user1/user2 @done (5/23/2024, 6:36:56 PM)
+    ✔ scelta 1v1, torneo, vs ai, gioco in 4 contemporaneamente @done (5/23/2024, 6:36:57 PM)
+    ✔ pulsante indietro @done (5/23/2024, 6:36:52 PM)
+
+  da fare:
+    ☐ (pagina) dopo aver scelto 1v1 o tournament, mettere il nome degli altri giocatori || x2 se 1v1 o torneo
+    ✔ (pagina) partita 1v1 @done (5/23/2024, 6:37:06 PM)
+    ☐ (pagina) gioco in 4
+    ☐ (pagina) torneo che mostra chi gioca ora e prossimo, finita la partita tornare a questa pagina e aggiornare score e posizioni.
+    tris:
+      ☐ (pagina) tris, nel main-menu piu pulsanti. scelta, pong, triss.
+      ☐ torneo?
+      ☐ contro altre persone e ai?
+
+back:
+  ☐ lista id - nome
+  ☐ se ti chiedo un id/nome mi passi immagini, stat
+  ☐ se mi registro con kzak e entro 42 kzak?
+
+  ☐ vedere front e vedere che chiamate servono
+
+docker:
+  ☐ IP_ADDR: localhost // 10.11.10.1
+  ☐ https?
+
+chiedere:
+  ☐ mostrare profilo
+  ☐ cosa si intende matchmaking secondo gioco
