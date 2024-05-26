@@ -428,7 +428,7 @@
 
     // Save match data
     var matchData = {
-		
+
 		token:localStorage.getItem('token'),
 		game: "pong",
 		win: win,
@@ -442,23 +442,23 @@
     var jsonMatchData = JSON.stringify(matchData);
 
 
-	// COMMENTED SO THAT THE FRONT END WORKS
-    // Send jsonMatchData to your backend
-	// fetch('https://your-backend-url.com', {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: jsonMatchData
-	// }).then(response => {
-	// 	if (response.ok) {
-	// 		console.log('Match data sent successfully');
-	// 	} else {
-	// 		console.error('Error sending match data:', response.statusText);
-	// 	}
-	// }).catch(error => {
-	// 	console.error('Network error:', error);
-	// });
+	COMMENTED SO THAT THE FRONT END WORKS
+    Send jsonMatchData to your backend
+	fetch('https://your-backend-url.com', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: jsonMatchData
+	}).then(response => {
+		if (response.ok) {
+			console.log('Match data sent successfully');
+		} else {
+			console.error('Error sending match data:', response.statusText);
+		}
+	}).catch(error => {
+		console.error('Network error:', error);
+	});
 	
 	// Show the winner
 	document.getElementById('winner').textContent = winner;
