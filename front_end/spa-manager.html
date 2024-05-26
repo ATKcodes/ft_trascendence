@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<!-- <script>import User from './User.js';</script> -->
 		<title>PONG</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
@@ -9,13 +10,21 @@
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body style="height: 100vh;"> <!-- Set the body height to 100vh -->
+		<!-- <script src="./Ũser.js"></script> -->
         <iframe id="login" src="login.html" style="height: 100%; width: 100%; border: none;"></iframe>
         <iframe id="main-page" src="main-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
         <iframe id ="profile" src="profile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
-		var validPaths = ['profile', 'game-page', 'login', 'main-page'];
+
+			// if (typeof User === 'undefined') {
+    		// 	const User = require('./User.js');
+			// }
+
+			// // Stampa il nickname
+			// console.log(User.nickname);
+
 		function goToMain() {
 			document.getElementById("login").style.display = "none";
 			document.getElementById("main-page").style.display = "block";
@@ -26,11 +35,11 @@
 			// Change the URL to 'main-page.html'
 			history.pushState({page: 'main-page'}, null, 'main-page');
 		}
-
-			// Handle the back and forward navigation
-			window.onpopstate = function(event) {
+		var validPaths = ['profile', 'game-page', 'login', 'main-page'];
+		// Handle the back and forward navigation
+		window.onpopstate = function(event) {
 		// Get the current path
-		var currentPath = window.location.pathname;
+		var currentPath = window.location.pathname.slice(1);
 
 		// Hide all iframes
 		document.getElementById("login").style.display = "none";
@@ -63,7 +72,7 @@
 		document.getElementById("404").style.display = "block";
 
 		// Change the URL to '404.html'
-		history.pushState({page: '404'}, null, '404');
+		history.replaceState({page: '404'}, null, '404');
 
 		};
 		function goToProfile() {
@@ -166,9 +175,8 @@
 				} else if (event.state.page === 'main-page') {
 					document.getElementById("main-page").style.display = "block";
 				} else if (event.state.page === '404') {
-            		// If the state is '404', go back to the previous page
-            		history.back();
-       	 		}
+					history.back();
+				}
 			}
     	};
 
@@ -185,6 +193,7 @@
         setPageBasedOnState({page: 'login'});
     }
 });
+
 
 function setPageBasedOnState(state) {
     const pageIds = ["login", "profile", "main-page", "game-page", "404"];
@@ -203,6 +212,20 @@ function setPageBasedOnState(state) {
         document.getElementById("login").style.display = "block";
     }
 }
+
+	// Handle page state on popstate event
+	window.onpopstate = function(event) {
+		setPageBasedOnState(event.state);
+	};
+	// class User {
+    //     constructor(name, token) {
+    //         this.name = name;
+    //         this.token = token;
+    //     }
+    // }
+
+    // Now you can create a new User object when the user logs in
+    let user = new User(name, token);
 	</script>
   </body>
 </html>
