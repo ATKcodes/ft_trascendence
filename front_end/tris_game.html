@@ -297,14 +297,8 @@
 	<button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
 	<input id="player2-username-tris" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
 	<button id="submit-username-tris" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
-	<button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
-	<button id="play-tris-1v1" style="display: none;"type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
-	<button id="play-tris-tournament" style="display: none;" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
-	<button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
-	<button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
-	<button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
-	<button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
+	<button id="play-tris-1v1" type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
+	<button id="play-tris-tournament" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
 	</div>
 	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
 	<button id = "NextMatch" style = "display: none;" class = "btn btn-left btn-lg btn-block"></button>
@@ -371,57 +365,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	window.onload = function(){
-document.getElementById("play-pong").addEventListener("click", function() {
-    document.getElementById("play-pong").style.display = "none";
-    document.getElementById("play-tris").style.display = "none";
-
-	// Show the new buttons
-	document.getElementById("play-1v1").style.display = "block";
-    document.getElementById("play-4players").style.display = "block";
-    document.getElementById("play-vs-ia").style.display = "block";
-    document.getElementById("play-tournament").style.display = "block";
-
-});
-document.getElementById("play-1v1").addEventListener("click", function(){
-	document.getElementById("play-1v1").style.display = "none";
-    document.getElementById("play-4players").style.display = "none";
-    document.getElementById("play-vs-ia").style.display = "none";
-    document.getElementById("play-tournament").style.display = "none";
-	document.getElementById("player2-username").style.display = "block";
-    document.getElementById("submit-username").style.display = "block";
-});
-//Funzione per cambiare il nick dell'user2.
-document.getElementById("submit-username").addEventListener("click", function() {
-    var username = document.getElementById("player2-username").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userright").textContent = username;
-		document.getElementById("player2-username").style.display = "none";
-		document.getElementById("submit-username").style.display = "none";
-        // Start the game
-        pongGame.start();
-    } else {
-        alert("Please enter a username for player 2.");
-    }
-});
-document.getElementById("play-vs-ia").addEventListener("click", function(){
-	document.getElementById("userright").textContent = "IA";
-	document.getElementById("play-1v1").style.display = "none";
-    document.getElementById("play-4players").style.display = "none";
-    document.getElementById("play-vs-ia").style.display = "none";
-    document.getElementById("play-tournament").style.display = "none";
-	pongGame.gameMode = "vs-ai";
-	pongGame.start();
-});
-
-//TRIS CODE
-document.getElementById("play-tris").addEventListener("click", function(){
-	document.getElementById("play-pong").style.display = "none";
-	document.getElementById("play-tris").style.display = "none";
-	document.getElementById("play-tris-1v1").style.display = "block";
-	document.getElementById("play-tris-tournament").style.display = "block";
-});
 document.getElementById("play-tris-1v1").addEventListener("click", function(){
 	document.getElementById("play-tris-1v1").style.display = "none";
     document.getElementById("play-tris-tournament").style.display = "none";
