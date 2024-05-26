@@ -145,6 +145,7 @@
     </script>
 
 	  <button
+        id="Register"
         type="button"
         class="btn btn-custom-brown mb-0 ms-3"
         data-bs-toggle="modal"
@@ -207,6 +208,7 @@
             </div>
             <div class="modal-footer">
               <button
+                id="closeButton"
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
@@ -271,7 +273,7 @@
         };
       </script>
       <br />
-      <a href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-a8a7afc615b7c393b1a141953798a4f72bfd49e80f8464df3f2ac1838557eefe&redirect_uri=https%3A%2F%2F127.0.0.1%3A8443%2Fmain-page.html&response_type=code" class="btn btn-custom-42 mt-2 ms-3 mb-3" type="button"><span class="white">Login with </span>42</a>
+      <a id = "Login42" href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-a8a7afc615b7c393b1a141953798a4f72bfd49e80f8464df3f2ac1838557eefe&redirect_uri=https%3A%2F%2F127.0.0.1%3A8443%2Fmain-page.html&response_type=code" class="btn btn-custom-42 mt-2 ms-3 mb-3" type="button"><span class="white">Login with </span>42</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -279,6 +281,67 @@
 		var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
 		var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 	</script>
+   <script>
+    // se non cé'una lingua nel local storage mettere EN di default
+    if (localStorage.getItem('language') === null) {
+    localStorage.setItem('language', 'EN');
+  }
+  // function changeLanguage() {
+  const selectedLanguage = localStorage.getItem('language');
+  if (selectedLanguage == 'IT') {    
+    document.getElementById('go_to_main').innerText = 'Accedi';
+    document.getElementById('Register').innerText = 'Registrati';
+    document.getElementById('login-error').innerText = 'Accesso non riuscito. Per favore riprova.'
+    document.getElementById('registerModalLabel').innerText = 'Registrati';
+    document.getElementById('successMessage').innerText = 'Registrazione completata.';
+    document.getElementById('passwordError').innerText = 'Le password sono diverse.';
+    document.getElementById('passwordInvalid').innerText = 'La password devono contenere almeno 8 lettere, una lettera maiuscola, una minuscola e un numero.';
+    document.getElementById('closeButton').innerText = 'Chiudi';
+    document.getElementById('registerButton').innerText = 'Registrati';
+    document.getElementById('passwordError').innerText = 'Le password sono diverse.';
+    document.getElementById('closeButton').innerText = 'Chiudi';
+    document.getElementById('Registernick').placeholder = 'nome utente';
+    document.getElementById('Registerpassword').placeholder = 'Password';
+    document.getElementById('repeatPassword').placeholder = 'Ripeti Password';
+    document.getElementById('Login42').placeholder = 'Accedi con 42';
+    document.getElementById('nickInput').placeholder = 'Nome Utente';
+    
+  } else if (selectedLanguage == 'EN') {
+    document.getElementById('go_to_main').innerText = 'Login';
+    document.getElementById('Register').innerText = 'Logout';
+    document.getElementById('login-error').innerText = 'Login unsuccessful. Please try again.'
+    document.getElementById('registerModalLabel').innerText = 'Register';
+    document.getElementById('successMessage').innerText = 'Registration successful.';
+    document.getElementById('passwordError').innerText = 'Passwords do not match.';
+    document.getElementById('passwordInvalid').innerText = 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number.';
+    document.getElementById('closeButton').innerText = 'Close';
+    document.getElementById('registerButton').innerText = 'Register';
+    document.getElementById('passwordError').innerText = ' Passwords do not match.';
+    document.getElementById('closeButton').innerText = 'Close';
+    document.getElementById('Registernick').placeholder = 'Nick';
+    document.getElementById('Registerpassword').placeholder = 'Password';
+    document.getElementById('repeatPassword').placeholder = 'Repeat Password';
+    document.getElementById('Login42').placeholder = 'Login with 42';
+    document.getElementById('nickInput').placeholder = 'Nick';
+   
+    
+    
+  } else if (selectedLanguage == 'VE') {
+    document.getElementById('go_to_main').innerText = 'Perfil';
+    document.getElementById('Register').innerText = 'Logout';
+    document.getElementById('login-error').innerText = 'Profilo'
+    document.getElementById('closeButton').innerText = 'Profilo';
+    document.getElementById('Register').innerText = 'Profilo';
+    
+    document.getElementById('registerModalLabel').innerText = 'Amigos';
+    document.getElementById('passwordError').innerText = 'Salir';
+    document.getElementById('closeButton').innerText = 'Logout';
+    
+    document.getElementById('Registernick').innerText = 'Logout';
+    document.getElementById('passwordError').innerText = 'Logout';
+    document.getElementById('passwordInvalid').innerText = 'Logout';
+  }
+  </script>
     </body>
     </html>
   </body>
