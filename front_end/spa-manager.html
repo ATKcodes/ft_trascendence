@@ -166,8 +166,9 @@
 				} else if (event.state.page === 'main-page') {
 					document.getElementById("main-page").style.display = "block";
 				} else if (event.state.page === '404') {
-					document.getElementById("404").style.display = "block";
-				}
+            		// If the state is '404', go back to the previous page
+            		history.back();
+       	 		}
 			}
     	};
 
