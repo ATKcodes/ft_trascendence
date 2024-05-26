@@ -125,6 +125,7 @@
         .then(data => {
             console.log('Success:', data); // Debugging: Log the data to see its structure
             if(data.token) {
+				let user = new User(data.nickname, data.token);
                 localStorage.setItem('userToken', data.token); // Correctly access and store the token
                 console.log('Login successful');
                 localStorage.setItem('lastPage', "main-page");

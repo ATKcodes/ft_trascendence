@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<script>import User from './User.js';</script>
 		<title>PONG</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
@@ -169,6 +170,15 @@ function setPageBasedOnState(state) {
 	window.onpopstate = function(event) {
 		setPageBasedOnState(event.state);
 	};
+	class User {
+        constructor(name, token) {
+            this.name = name;
+            this.token = token;
+        }
+    }
+
+    // Now you can create a new User object when the user logs in
+    let user = new User(name, token);
 	</script>
   </body>
 </html>
