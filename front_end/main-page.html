@@ -167,6 +167,11 @@
         <li style="margin-top: 10%;">Mvolpi</li>
         <li id="go_to_profile" style="margin-top: 5%;">Profilo</li>
         <li style="margin-top: 5%;" id="amici">Amici</li>
+        <div id="lista-amici" style="display: none;">
+          <p>Amico 1</p>
+          <p>Amico 2</p>
+          <p>Amico 3</p>
+        </div>
         <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
       </ul>
     </nav>
@@ -200,21 +205,25 @@
         });
       </script>
     </div>
-
   </body>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     $(document).ready(function(){
       $('.navbar').click(function(){
         $('.nav').toggleClass('wide');
       });
     });
-    let variabileBooleana = false;
-  
+    
     document.getElementById('amici').addEventListener('click', function() {
-      variabileBooleana = !variabileBooleana;
-      console.log(variabileBooleana);
-  });
+    var listaAmici = document.getElementById('lista-amici');
+    // Qui dovresti recuperare la lista dei tuoi amici. Per ora, userò un array di esempio.
+    var amici = ['Amico 1', 'Amico 2', 'Amico 3'];
+    listaAmici.innerHTML = '';
+    for (var i = 0; i < amici.length; i++) {
+        listaAmici.innerHTML += '<p>' + amici[i] + '</p>';
+    }
+    listaAmici.style.display = 'block';
+});
 </script>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </html>

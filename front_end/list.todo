@@ -17,7 +17,7 @@ front:
     ✔ pulsante play pong e play tris @done (5/23/2024, 6:35:28 PM)
 
   profilo nel main-menu:
-    ☐ Pagina profilo da rifare, diviso per tris e per pong, con statistiche e match history. Pulsante per cambiare Nick e Foto M
+    ☐ Pagina profilo da rifare, diviso per tris e per pong, con statistiche e match history. Pulsante per cambiare Nick e Foto @done
     amici:
       ☐ o socket o chiamata ogni tot secondi L
       ☐ se chiamata ogni tot, chiedete lista tutte le persone, se ci sono nuovi amici perche qualcuno mi ha aggiunto L
@@ -50,7 +50,6 @@ front:
     tris:
       ☐ (pagina) tris, nel main-menu piu pulsanti. scelta, pong, triss.
       ☐ torneo?
-      ☐ contro altre persone e ai?
 
 back:
   ☐ lista id - nome
