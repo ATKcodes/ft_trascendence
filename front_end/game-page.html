@@ -327,6 +327,8 @@
 		bouncecounter: 0,
 		balllimitfaster: 2,
 		ballaccelleration: 1,
+		matchdatasent : 0,
+		winorlose : true,
 
 		update: function() {
         // Update the position of the ball
@@ -402,49 +404,37 @@
 	this.ball.style.display = "none";
 	this.paddleA.style.display = "none";
 	this.paddleB.style.display = "none";
-	win = true;
-
-	if (winner = document.querySelector('.userleft').textContent)
+	this.scoreA = 0;
+	this.scoreB = 0;
+	this.winorlose = "true";
+	console.log(winner);
+	if (winner === document.querySelector('.userleft').textContent)
 	{
-		win = true;
+		console.log("entri qui");
+		this.winorlose = "true";
 	}
 	else 
 	{
-		win = false;
+		console.log(document.querySelector('.userleft').textContent);
+		this.winorlose = "false";
 	}
-
     // Save match data
     var matchData = {
-		token:localStorage.getItem('token'),
 		game: "pong",
-		win: win,
+		win: this.winorlose,
 		score: this.scoreA,
         scoreplayer2: this.scoreB,
    		player2: document.querySelector('.userright').textContent, // Get User2 name
         date: new Date().toISOString(),
     };
     var jsonMatchData = JSON.stringify(matchData);
-
-	fetch('http://localhost:8001/main/winlose/', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: jsonMatchData
-	}).then(response => {
-		if (response.ok) {
-			console.log('Match data sent successfully');
-		} else {
-			console.error('Error sending match data:', response.statusText);
-		}
-	}).catch(error => {
-		console.error('Network error:', error);
-	});
+	if (this.matchdatasent === 0)
+	{
+		sendMatchData(jsonMatchData);
+	}
 },
 
 	resetBall: function() {
-		console.log(this.bouncecounter);
-		console.log(this.ballSpeed.x);
         // Reset ball position to the center of the game area
         this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
         this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
@@ -477,6 +467,26 @@
         pongGame.loop();
     }
 };
+function sendMatchData(jsonMatchData){
+	var token = localStorage.getItem('userToken');
+	fetch('http://localhost:8001/main/winlose/', {
+			method: 'POST',
+			headers: {
+				'Authorization' : 'Token ' + token,
+				'Content-Type': 'application/json'
+			},
+			body: jsonMatchData
+		}).then(response => {
+			if (response.ok) {
+				console.log('Match data sent successfully');
+			} else {
+				console.error('Error sending match data:', response.statusText);
+			}
+		}).catch(error => {
+			console.error('Network error:', error);
+		});
+	pongGame.matchdatasent = 0;
+}
 
 document.addEventListener('keydown', function(event) {
     switch (event.key) {
