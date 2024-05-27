@@ -89,9 +89,8 @@ def update_profile_image(request):
     serializer = ProfileImageSerializer(data=request.data, instance=request.user)
     if serializer.is_valid():
         serializer.save()
-        return JsonResponse({'response': 'successful'})
+        return JsonResponse({'response': 'successful', 'errors': serializer.errors, 'user': serializer.data,})
     else:
-        print(serializer.errors)
         return JsonResponse({'response': 'failed', 'errors': serializer.errors, })
 
 
