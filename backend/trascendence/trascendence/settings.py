@@ -148,7 +148,7 @@ AUTH_USER_MODEL = 'login.User'
 
 REST_FRAMEWORK = {
     'AUTHENTICATION_CLASSES': [
-        'login.views.TokenAuthentication',
+        'login.views.CustomTokenAuthentication',
     ],
 }
 

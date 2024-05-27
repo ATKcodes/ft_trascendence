@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
+from rest_framework.authentication import TokenAuthentication
+from django.conf import settings
+from django.utils.crypto import get_random_string
 
 class User (AbstractUser):
     username = models.CharField(max_length=250, unique=True)
@@ -26,3 +29,27 @@ class User (AbstractUser):
         if not self.player:
             self.player = self.username
         super().save(*args, **kwargs)
+
+
+class CustomToken(models.Model):
+    key = models.CharField("Key", max_length=128, db_index=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, related_name='custom_auth_token',
+        on_delete=models.CASCADE, verbose_name="User"
+    )
+    created = models.DateTimeField("Created", auto_now_add=True)
+
+    class Meta:
+        unique_together = (('user',),)
+        verbose_name = 'Custom Token'
+        verbose_name_plural = 'Custom Tokens'
+    
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = get_random_string(length=128)
+        super().save(*args, **kwargs)
+
+
+class CustomTokenAuthentication(TokenAuthentication):
+    def get_model(self):
+        return CustomToken

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .models import User
+from .models import User, CustomToken, CustomTokenAuthentication
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -79,20 +79,20 @@ class LoginView(APIView):
                 "user": serializer.data
             }
 
-            token, created = Token.objects.get_or_create(user=user)
+            token, created = CustomToken.objects.get_or_create(user=user)
             response = Response({"response": "successful", "token": token.key, "nickname": user.player})
             return response
         return Response({"detail": "Invalid credentials"})
 
 
 @api_view(['POST'])  
-@authentication_classes([SessionAuthentication, TokenAuthentication])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def TestView(request):
     return Response({"detail": "You are authenticfewfated"})
 
 @api_view(['POST'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def logout(request):
     request.user.auth_token.delete()
@@ -105,17 +105,20 @@ def get_42token(request):
         'grant_type': 'authorization_code',
         'client_id': os.getenv('CLIENT_ID'),
         'client_secret': os.getenv('CLIENT_SECRET'),
-        'code': '189efdd7932934b691b523a9b0c738e748ed9a25b7d7262fb77ec10b8cdae342',
+        'code': 'b3ec5979f078f1ea6f6bbc86296470f47c3e0d3ff26e342120c9e2caba05405a',
         'redirect_uri': 'https://127.0.0.1:8443/main-page.html',
     }
     response = requests.post('https://api.intra.42.fr/oauth/token', data=data)
     if response.status_code == 200:
         response2 = requests.get('https://api.intra.42.fr/v2/me', headers={'Authorization': 'Bearer ' + response.json()['access_token']})
         username = response2.json()['login']
+        token42 = response.json()['access_token']
         if not User.objects.filter(username=username).exists():
-            serializer = UserSerializer(data={'username': username, 'password': 'fefwefefewfweqrheiwfweibfuhbeuwfbuwgwfywqdf'})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+            serializer = UserSerializer(data={'username': username, 'password': get_random_string(length=40)})
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+            user = User.objects.get(username=username)
+        token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
         return JsonResponse({'access_token': response.json()['access_token']})
     else:
         return JsonResponse({'error': 'Failed to get access token'}, status=400)
