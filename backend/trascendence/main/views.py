@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import generics, status
 from .models import User, CustomToken, CustomTokenAuthentication
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ProfileImageSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
@@ -20,9 +20,8 @@ from datetime import datetime
 from django.utils import timezone
 
 
-
 @api_view(['POST'])  
-@authentication_classes([SessionAuthentication, TokenAuthentication])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def Change_Player(request):
     user = request.user
@@ -35,10 +34,10 @@ def Change_Player(request):
 
 
 @api_view(['POST'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def WinLose_count(request):    
-    user = User.objects.get(username=request.user.username)
+    user = request.user
     user.player2 = request.data['player2']
     if request.data['game'] == 'pong':
         if request.data['win'] == 'true':
@@ -83,4 +82,26 @@ def WinLose_count(request):
 
 
 
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_profile_image(request):
+    serializer = ProfileImageSerializer(data=request.data, instance=request.user)
+    if serializer.is_valid():
+        serializer.save()
+        return JsonResponse({'response': 'successful'})
+    else:
+        print(serializer.errors)
+        return JsonResponse({'response': 'failed', 'errors': serializer.errors, })
 
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_profile_image(request):
+    user = request.user
+    if hasattr(user, 'profile_image'):
+        return JsonResponse({'profile_image_url': request.build_absolute_uri(user.profile_image.url)})
+    else:
+        return JsonResponse({'error': 'No profile image found'}, status=404)

@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
+from rest_framework.serializers import ModelSerializer
+from django import forms
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,3 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
         if password is not None:
             instance.set_password(password)
         return instance
+
+class ProfileImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['profile_image']

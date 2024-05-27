@@ -7,13 +7,14 @@ from django.utils.crypto import get_random_string
 
 class User (AbstractUser):
     username = models.CharField(max_length=250, unique=True)
-    password = models.CharField(max_length=250, blank=True)
+    password = models.CharField(max_length=250)
     wins_pong = models.IntegerField(default=0)
     loses_pong = models.IntegerField(default=0)
     winrate_pong = models.FloatField(default=0)
     wins_tictactoe = models.IntegerField(default=0)
     loses_tictactoe = models.IntegerField(default=0)
     winrate_tictactoe = models.FloatField(default=0)
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True)
     player = models.CharField(max_length=250, blank=True)
     player2 = models.CharField(max_length=250, blank=True)
     score = models.IntegerField(default=0)
