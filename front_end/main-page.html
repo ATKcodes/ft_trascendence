@@ -202,13 +202,13 @@
       </script>
     </div>
 	<script>
-		function changeLanguage() {
 		const selectedLanguage = localStorage.getItem('language');
 		if (selectedLanguage == 'IT') {
 		document.getElementById('go_to_profile').innerText = 'Profilo';
 		document.getElementById('amici').innerText = 'Amici';
-		document.getElementById('go_to_login').innerText = 'Logout';
+		document.getElementById('go_to_login').innerText = 'Esci';
 		document.getElementById('go_to_game').innerText = 'Gioca';
+		document.getElementById('go_to_login').innerText = 'Esci';
 		} else if (selectedLanguage == 'EN') {
 		document.getElementById('go_to_profile').innerText = 'Profile';
 		document.getElementById('amici').innerText = 'Friends';
@@ -220,7 +220,6 @@
 		document.getElementById('go_to_login').innerText = 'Salir';
 		document.getElementById('go_to_game').innerText = 'Jugar';
 		}
-	}
 	</script>
   </body>
 
