@@ -43,9 +43,9 @@
       }
       .div-title {
           font-family: 'font-Despairs';
-          font-size: 400%; /* Change this to move the div horizontally */
+          font-size: 500%; /* Change this to move the div horizontally */
           position: absolute;
-          left: 42%; /* Change this to move the div horizontally */
+          left: 45%; /* Change this to move the div horizontally */
           right: 2%;
           top: 3%; /* Change this to move the div vertically */
           width: 15%;
@@ -170,6 +170,7 @@
         <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
       </ul>
     </nav>
+	<h2 class="div-title">PONG</h2>
     <select class = "select-language rounded-pill">
       <option value="IT">IT</option>
       <option value="EN">EN</option>
@@ -200,7 +201,26 @@
         });
       </script>
     </div>
-
+	<script>
+		const selectedLanguage = localStorage.getItem('language');
+		if (selectedLanguage == 'IT') {
+		document.getElementById('go_to_profile').innerText = 'Profilo';
+		document.getElementById('amici').innerText = 'Amici';
+		document.getElementById('go_to_login').innerText = 'Esci';
+		document.getElementById('go_to_game').innerText = 'Gioca';
+		document.getElementById('go_to_login').innerText = 'Esci';
+		} else if (selectedLanguage == 'EN') {
+		document.getElementById('go_to_profile').innerText = 'Profile';
+		document.getElementById('amici').innerText = 'Friends';
+		document.getElementById('go_to_login').innerText = 'Logout';
+		document.getElementById('go_to_game').innerText = 'Play';
+		} else if (selectedLanguage == 'VE') {
+		document.getElementById('go_to_profile').innerText = 'Perfil';
+		document.getElementById('amici').innerText = 'Amigos';
+		document.getElementById('go_to_login').innerText = 'Salir';
+		document.getElementById('go_to_game').innerText = 'Jugar';
+		}
+	</script>
   </body>
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
