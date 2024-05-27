@@ -303,7 +303,7 @@
 		color : white;
 	}
 
-	#paddleA, #paddleB {
+	#paddleA, #paddleB, #paddleC, #paddleD{
 		position: absolute;
 		height: 80px;
 		width: 10px;
@@ -319,10 +319,10 @@
 		right: 0;
 	}
 	#paddleC{
-		left : 15%
+		left : 25%
 	}
 	#paddleD{
-		right : 15%
+		right : 25%
 	}
 
 	#ball, #paddleA, #paddleB, #paddleC, #paddleD {
@@ -352,24 +352,37 @@
             <div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
             <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white;">0</span></div>
         </div>
-        <div id="ball"></div>
-        <div id="paddleA"></div>
-		<div id="paddleC"></div>
-        <div id="paddleB"></div>
-		<div id="paddleD"></div>
+        <div id="ball" style = "display: none;"></div>
+        <div id="paddleA" style = "display: none;"></div>
+		<div id="paddleC" style = "display: none;"></div>
+        <div id="paddleB" style = "display: none;"></div>
+		<div id="paddleD" style = "display: none;"></div>
     </div>
-    <input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
-    <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<input id="player2-username-tris" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
-    <button id="submit-username-tris" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-    <button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
-    <button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
-	<button id="play-tris-1v1" style="display: none;"type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
-	<button id="play-tris-tournament" style="display: none;" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
-    <button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
+	<!--first menu-->
+	<button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
+	<button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
+	<!--menu choose pong mode-->
+	<button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
     <button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
     <button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
     <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
+	<!--menu insert player2 nick in play-1v1-->
+	<input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+    <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<!--menu insert players nick in play-4players-->
+	<input id="player2-username2" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+    <button id="submit-username2" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<input id="player3-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player3 Nick">
+    <button id="submit-username3" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<input id="player4-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player4 Nick">
+    <button id="submit-username4" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<!--menu choose tris mode-->
+	<button id="play-tris-1v1" style="display: none;"type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
+	<button id="play-tris-tournament" style="display: none;" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
+	<!--menu insert player2 nick in play-tris-1v1-->
+	<input id="player2-username-tris" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+	<button id="submit-username-tris" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<!--menu NextMatch-->
 	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
 	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom btn-lg btn-block"></button>
 	<script>
@@ -464,7 +477,7 @@
             pongGame.paddleBSpeed = 0;
         }
     }
-		else if (pongGame.gameMode === '4players]')
+		else if (pongGame.gameMode === '4players')
 		{
 			this.paddleC.style.display = "block";
 			this.paddleD.style.display = "block";
@@ -685,13 +698,13 @@ document.getElementById("submit-username").addEventListener("click", function() 
 		document.getElementById("userright").textContent = username;
 		document.getElementById("player2-username").style.display = "none";
 		document.getElementById("submit-username").style.display = "none";
-		pongGame.resetBall();
 		document.getElementById("scoreA").style.display = "block";
 		document.getElementById("scoreB").style.display = "block";
 		document.getElementById("ball").style.display = "block";
 		document.getElementById("paddleA").style.display = "block";
 		document.getElementById("paddleB").style.display = "block";
 		pongGame.gameMode = "1v1";
+		pongGame.resetBall();
         pongGame.start();
     } else {
         alert("Please enter a username for player 2.");
@@ -710,16 +723,23 @@ document.getElementById("play-vs-ia").addEventListener("click", function(){
 	document.getElementById("ball").style.display = "block";
 	document.getElementById("paddleA").style.display = "block";
 	document.getElementById("paddleB").style.display = "block";
+	pongGame.resetBall();
 	pongGame.start();
 });
 
-document.getElementById("play-4-players").addEventListener("click", function(){
+document.getElementById("play-4players").addEventListener("click", function(){
 	document.getElementById("play-1v1").style.display = "none";
 	document.getElementById("play-4players").style.display = "none";
 	document.getElementById("play-vs-ia").style.display = "none";
 	document.getElementById("play-tournament").style.display = "none";
 	pongGame.gameMode = "4players";
 	pongGame.resetBall();
+	document.getElementById("player2-username").style.display = "block";
+	document.getElementById("submit-username2").style.display = "block";
+	document.getElementById("player3-username").style.display = "block";
+	document.getElementById("submit-username3").style.display = "block";
+	document.getElementById("player4-username").style.display = "block";
+	document.getElementById("submit-username4").style.display = "block";
 	document.getElementById("userright2").style.display = "block";
 	document.getElementById("userleft2").style.display = "block";
 	document.getElementById("avatar3").style.display = "block";
@@ -727,10 +747,7 @@ document.getElementById("play-4-players").addEventListener("click", function(){
 	document.getElementById("scoreA").style.display = "block";
 	document.getElementById("scoreB").style.display = "block";
 	document.getElementById("ball").style.display = "block";
-	document.getElementById("paddleA").style.display = "block";
-	document.getElementById("paddleC").style.display = "block";
-	document.getElementById("paddleB").style.display = "block";
-	document.getElementById("paddleD").style.display = "block";
+	pongGame.resetBall();
 	pongGame.start();
 });
 
@@ -750,6 +767,7 @@ document.getElementById("play-tournament").addEventListener("click", function(){
 	document.getElementById("ball").style.display = "block";
 	document.getElementById("paddleA").style.display = "block";
 	document.getElementById("paddleB").style.display = "block";
+	pongGame.resetBall();
 	pongGame.start();
 });
 

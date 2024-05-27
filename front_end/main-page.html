@@ -177,7 +177,8 @@
   <option value="VE">VE</option>
 </select>
 <script>
-  // Ottieni il riferimento al tuo elemento select
+  	document.addEventListener('DOMContentLoaded', (event) => {
+  // Seleziona l'elemento select
   var selectLanguage = document.querySelector('.select-language');
 
   // Aggiungi un event listener per l'evento 'change'
@@ -189,8 +190,7 @@
     updateText(this.value);
   });
 
-  // Funzione per aggiornare il testo sulla pagina
-  function updateText(language) {
+	function updateText(language) {
     if (language == 'IT') {
       document.getElementById('go_to_profile').innerText = 'Profilo';
       document.getElementById('amici').innerText = 'Amici';
@@ -208,12 +208,12 @@
       document.getElementById('go_to_game').innerText = 'Jugar';
     }
   }
-
   // Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
   var savedLanguage = localStorage.getItem('language');
   if (savedLanguage) {
     updateText(savedLanguage);
   }
+});
 </script>
         <script>
             document.getElementById("go_to_login").addEventListener("click", function() {
