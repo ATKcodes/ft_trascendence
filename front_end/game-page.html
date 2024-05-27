@@ -164,6 +164,20 @@
 		text-align: center;
 		border-color: #ffffff;
 	}
+	.btn-center-bottom {
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 40%;
+		top: 55%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
 	.btn-nohover:hover {
 		visibility: visible !important;
         opacity: 1 !important;
@@ -302,7 +316,7 @@
     <button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
     <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
 	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
-	<button id = "NextMatch" style = "display: none;" class = "btn btn-left btn-lg btn-block"></button>
+	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom btn-lg btn-block"></button>
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -347,8 +361,6 @@
         } else {
             pongGame.paddleBSpeed = 0;
         }
-    } else {
-        this.paddleBPos.y += this.paddleBSpeed;
     }
 		this.paddleBPos.y += this.paddleBSpeed;
         // Prevent the paddles from going out of the game area
@@ -388,13 +400,12 @@
 		if (this.scoreA >= 5) {
 			this.endGame(document.querySelector('.userleft').textContent);
        		return;
+		}
 		// Check if player B has reached 5 points
-		if (this.scoreB >= 5) {
+		else if (this.scoreB >= 5) {
         this.endGame(document.querySelector('.userright').textContent);
         return;
-    }
-    }
-
+    	}
     },
 	endGame: function(winner) {
     // Reset the ball
@@ -429,6 +440,24 @@
 	{
 		sendMatchData(jsonMatchData);
 	}
+	document.getElementById('winner').textContent = winner;
+	document.querySelector('.open_text').style.display = "block";
+	document.getElementById('NextMatch').textContent = "Next Match";
+	document.getElementById('NextMatch').style.display = "block";
+	document.getElementById('NextMatch').addEventListener('click', function() {
+		document.querySelector('.open_text').style.display = "none";
+		document.getElementById('NextMatch').style.display = "none";
+		pongGame.ballSpeed.x = 0;
+		pongGame.ballSpeed.y = 0;
+		pongGame.bouncecounter = 0;
+		pongGame.balllimitfaster = 2;
+		pongGame.scoreA = 0;
+		pongGame.scoreB = 0;
+		document.getElementById('scoreA').style.display = "none"
+		document.getElementById('scoreB').style.display = "none"
+		document.getElementById('play-pong').style.display = "block";
+		document.getElementById('play-tris').style.display = "block";
+	});
 },
 
 	resetBall: function() {
