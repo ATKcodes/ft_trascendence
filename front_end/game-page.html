@@ -28,13 +28,12 @@
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
-	
 	}
 	.div-title {
 		font-family: 'font-Despairs';
 		font-size: 250%;
 		position: absolute;
-		left: 45%; /* Change this to move the div horizontally */
+		left: 47%; /* Change this to move the div horizontally */
 		right: 2%;
 		top: 0%; /* Change this to move the div vertically */
 		width: 15%;
@@ -75,6 +74,34 @@
 		color: #ffffff;
 		position: absolute;
 		right: 2%;
+		top: 1.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.avatar3 {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		font-weight: lighter;
+		font-size :110%;
+		color: #ffffff;
+		position: absolute;
+		left: 17%;
+		top: 1.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.avatar4 {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		font-weight: lighter;
+		font-size :110%;
+		color: #ffffff;
+		position: absolute;
+		right: 17%;
 		top: 1.5%;
 		padding : 0.5%;
 		margin: 0 auto;
@@ -230,10 +257,26 @@
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
+	}
+	.userleft2{
+		position: absolute;
+		left: 20%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
 	}	
 	.userright{
 		position: absolute;
 		right: 5%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.userright2{
+		position: absolute;
+		right: 20%;
 		top: 2.5%;
 		padding : 0.5%;
 		margin: 0 auto;
@@ -275,16 +318,24 @@
 	#paddleB {
 		right: 0;
 	}
+	#paddleC{
+		left : 15%
+	}
+	#paddleD{
+		right : 15%
+	}
 
-	#ball, #paddleA, #paddleB {
+	#ball, #paddleA, #paddleB, #paddleC, #paddleD {
 		background: white;
    		z-index: 2;
 }
 	</style>
 </head>
 <body>
-    <img src="download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
+    <img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
     <h5 id = "userleft" class = "userleft">User1</h5>
+	<img src="download.jpeg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
+	<h5 id = "userleft2" class = "userleft2" style = "display:none">User3</h5>
     <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     <script>
         document.getElementById("go_to_main").addEventListener("click", function() {
@@ -292,8 +343,10 @@
             window.parent.goToMain();
         });
     </script>
-    <img src="download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
+    <img src="download.jpeg" alt="Avatar" class="avatar2" id = "avatar2">
     <h5 id = "userright"class = "userright">User2</h5>
+	<img src="download.jpeg" alt="Avatar" class="avatar4" id = "avatar4" style = "display:none">
+	<h5 id = "userright2" class = "userright2" style = "display:none">User4</h5>
     <div id="pong-game">
         <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
             <div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
@@ -301,7 +354,9 @@
         </div>
         <div id="ball"></div>
         <div id="paddleA"></div>
+		<div id="paddleC"></div>
         <div id="paddleB"></div>
+		<div id="paddleD"></div>
     </div>
     <input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
     <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
@@ -361,7 +416,7 @@
 				document.getElementById('submit-username').innerText = 'Register';
 			}
 		});
-		</script>
+	</script>		
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -374,6 +429,8 @@
 		ball: document.getElementById('ball'),
 		paddleA: document.getElementById('paddleA'),
 		paddleB: document.getElementById('paddleB'),
+		paddleC: document.getElementById('paddleC'),
+		paddleD: document.getElementById('paddleD'),
 		ballPos: {x: 0, y: 0},
 		paddleAPos: {y: 0},
 		paddleBPos: {y: 0},
@@ -407,6 +464,12 @@
             pongGame.paddleBSpeed = 0;
         }
     }
+		else if (pongGame.gameMode === '4players]')
+		{
+			this.paddleC.style.display = "block";
+			this.paddleD.style.display = "block";
+		}
+
 		this.paddleBPos.y += this.paddleBSpeed;
         // Prevent the paddles from going out of the game area
         this.paddleAPos.y = Math.max(Math.min(this.paddleAPos.y, this.game.offsetHeight - this.paddleA.offsetHeight), 0);
@@ -622,7 +685,13 @@ document.getElementById("submit-username").addEventListener("click", function() 
 		document.getElementById("userright").textContent = username;
 		document.getElementById("player2-username").style.display = "none";
 		document.getElementById("submit-username").style.display = "none";
-        // Start the game
+		pongGame.resetBall();
+		document.getElementById("scoreA").style.display = "block";
+		document.getElementById("scoreB").style.display = "block";
+		document.getElementById("ball").style.display = "block";
+		document.getElementById("paddleA").style.display = "block";
+		document.getElementById("paddleB").style.display = "block";
+		pongGame.gameMode = "1v1";
         pongGame.start();
     } else {
         alert("Please enter a username for player 2.");
@@ -635,8 +704,55 @@ document.getElementById("play-vs-ia").addEventListener("click", function(){
     document.getElementById("play-vs-ia").style.display = "none";
     document.getElementById("play-tournament").style.display = "none";
 	pongGame.gameMode = "vs-ai";
+	pongGame.resetBall();
+	document.getElementById("scoreA").style.display = "block";
+	document.getElementById("scoreB").style.display = "block";
+	document.getElementById("ball").style.display = "block";
+	document.getElementById("paddleA").style.display = "block";
+	document.getElementById("paddleB").style.display = "block";
 	pongGame.start();
 });
+
+document.getElementById("play-4-players").addEventListener("click", function(){
+	document.getElementById("play-1v1").style.display = "none";
+	document.getElementById("play-4players").style.display = "none";
+	document.getElementById("play-vs-ia").style.display = "none";
+	document.getElementById("play-tournament").style.display = "none";
+	pongGame.gameMode = "4players";
+	pongGame.resetBall();
+	document.getElementById("userright2").style.display = "block";
+	document.getElementById("userleft2").style.display = "block";
+	document.getElementById("avatar3").style.display = "block";
+	document.getElementById("avatar4").style.display = "block";
+	document.getElementById("scoreA").style.display = "block";
+	document.getElementById("scoreB").style.display = "block";
+	document.getElementById("ball").style.display = "block";
+	document.getElementById("paddleA").style.display = "block";
+	document.getElementById("paddleC").style.display = "block";
+	document.getElementById("paddleB").style.display = "block";
+	document.getElementById("paddleD").style.display = "block";
+	pongGame.start();
+});
+
+document.getElementById("play-tournament").addEventListener("click", function(){
+	document.getElementById("play-1v1").style.display = "none";
+	document.getElementById("play-4players").style.display = "none";
+	document.getElementById("play-vs-ia").style.display = "none";
+	document.getElementById("play-tournament").style.display = "none";
+	pongGame.gameMode = "tournament";
+	pongGame.resetBall();
+	document.getElementById("userright2").style.display = "block";
+	document.getElementById("userleft2").style.display = "block";
+	document.getElementById("avatar3").style.display = "block";
+	document.getElementById("avatar4").style.display = "block";
+	document.getElementById("scoreA").style.display = "block";
+	document.getElementById("scoreB").style.display = "block";
+	document.getElementById("ball").style.display = "block";
+	document.getElementById("paddleA").style.display = "block";
+	document.getElementById("paddleB").style.display = "block";
+	pongGame.start();
+});
+
 
 //TRIS CODE
 document.getElementById("play-tris").addEventListener("click", function(){
