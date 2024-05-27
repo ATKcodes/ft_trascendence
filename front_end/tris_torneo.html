@@ -418,6 +418,7 @@
 				losers.push(player4Name);
 				alert('Final standings:\n1. ' + winners[0] + '\n2. ' + winners[1] + '\n3. ' + losers[0] + '\n4. ' + losers[1]);
 				resetBoard();
+				location.reload(); // Reload the page
 			}
 		}
 
@@ -488,7 +489,6 @@
 		}
 
 		createBoard();
-	</script>
 	</script>
 
 	<div id="player-names-dialog" class="dialog" style="display: none;">
