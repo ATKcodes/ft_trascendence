@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .cell {
+            width: 60px;
+            height: 60px;
+            border: 1px solid;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 60px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <table id="board"></table>
+    <button onclick="resetBoard()">Reset</button>
+    <script>
+        var board = Array(3).fill().map(() => Array(3).fill(''));
+        var currentPlayer = 'X';
+
+        function createBoard() {
+            var table = document.getElementById('board');
+            table.innerHTML = '';
+            for (var i = 0; i < 3; i++) {
+                var row = table.insertRow();
+                for (var j = 0; j < 3; j++) {
+                    var cell = row.insertCell();
+                    cell.innerHTML = board[i][j];
+                    cell.classList.add('cell');
+                    cell.addEventListener('click', cellClick);
+                }
+            }
+        }
+
+        function cellClick() {
+            var col = this.cellIndex;
+            var row = this.parentNode.rowIndex;
+            if (board[row][col] == '') {
+                board[row][col] = currentPlayer;
+                currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+                createBoard();
+                checkWin();
+            }
+        }
+
+        function checkWin() {
+            for (var i = 0; i < 3; i++) {
+                if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '') {
+                    alert(board[i][0] + ' wins!');
+                    resetBoard();
+                }
+                if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != '') {
+                    alert(board[0][i] + ' wins!');
+                    resetBoard();
+                }
+            }
+            if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '') {
+                alert(board[0][0] + ' wins!');
+                resetBoard();
+            }
+            if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != '') {
+                alert(board[0][2] + ' wins!');
+                resetBoard();
+            }
+        }
+
+        function resetBoard() {
+            board = Array(3).fill().map(() => Array(3).fill(''));
+            currentPlayer = 'X';
+            createBoard();
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

@@ -1,3 +1,3 @@
 from django.db import models
-from login.models import User
+from login.models import User, CustomToken, CustomTokenAuthentication
 
