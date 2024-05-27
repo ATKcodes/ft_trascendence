@@ -290,8 +290,8 @@
     localStorage.setItem('language', 'EN');
   }
   // function changeLanguage() {
-  const selectedLanguage = localStorage.getItem('language');
-  if (selectedLanguage == 'IT') {    
+  const savedLanguage = localStorage.getItem('language');
+  if (savedLanguage== 'IT') {    
     document.getElementById('go_to_main').innerText = 'Accedi';
     document.getElementById('Register').innerText = 'Registrati';
     document.getElementById('login-error').innerText = 'Accesso non riuscito. Per favore riprova.'
@@ -309,7 +309,7 @@
     document.getElementById('Login42').placeholder = 'Accedi con 42';
     document.getElementById('nickInput').placeholder = 'Nome Utente';
     
-  } else if (selectedLanguage == 'EN') {
+  } else if (savedLanguage == 'EN') {
     document.getElementById('go_to_main').innerText = 'Login';
     document.getElementById('Register').innerText = 'Register';
     document.getElementById('login-error').innerText = 'Login unsuccessful. Please try again.'
@@ -329,7 +329,7 @@
    
     
     
-  } else if (selectedLanguage == 'VE') {
+  } else if (savedLanguage == 'VE') {
     document.getElementById('go_to_main').innerText = 'Perfil';
     document.getElementById('Register').innerText = 'Logout';
     document.getElementById('login-error').innerText = 'Profilo'
