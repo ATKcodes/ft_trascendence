@@ -46,27 +46,37 @@
 
 		function goTo404() {
 			hidePages();
-			document.getElementById("404").style.display = "block";
+			var errorPage = document.getElementById("404");
+			errorPage.style.display = "block";
+			errorPage.src = errorPage.src; // This will refresh the iframe
 			history.replaceState({page: '404'}, null, '404');
 		};
 		function goToProfile() {
 			hidePages();
-			document.getElementById("profile").style.display = "block";
+			var profilePage = document.getElementById("profile");
+			profilePage.style.display = "block";
+			profilePage.src = profilePage.src; // This will refresh the iframe
 			history.pushState({page: 'profile'}, null, 'profile');
   		}
-		function goToGame() {
-			hidePages();
-			document.getElementById("game-page").style.display = "block";
+		  function goToGame() {
+    		hidePages();
+			var gamePage = document.getElementById("game-page");
+			gamePage.style.display = "block";
+			gamePage.src = gamePage.src; // This will refresh the iframe
 			history.pushState({page: 'game-page'}, null, 'game-page');
 		}
 		function goToLogin() {
 			hidePages();
-			document.getElementById("login").style.display = "block";
+			var LoginPage = document.getElementById("login");
+			LoginPage.style.display = "block";
+			LoginPage.src = LoginPage.src; // This will refresh the iframe
 			history.pushState({page: 'login'}, null, 'login');
 		}
 		function goToTris() {
 			hidePages();
-			document.getElementById("tris-game").style.display = "block";
+			var TrisPage = document.getElementById("tris-game");
+			TrisPage.style.display = "block";
+			TrisPage.src = TrisPage.src; // This will refresh the iframe
 			history.pushState({page: 'tris-game'}, null, 'tris-game');
 		}
 		
