@@ -201,7 +201,27 @@
         });
       </script>
     </div>
-
+	<script>
+		function changeLanguage() {
+		const selectedLanguage = localStorage.getItem('language');
+		if (selectedLanguage == 'IT') {
+		document.getElementById('go_to_profile').innerText = 'Profilo';
+		document.getElementById('amici').innerText = 'Amici';
+		document.getElementById('go_to_login').innerText = 'Logout';
+		document.getElementById('go_to_game').innerText = 'Gioca';
+		} else if (selectedLanguage == 'EN') {
+		document.getElementById('go_to_profile').innerText = 'Profile';
+		document.getElementById('amici').innerText = 'Friends';
+		document.getElementById('go_to_login').innerText = 'Logout';
+		document.getElementById('go_to_game').innerText = 'Play';
+		} else if (selectedLanguage == 'VE') {
+		document.getElementById('go_to_profile').innerText = 'Perfil';
+		document.getElementById('amici').innerText = 'Amigos';
+		document.getElementById('go_to_login').innerText = 'Salir';
+		document.getElementById('go_to_game').innerText = 'Jugar';
+		}
+	}
+	</script>
   </body>
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

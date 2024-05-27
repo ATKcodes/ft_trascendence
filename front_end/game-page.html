@@ -284,7 +284,7 @@
 </head>
 <body>
     <img src="download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
-    <h5 class = "userleft">User1</h5>
+    <h5 id = "userleft" class = "userleft">User1</h5>
     <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     <script>
         document.getElementById("go_to_main").addEventListener("click", function() {
@@ -317,6 +317,51 @@
     <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
 	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
 	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom btn-lg btn-block"></button>
+	<script>
+		const selectedLanguage = localStorage.getItem('language');
+		if (selectedLanguage == 'IT') {
+		document.getElementById('userleft').innerText = 'Giocatore 1';
+		document.getElementById('userright').innerText = 'Giocatore 2';
+		document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
+		document.getElementById('submit-username').innerText = 'Invia';
+		document.getElementById('player2-username-tris').placeholder = 'Inserisci nome giocatore2'
+		document.getElementById('submit-username-tris').innerText = 'Invia';
+		document.getElementById('play-pong').innerText = 'Gioca a Pong';
+		document.getElementById('play-tris').innerText = 'Gioca a Tris';
+		document.getElementById('play-tris-1v1').innerText = 'Gioca 1 contro 1';
+		document.getElementById('play-tris-tournament').innerText = 'Modalità torneo';
+		document.getElementById('play-1v1').innerText = 'Gioca 1 contro 1';
+		document.getElementById('play-4players').innerText = 'Modalità 4 Giocatori';
+		document.getElementById('play-vs-ia').innerText = 'Modalità contro computer';
+		document.getElementById('play-tournament').innerText = 'Modalità torneo';
+		document.getElementById('NextMatch').innerText = 'Prossima partita';
+		
+		} else if (selectedLanguage == 'EN') {
+		document.getElementById('userleft').innerText = 'Player 1';
+		document.getElementById('userright').innerText = 'Player 2';
+		document.getElementById('player2-username').placeholder = 'Insert Player2 Nick'
+		document.getElementById('submit-username').innerText = 'Submit';
+		document.getElementById('player2-username-tris').placeholder = 'Insert Player2 Nick'
+		document.getElementById('submit-username-tris').innerText = 'Submit';
+		document.getElementById('play-pong').innerText = 'Play Pong';
+		document.getElementById('play-tris').innerText = 'Play Tic Tac Toe';
+		document.getElementById('play-tris-1v1').innerText = 'Play 1v1';
+		document.getElementById('play-tris-tournament').innerText = 'Play Tournament';
+		document.getElementById('play-1v1').innerText = 'Play 1v1';
+		document.getElementById('play-4players').innerText = 'Play in 4 Players';
+		document.getElementById('play-vs-ia').innerText = 'Play vs IA';
+		document.getElementById('play-tournament').innerText = 'Play Tournament';
+		document.getElementById('NextMatch').innerText = 'Next Match';
+		
+		
+		
+		} else if (selectedLanguage == 'VE') {
+		document.getElementById('userright').innerText = 'Login';
+		document.getElementById('friends').innerText = 'Logout';
+		document.getElementById('player2-username').innerText = 'Login unsuccessful. Please try again.'
+		document.getElementById('submit-username').innerText = 'Register';
+		}
+	</script>		
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
