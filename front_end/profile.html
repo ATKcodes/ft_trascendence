@@ -109,6 +109,9 @@
         .data {
             font-size: 200%;
         }
+        .history {
+            font-size: 200%;
+        }
         .pong {
             margin-bottom: 10%;
         }
@@ -147,6 +150,10 @@
             font-size: 24px;
             cursor: pointer;
         }
+        .pong, .tris {
+            max-height: calc(1.2em * 7); /* 1.2em è l'altezza approssimativa di una riga di testo, moltiplicata per il numero di righe che vuoi visualizzare */
+            overflow-y: auto; /* Abilita lo scorrimento verticale se il contenuto supera l'altezza massima */
+        }
     }
 </style>
 <body>
@@ -170,22 +177,22 @@
         <div class="statistics">
             <div class="pong">
                 <h2 class="game_title">Pong</h2>
-                <h6 class="data">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
-                <h6 class="data">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
-                <h6 class="data">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
+                <h6 class="history">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
+                <h6 class="history">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
+                <h6 class="history">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
                 <h6 class="data">Vinte</h6>
                 <h6 class="data">Perse</h6>
             </div>
             <hr>
             <div class="tris">
                 <h2 class="game_title">Tris</h2>
-                <h6 class="data">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
-                <h6 class="data">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
-                <h6 class="data">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
+                <h6 class="history">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
+                <h6 class="history">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
+                <h6 class="history">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
                 <h6 class="data">Vinte</h6>
                 <h6 class="data">Perse</h6>
             </div>
