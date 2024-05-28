@@ -21,7 +21,7 @@ front:
     amici:
       ☐ o socket o chiamata ogni tot secondi L
       ☐ se chiamata ogni tot, chiedete lista tutte le persone, se ci sono nuovi amici perche qualcuno mi ha aggiunto L
-      ☐ tasto aggiungi amici dove cerco e aggiungo Dialog M
+      ✔ tasto aggiungi amici dove cerco e aggiungo Dialog M @done (5/28/2024, 4:18:08 PM)
 
     vedere profilo amici:
       ☐ se clicco sul profilo di un amico lo apre e richiesta di prendere immagine e stat partite. IN DUBBIO
