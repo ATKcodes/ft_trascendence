@@ -329,20 +329,23 @@
    
     
     
-  } else if (savedLanguage == 'VE') {
-    document.getElementById('go_to_main').innerText = 'Perfil';
-    document.getElementById('Register').innerText = 'Logout';
-    document.getElementById('login-error').innerText = 'Profilo'
-    document.getElementById('closeButton').innerText = 'Profilo';
-    document.getElementById('Register').innerText = 'Profilo';
-    
-    document.getElementById('registerModalLabel').innerText = 'Amigos';
-    document.getElementById('passwordError').innerText = 'Salir';
-    document.getElementById('closeButton').innerText = 'Logout';
-    
-    document.getElementById('Registernick').innerText = 'Logout';
-    document.getElementById('passwordError').innerText = 'Logout';
-    document.getElementById('passwordInvalid').innerText = 'Logout';
+  } else if (savedLanguage == 'ES') {
+    document.getElementById('go_to_main').innerText = 'Acceder';
+    document.getElementById('Register').innerText = 'Registrarse';
+    document.getElementById('login-error').innerText = 'No se ha podido iniciar sesión. Inténtalo de nuevo.'
+    document.getElementById('registerModalLabel').innerText = 'Registrarse';
+    document.getElementById('successMessage').innerText = 'Registro exitoso.';
+    document.getElementById('passwordError').innerText = 'La contraseña no coincide.';
+    document.getElementById('passwordInvalid').innerText = 'La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.';
+    document.getElementById('closeButton').innerText = 'Cerrar';
+    document.getElementById('registerButton').innerText = 'Registrarse';
+    document.getElementById('passwordError').innerText = 'La contraseña no coincide.';
+    document.getElementById('closeButton').innerText = 'Cerrar';
+    document.getElementById('Registernick').placeholder = 'Nombre de usuario';
+    document.getElementById('Registerpassword').placeholder = 'Contraseña';
+    document.getElementById('repeatPassword').placeholder = 'Repeat contraseña';
+    document.getElementById('Login42').placeholder = 'Acceder con 42';
+    document.getElementById('nickInput').placeholder = 'Nombre de usuario';
   }
   </script>
     </body>
