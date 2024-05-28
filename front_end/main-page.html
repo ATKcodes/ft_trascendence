@@ -172,6 +172,16 @@
           <p>Amico 2</p>
           <p>Amico 3</p>
         </div>
+        <li id="add" style="margin-top: 5%;">Aggiungi Amico</li>
+        <div id="dialog" title="Aggiungi Amico" style="display: none;">
+          <input type="text" id="username" placeholder="Inserisci l'username" />
+          <button id="addFriend">Aggiungi</button>
+        </div>
+        <script>
+          document.getElementById("add").addEventListener("click", function() {
+            $("#dialog").dialog();
+          });
+        </script>
         <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
       </ul>
     </nav>
