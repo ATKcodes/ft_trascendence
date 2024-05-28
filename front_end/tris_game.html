@@ -10,95 +10,109 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="tris_game.css">
+    <link rel="stylesheet" href="tris_game.css" />
   </head>
 
-  <body class="d-flex flex-column justify-content-center align-items-center">
-    <div
-      class="d-flex justify-content-center align-items-center"
-      style="height: 100px"
-    >
+  <body>
+    <div class="header d-flex justify-content-center align-items-center">
       <h1>PONG</h1>
     </div>
-    <div
-      class="gameDashboard d-flex flex-column justify-content-center align-items-center"
-    >
-      <div id="chosePlay">
-        <div class="container d-flex justify-content-center align-items-center">
-          <div class="row">
-            <div class="col-md-5 d-flex justify-content-around">
-              <button
-                id="btn1v1"
-                class="btn btn-primary mr-3"
-                style="margin-right: 20px"
-              >
-                1v1
+
+    <div class="container">
+      <div class="gameDashboard">
+        <div id="chosePlay" style="height: 100vh">
+          <div class="container text-center h-100 d-flex align-items-center">
+            <div class="row w-100">
+              <div class="col">
+                <button
+                  id="btn1v1"
+                  class="btn btn-dark mr-1"
+                  style="margin-right: 10px"
+                >
+                  1v1
+                </button>
+                <button class="btn btn-dark ml-1" style="margin-left: 10px">
+                  Torneo
+                </button>
+              </div>
+            </div>
+            <!-- <div class="row w-100">
+              <div class="col">
+                <button class="btn btn-dark">Go To Main</button>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div id="insertNick" style="height: 100vh; display: none">
+          <div class="container text-center h-100 d-flex align-items-center">
+            <div class="row w-100">
+              <div class="col">
+                <input
+                  id="nicknameInput"
+                  type="text"
+                  placeholder="User2"
+                  maxlength="6"
+                  style="max-width: 100px; margin-right: 10px"
+                />
+                <button
+                  id="playButton"
+                  class="btn btn-dark btn-outline-secondary"
+                  type="button"
+                  disabled
+                >
+                  Play
+                </button>
+                <button
+                  id="backChose"
+                  class="btn btn-dark btn-outline-secondary"
+                  type="button"
+                >
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="game" style="height: 100vh; display: none">
+          <div class="d-flex justify-content-between h-100">
+            <div class="player1 w-100 d-flex flex-column justify-content-center" style="flex: 1">
+              <h1 id="nickPlayer1"></h1>
+              <p>Player 1 is X</p>
+            </div>
+
+            <div class="tris-grid" style="flex: 3">
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+            </div>
+
+            <div class="player2 d-flex flex-column justify-content-center" style="flex: 1">
+              <h1 id="nickPlayer2"></h1>
+              <p>Player 2 is O</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="alert" class="backdrop" style="display: none">
+          <div class="alert-box">
+            <h1 id="aler-message"></h1>
+            <div class="alert-box-actions">
+              <button class="go-to-main" class="btn btn-dark">
+                Go To Main Menu
               </button>
-              <button class="btn btn-primary ml-3">Torneo</button>
             </div>
           </div>
         </div>
       </div>
-      <div id="insertNick" style="display: none">
-        <div class="container d-flex justify-content-center align-items-center">
-          <div
-            class="col-md-8 d-flex flex-column justify-content-center align-items-center"
-          >
-            <input
-              id="nicknameInput"
-              type="text"
-              class="form-control"
-              placeholder="User2"
-              maxlength="6"
-              style="margin-bottom: 20px; max-width: 300px"
-            />
-            <button
-              id="playButton"
-              class="btn btn-outline-secondary"
-              type="button"
-              style="margin-bottom: 20px"
-              disabled
-            >
-              Play
-            </button>
-            <button class="btn btn-outline-secondary back" type="button">
-              Back
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="container d-flex justify-content-center align-items-center">
-        <div class="row">
-          <div class="col-md-4 d-flex flex-column align-items-center">
-            <h2 id="player1Nick">Player 1</h2>
-            <h3>X</h3>
-          </div>
-          <div class="col-md-4">
-            <table id="gameBoard">
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-          <div class="col-md-4 d-flex flex-column align-items-center">
-            <h2 id="player2Nick">Player 2</h2>
-            <h3>O</h3>
-          </div>
-        </div>
-      </div> -->
-    <script src="tris_game.js">
-    </script>
+    </div>
+    <script src="tris_game.js"></script>
   </body>
 </html>
