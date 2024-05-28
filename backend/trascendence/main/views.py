@@ -105,3 +105,36 @@ def get_profile_image(request):
         return JsonResponse({'profile_image_url': request.build_absolute_uri(user.profile_image.url)})
     else:
         return JsonResponse({'error': 'No profile image found'}, status=404)
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def add_friend(request):
+    user = request.user
+    try:
+        friend_username = request.data['friend_username']
+        if not friend_username:
+            return HttpResponseBadRequest("friend_username is required")
+        new_friend = User.objects.get(username=friend_username)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    user.add_friend(new_friend)
+    return JsonResponse({'response': 'successful friend added'}, status=200)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_friends(request):
+    user = request.user
+    friends = user.get_friends()
+    friends_list = [{'username': friend.username, 'status': friend.status} for friend in friends]
+    return JsonResponse({'friends': friends_list}, status=200)
+
+@api_view(['DELETE'])
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def delete_user(request):
+    user = request.user
+    user.delete()
+    return Response({'message': 'User deleted successfully'}, status=status.HTTP_200_OK)

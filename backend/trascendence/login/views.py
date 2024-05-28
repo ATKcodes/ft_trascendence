@@ -81,6 +81,8 @@ class LoginView(APIView):
             }
 
             token, created = CustomToken.objects.get_or_create(user=user)
+            user.status = True
+            user.save()
             response = Response({"response": "successful", "token": token.key, "nickname": user.player})
             return response
         return Response({"detail": "Invalid credentials"})
@@ -96,7 +98,8 @@ def TestView(request):
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def logout(request):
-    request.user.auth_token.delete()
+    user.status = False
+    user.save()
     return Response({"detail": "You are logged out"})
 
 
@@ -119,6 +122,8 @@ def get_42token(request):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
             user = User.objects.get(username=username)
+        user.status = True
+        user.save()
         token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
         return JsonResponse({'access_token': response.json()['access_token']})
     else:
