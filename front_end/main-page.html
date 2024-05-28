@@ -115,15 +115,15 @@
       }
       .navbar {
         padding: 10px;
-        background: #000;
         position: fixed;
         top: 30px;
         left: 30px;
         z-index: 90;
         cursor: pointer;
+        width: 3%;
+        height: 3%;
       }
       .icon-bar {
-        background-image: url('download.jpeg');
         border-radius: 50%;
         color: #000000;
         position: absolute;
@@ -132,6 +132,8 @@
         padding : 0.5%;
         margin: 0 auto;
         text-align: left;
+        width: 50px;
+        height: 50px;
       }
       nav {
         width: 20%;
@@ -160,7 +162,7 @@
   </head>
   <body>
     <div class="navbar">
-      <img class="icon-bar"></img>
+      <img class="icon-bar" src="download.jpeg"></img>
     </div>
     <nav class="nav">
       <ul>
@@ -182,7 +184,7 @@
             $("#dialog").dialog();
           });
         </script>
-        <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
+        <li id = "go_to_login"style="margin-top: 190%;">Logout</li>
       </ul>
     </nav>
     <select class = "select-language rounded-pill">
