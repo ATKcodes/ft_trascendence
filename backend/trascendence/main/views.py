@@ -44,12 +44,12 @@ def WinLose_count(request):
             user.wins_pong += 1
             user.score = request.data['score']
             user.scoreplayer2 = request.data['scoreplayer2']
-            #user.matchHistorypong.append({'game': 'pong', 'win': True, 'score': user.score, 'scoreplayer2': user.scoreplayer2})
+            user.matchHistorypong.append({'game': 'pong', 'win': 'true', 'score': user.score, 'scoreplayer2': user.scoreplayer2})
         else:
             user.loses_pong += 1
             user.score = request.data['score']
             user.scoreplayer2 = request.data['scoreplayer2']
-            #user.matchHistorypong.append({'game': 'pong', 'win': False, 'score': user.score, 'scoreplayer2': user.scoreplayer2})
+            user.matchHistorypong.append({'game': 'pong', 'win': 'false', 'score': user.score, 'scoreplayer2': user.scoreplayer2})
         user.winrate_pong = user.wins_pong /  (user.wins_pong + user.loses_pong) * 100
         now = timezone.now()
         user.date_played_tictactoe = now
@@ -57,10 +57,10 @@ def WinLose_count(request):
     elif request.data['game'] == 'tictactoe':
         if request.data['win'] == 'true':
             user.wins_tictactoe += 1
-            #user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': True})
+            user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': True})
         else:
             user.loses_tictactoe += 1
-            #user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': False})
+            user.matchHistorytictactoe.append({'game': 'tictactoe', 'win': False})
         user.winrate_tictactoe = user.wins_tictactoe /  (user.wins_tictactoe + user.loses_tictactoe) * 100
         now = timezone.now()
         user.date_played_tictactoe = now
@@ -70,7 +70,8 @@ def WinLose_count(request):
         'pong': {
             'wins': user.wins_pong, 
             'loses': user.loses_pong, 
-            'winrate': user.winrate_pong, 
+            'winrate': user.winrate_pong,
+            'matchHistory': user.matchHistorypong,
         }, 
         'tictactoe': {
             'wins': user.wins_tictactoe, 
@@ -89,9 +90,9 @@ def update_profile_image(request):
     serializer = ProfileImageSerializer(data=request.data, instance=request.user)
     if serializer.is_valid():
         serializer.save()
-        return JsonResponse({'response': 'successful', 'errors': serializer.errors, 'user': serializer.data,})
+        return JsonResponse({'response': 'successful'})
     else:
-        return JsonResponse({'response': 'failed', 'errors': serializer.errors, })
+        return JsonResponse({'response': 'failed'})
 
 
 

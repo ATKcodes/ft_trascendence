@@ -21,8 +21,8 @@ class User (AbstractUser):
     scoreplayer2 = models.IntegerField(default=0)
     date_played = models.DateTimeField(null=True, blank=True)
     date_played_tictactoe = models.DateTimeField(null=True, blank=True)
-    matchHistorypong = models.JSONField(default=dict)
-    matchHistorytictactoe = models.JSONField(default=dict)
+    matchHistorypong = models.JSONField(default=list)
+    matchHistorytictactoe = models.JSONField(default=list)
     friend_list = models.ManyToManyField('self', blank=True)
 
 
