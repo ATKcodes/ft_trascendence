@@ -349,8 +349,8 @@
 	<h5 id = "userright2" class = "userright2" style = "display:none">User4</h5>
     <div id="pong-game">
         <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
-            <div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
-            <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white;">0</span></div>
+            <div><span id="scoreA" style="font-size: 24px; color: white; display:none">0</span></div>
+            <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white; display:none">0</span></div>
         </div>
         <div id="ball" style = "display: none;"></div>
         <div id="paddleA" style = "display: none;"></div>
@@ -450,6 +450,8 @@
 	    ballSpeed: {x: 8, y: 8},
 		paddleASpeed: 0,
     	paddleBSpeed: 0,
+		paddleCSpeed: 0,
+   		paddleDSpeed: 0,
     	paddleSpeed: 6,
 		scoreA: 0,
    		scoreB: 0,
@@ -458,12 +460,15 @@
 		ballaccelleration: 1,
 		matchdatasent : 0,
 		winorlose : true,
+		paddleCPos: {x: document.getElementById('pong-game').offsetWidth * 0.25, y: 0},
+		paddleDPos: {x: document.getElementById('pong-game').offsetWidth * 0.75, y: 0},
 
 		update: function() {
+		document.getElementById("scoreA").style.display = "block";
+        document.getElementById("scoreB").style.display = "block";
         // Update the position of the ball
         this.ballPos.x += this.ballSpeed.x;
         this.ballPos.y += this.ballSpeed.y;
-
 		// Update the position of the paddles
 		this.paddleAPos.y += this.paddleASpeed;
 		
@@ -476,13 +481,27 @@
         } else {
             pongGame.paddleBSpeed = 0;
         }
-    }
+   		}
 		else if (pongGame.gameMode === '4players')
 		{
+			//show paddles C and D
 			this.paddleC.style.display = "block";
 			this.paddleD.style.display = "block";
-		}
 
+			// Add movement for paddleC and paddleD
+			this.paddleCPos.y += this.paddleCSpeed;
+			this.paddleDPos.y += this.paddleDSpeed;
+
+			// Prevent the paddles from going out of the game area
+			this.paddleCPos.y = Math.max(Math.min(this.paddleCPos.y, this.game.offsetHeight - this.paddleC.offsetHeight), 0);
+			this.paddleDPos.y = Math.max(Math.min(this.paddleDPos.y, this.game.offsetHeight - this.paddleD.offsetHeight), 0);
+			
+			if((this.ballPos.x < this.paddleCPos.x + this.paddleC.offsetWidth && this.ballPos.x > this.paddleCPos.x && this.ballPos.y + this.ball.offsetHeight > this.paddleCPos.y && this.ballPos.y < this.paddleCPos.y + this.paddleC.offsetHeight) ||
+				(this.ballPos.x + this.ball.offsetWidth > this.paddleDPos.x && this.ballPos.x + this.ball.offsetWidth < this.paddleDPos.x + this.paddleD.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleDPos.y && this.ballPos.y < this.paddleDPos.y + this.paddleD.offsetHeight)) {
+					this.ballSpeed.x *= -1; // Reverse the horizontal direction
+					this.bouncecounter++;
+		}
+		}
 		this.paddleBPos.y += this.paddleBSpeed;
         // Prevent the paddles from going out of the game area
         this.paddleAPos.y = Math.max(Math.min(this.paddleAPos.y, this.game.offsetHeight - this.paddleA.offsetHeight), 0);
@@ -512,6 +531,7 @@
             this.ballSpeed.x *= -1; // Reverse the horizontal direction
 			this.bouncecounter++;
         }
+
 		if (this.bouncecounter == this.balllimitfaster){
 			this.balllimitfaster = this.balllimitfaster * 2;
 			this.ballSpeed.x = this.ballSpeed.x + 1;
@@ -519,13 +539,15 @@
 		}
 		// Check if player A has reached 5 points
 		if (this.scoreA >= 5) {
+			this.resetBall();
 			this.endGame(document.querySelector('.userleft').textContent);
        		return;
 		}
 		// Check if player B has reached 5 points
 		else if (this.scoreB >= 5) {
-        this.endGame(document.querySelector('.userright').textContent);
-        return;
+			this.resetBall();
+        	this.endGame(document.querySelector('.userright').textContent);
+        	return;
     	}
     },
 	endGame: function(winner) {
@@ -536,6 +558,12 @@
 	this.ball.style.display = "none";
 	this.paddleA.style.display = "none";
 	this.paddleB.style.display = "none";
+	this.paddleC.style.display = "none";
+	this.paddleD.style.display = "none";
+	document.getElementById("scoreA").style.display = "none";
+    document.getElementById("scoreB").style.display = "none";
+	this.scoreA = 0;
+	this.scoreB = 0;
 	this.winorlose = "true";
 	if (winner === document.querySelector('.userleft').textContent)
 	{
@@ -557,11 +585,24 @@
     var jsonMatchData = JSON.stringify(matchData);
 	this.scoreA = 0;
 	this.scoreB = 0;
+	if (this.gameMode !== "1v1")
+	{
+		this.matchdatasent = 1;
+	}
 	if (this.matchdatasent === 0)
 	{
 		sendMatchData(jsonMatchData);
 	}
-	document.getElementById('winner').textContent = winner;
+	if (this.gameMode === "4players"){
+		if (winner === document.querySelector('.userleft').textContent)
+			document.getElementById('winner').textContent = "Team 1";
+		else
+			document.getElementById('winner').textContent = "Team 2";
+	}
+	else
+	{
+		document.getElementById('winner').textContent = winner;
+	}
 	document.querySelector('.open_text').style.display = "block";
 	document.getElementById('NextMatch').textContent = "Next Match";
 	document.getElementById('NextMatch').style.display = "block";
@@ -602,6 +643,12 @@
 
     // Update the position of paddle B
     this.paddleB.style.top = this.paddleBPos.y + 'px';
+
+	// Update the position of paddle C
+	this.paddleC.style.top = this.paddleCPos.y + 'px';
+
+	// Update the position of paddle D
+	this.paddleD.style.top = this.paddleDPos.y + 'px';
 },
 
     loop: function() {
@@ -649,6 +696,18 @@ document.addEventListener('keydown', function(event) {
         case 'ArrowDown':
             pongGame.paddleBSpeed = pongGame.paddleSpeed;
             break;
+		case 'i':
+			pongGame.paddleCSpeed = -pongGame.paddleSpeed;
+			break;
+		case 'k':
+			pongGame.paddleCSpeed = pongGame.paddleSpeed;
+			break;
+		case '-':
+			pongGame.paddleDSpeed = -pongGame.paddleSpeed;
+			break;
+		case '+':
+			pongGame.paddleDSpeed = pongGame.paddleSpeed;
+			break;
     }
 });
 
@@ -662,6 +721,14 @@ document.addEventListener('keyup', function(event) {
         case 'ArrowDown':
             pongGame.paddleBSpeed = 0;
             break;
+		case 'i':
+		case 'k':
+			pongGame.paddleCSpeed = 0;
+			break;
+		case '-':
+		case '+':
+			pongGame.paddleDSpeed = 0;
+			break;
     }
 });
 
@@ -736,20 +803,62 @@ document.getElementById("play-4players").addEventListener("click", function(){
 	pongGame.resetBall();
 	document.getElementById("player2-username").style.display = "block";
 	document.getElementById("submit-username2").style.display = "block";
-	document.getElementById("player3-username").style.display = "block";
-	document.getElementById("submit-username3").style.display = "block";
-	document.getElementById("player4-username").style.display = "block";
-	document.getElementById("submit-username4").style.display = "block";
 	document.getElementById("userright2").style.display = "block";
 	document.getElementById("userleft2").style.display = "block";
 	document.getElementById("avatar3").style.display = "block";
 	document.getElementById("avatar4").style.display = "block";
-	document.getElementById("scoreA").style.display = "block";
-	document.getElementById("scoreB").style.display = "block";
-	document.getElementById("ball").style.display = "block";
-	pongGame.resetBall();
-	pongGame.start();
 });
+
+document.getElementById("submit-username2").addEventListener("click", function() {
+    var username = document.getElementById("player2-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userright").textContent = username;
+		document.getElementById("player2-username").style.display = "none";
+		document.getElementById("submit-username2").style.display = "none";
+		document.getElementById("player3-username").style.display = "block";
+		document.getElementById("submit-username3").style.display = "block";
+    } else {
+        alert("Please enter a username for player 2.");
+    }
+});
+
+document.getElementById("submit-username3").addEventListener("click", function() {
+    var username = document.getElementById("player3-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userleft2").textContent = username;
+		document.getElementById("player3-username").style.display = "none";
+		document.getElementById("submit-username3").style.display = "none";
+		document.getElementById("player4-username").style.display = "block";
+		document.getElementById("submit-username4").style.display = "block";
+    } else {
+        alert("Please enter a username for player 3.");
+    }
+});
+
+document.getElementById("submit-username4").addEventListener("click", function() {
+    var username = document.getElementById("player4-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userright2").textContent = username;
+		document.getElementById("player4-username").style.display = "none";
+		document.getElementById("submit-username4").style.display = "none";
+		document.getElementById("scoreA").style.display = "block";
+		document.getElementById("scoreB").style.display = "block";
+		document.getElementById("ball").style.display = "block";
+		document.getElementById("paddleA").style.display = "block";
+		document.getElementById("paddleB").style.display = "block";
+		pongGame.resetBall();
+        pongGame.start();
+    } else {
+        alert("Please enter a username for player 4.");
+    }
+});
+
 
 document.getElementById("play-tournament").addEventListener("click", function(){
 	document.getElementById("play-1v1").style.display = "none";
