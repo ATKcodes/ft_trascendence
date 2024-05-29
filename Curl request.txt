@@ -1,0 +1,32 @@
+CURL request for adding friends:
+
+curl -X POST -H "Content-Type: application/json" \
+     -H "Authorization: Token Arq3ddsCi8r3y6j5wLGY3fMmlcgJIzHyWlprCrApTNBuGgoXXDmK0fFIbKmXZY3nviXSU8Gxa6CjJLLB6OQQmDwWCH38Y6ZyLWbH66nHxL7rCD99UuUPKAYyjaUaFxel" \
+     -d '{"friend_username":"<friend-username>"}' \
+     http://http://localhost:8001/main/add_friends/
+
+
+
+
+CURL for getting friends:
+
+curl -X POST -H "Content-Type: application/json" \
+     -H "Authorization: Token Arq3ddsCi8r3y6j5wLGY3fMmlcgJIzHyWlprCrApTNBuGgoXXDmK0fFIbKmXZY3nviXSU8Gxa6CjJLLB6OQQmDwWCH38Y6ZyLWbH66nHxL7rCD99UuUPKAYyjaUaFxel" \
+     http://http://localhost:8001/main/get_friends/
+
+
+
+CURL for logout
+
+curl -X POST -H "Content-Type: application/json" \
+     -H "Authorization: Token 3BJuyYOFQwR3NSqZgmzyLmxzdNcVN9jBdrLtu2N1vJKKmowY9cP9bviWDtfdVJXJ7WTO7WsxvhR1A8sphDY6WY0YFi5yE10Co054CYkMfprMT2vOFC2IC0o7AUtIqsKw" \
+     http://localhost:8001/login/logout/
+
+
+
+
+CURL for delete accout from the database:
+
+curl -X DELETE -H "Content-Type: application/json" \
+     -H "Authorization: Token 3lmSf0aJSEvdk9tDgzY2tIDaMPX3JywvIechkkuEFqvo90GqQhoKuaCxUWmOiqoPVnwFaNWeoOhVmzwGHPfjFCDr83o2mCQ72HcnlcR7RSZukEv0BiCDAT6SNKQBJCNN" \
+     http://localhost:8001/main/delete_user/

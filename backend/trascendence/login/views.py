@@ -21,44 +21,6 @@ import os
 from requests.auth import HTTPBasicAuth
 from django.utils.crypto import get_random_string
 
-@api_view(['GET', 'POST'])
-def user_list(request):
-    if request.method == 'GET':
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED, safe=False)
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, pk):
-
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = UserSerializer(user, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        user.delete()
-        return HttpResponse(status=204)
-
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -83,7 +45,7 @@ class LoginView(APIView):
             token, created = CustomToken.objects.get_or_create(user=user)
             user.status = True
             user.save()
-            response = Response({"response": "successful", "token": token.key, "nickname": user.player})
+            response = Response({"response": "successful", "token": token.key, "user": response_data})
             return response
         return Response({"detail": "Invalid credentials"})
 
@@ -98,6 +60,7 @@ def TestView(request):
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def logout(request):
+    user = request.user
     user.status = False
     user.save()
     return Response({"detail": "You are logged out"})
