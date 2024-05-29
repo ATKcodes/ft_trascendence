@@ -729,7 +729,6 @@
 		score: this.scoreA,
         scoreplayer2: this.scoreB,
    		player2: document.querySelector('.userright').textContent, // Get User2 name
-        date: new Date().toISOString(),
     };
     var jsonMatchData = JSON.stringify(matchData);
 	this.scoreA = 0;
@@ -1205,31 +1204,8 @@ document.getElementById('EndTournament').addEventListener('click', function() {
 
 //TRIS CODE
 document.getElementById("play-tris").addEventListener("click", function(){
-	document.getElementById("play-pong").style.display = "none";
-	document.getElementById("play-tris").style.display = "none";
-	document.getElementById("play-tris-1v1").style.display = "block";
-	document.getElementById("play-tris-tournament").style.display = "block";
-});
-document.getElementById("play-tris-1v1").addEventListener("click", function(){
-	document.getElementById("play-tris-1v1").style.display = "none";
-    document.getElementById("play-tris-tournament").style.display = "none";
-	document.getElementById("player2-username-tris").style.display = "block";
-    document.getElementById("submit-username-tris").style.display = "block";
-});
-//Funzione per cambiare il nick dell'user2 nel gioco tris
-document.getElementById("submit-username-tris").addEventListener("click", function() {
-    var username = document.getElementById("player2-username-tris").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userright").textContent = username;
-		document.getElementById("player2-username-tris").style.display = "none";
-		document.getElementById("submit-username-tris").style.display = "none";
-        // Start the game
-		// QUI INSERISCI LA FUNZIONE CHE FA PARTIRE TRIS
-    } else {
-        alert("Please enter a username for player 2.");
-    }
+	localStorage.setItem('lastPage', "tris-game");
+	window.parent.goToTris();
 });
 }
 </script>
