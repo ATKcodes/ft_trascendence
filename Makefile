@@ -8,7 +8,7 @@ COMPOSE_FILE := docker-compose.yaml
 .PHONY: up down logs clean help
 
 up: ## Start the containers
-	sudo docker-compose -f $(COMPOSE_FILE) up -d
+	docker-compose up --build
 
 down: ## Stop and remove the containers
 	docker-compose -f $(COMPOSE_FILE) down

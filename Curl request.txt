@@ -1,7 +1,7 @@
 CURL request for adding friends:
 
 curl -X POST -H "Content-Type: application/json" \
-     -H "Authorization: Token Arq3ddsCi8r3y6j5wLGY3fMmlcgJIzHyWlprCrApTNBuGgoXXDmK0fFIbKmXZY3nviXSU8Gxa6CjJLLB6OQQmDwWCH38Y6ZyLWbH66nHxL7rCD99UuUPKAYyjaUaFxel" \
+     -H "Authorization: Token cuLURRwmD8iqtLnYM3KaPi2Vm1rO3uSMfdS0fzq4lYENh2usk1pEagWHk3gZrBfRjnngvhJF0v9nOhKuGJHh4oA6okFbpTXufDGMpSHTpogLsEv4am2KGYhVjTFHm0pr" \
      -d '{"friend_username":"<friend-username>"}' \
      http://http://localhost:8001/main/add_friends/
 
@@ -19,7 +19,7 @@ curl -X POST -H "Content-Type: application/json" \
 CURL for logout
 
 curl -X POST -H "Content-Type: application/json" \
-     -H "Authorization: Token 3BJuyYOFQwR3NSqZgmzyLmxzdNcVN9jBdrLtu2N1vJKKmowY9cP9bviWDtfdVJXJ7WTO7WsxvhR1A8sphDY6WY0YFi5yE10Co054CYkMfprMT2vOFC2IC0o7AUtIqsKw" \
+     -H "Authorization: Token F5g9SrNTJmqdcn85jOUu8hY0lSbghL8ttg1fC1BgAkrXUHVEVha6crVbf2e6Whoj9db0Q8A2h4Mb0LzRM0U83cyaBrgtWruER1QsvmsKBWwEG8du8HYdfarcL9HteA0e" \
      http://localhost:8001/login/logout/
 
 
