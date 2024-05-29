@@ -2,22 +2,36 @@
 let player1 = "";
 let player2 = "";
 
+function getId(id) {
+  return document.getElementById(id);
+}
+
 // Move in the page
-document.getElementById("btn1v1").addEventListener("click", function () {
-  document.getElementById("chosePlay").style.display = "none";
-  document.getElementById("insertNick").style.display = "block";
+let path = ["chosePlay", "insertNick", "game"];
+
+function moveArround(were) {
+  for (let i = 0; i < path.length; i++) {
+    if (path[i] === were) {
+      getId(were).style.display = "block";
+    } else {
+      getId(path[i]).style.display = "none";
+    }
+  }
+}
+
+getId("btn1v1").addEventListener("click", function () {
+  moveArround("insertNick");
 });
 
-document.getElementById("backChose").addEventListener("click", function () {
-  var input = document.getElementById("nicknameInput");
+getId("backChose").addEventListener("click", function () {
+  var input = getId("nicknameInput");
   input.value = "";
-  document.getElementById("chosePlay").style.display = "block";
-  document.getElementById("insertNick").style.display = "none";
+  moveArround("chosePlay");
 });
 
-document.getElementById("nicknameInput").addEventListener("input", function () {
-  var input = document.getElementById("nicknameInput");
-  var button = document.getElementById("playButton");
+getId("nicknameInput").addEventListener("input", function () {
+  var input = getId("nicknameInput");
+  var button = getId("playButton");
   if (input.value.trim() === "") {
     button.disabled = true;
   } else {
@@ -25,16 +39,15 @@ document.getElementById("nicknameInput").addEventListener("input", function () {
   }
 });
 
-document.getElementById("playButton").addEventListener("click", function () {
+getId("playButton").addEventListener("click", function () {
   player1 = "Prendere da user";
-  let input = document.getElementById("nicknameInput");
+  let input = getId("nicknameInput");
   player2 = input.value;
   input.value = "";
   console.log("player1: ", player1, "player2: ", player2);
-  document.getElementById("nickPlayer1").textContent = player1;
-  document.getElementById("nickPlayer2").textContent = player2;
-  document.getElementById("insertNick").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  getId("nickPlayer1").textContent = player1;
+  getId("nickPlayer2").textContent = player2;
+  moveArround("game");
 });
 
 // Back to Main
@@ -60,14 +73,13 @@ function handleClick(e) {
   if (e.target.textContent !== "") return;
   e.target.textContent = currentPlayer;
   if (checkWin(currentPlayer)) {
-    currentPlayer = "X";
-    document.getElementById("alert").style.display = "block";
-    document.getElementById(
+    getId("alert").style.display = "block";
+    getId(
       "aler-message"
     ).textContent = `${playerWins()} wins!`;
   } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
-    document.getElementById("alert").style.display = "block";
-    document.getElementById("aler-message").textContent = `It's a draw!`;
+    getId("alert").style.display = "block";
+    getId("aler-message").textContent = `It's a draw!`;
     currentPlayer = "X";
   } else {
     currentPlayer = currentPlayer === "X" ? "O" : "X";
@@ -77,9 +89,9 @@ function handleClick(e) {
 }
 
 function highlightPlayer() {
-  document.getElementById("nickPlayer1").style.color =
+  getId("nickPlayer1").style.color =
     currentPlayer === "X" ? "green" : "white";
-  document.getElementById("nickPlayer2").style.color =
+  getId("nickPlayer2").style.color =
     currentPlayer === "O" ? "green" : "white";
 }
 
