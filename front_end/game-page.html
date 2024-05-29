@@ -964,6 +964,10 @@ document.getElementById("play-pong").addEventListener("click", function() {
     
 });
 document.getElementById("play-1v1").addEventListener("click", function(){
+	document.getElementById("userright2").style.display = "none";
+	document.getElementById("userleft2").style.display = "none";
+	document.getElementById("avatar3").style.display = "none";
+	document.getElementById("avatar4").style.display = "none";
 	document.getElementById("play-1v1").style.display = "none";
     document.getElementById("play-4players").style.display = "none";
     document.getElementById("play-vs-ia").style.display = "none";
@@ -995,6 +999,10 @@ document.getElementById("submit-username").addEventListener("click", function() 
 
 //IA menu
 document.getElementById("play-vs-ia").addEventListener("click", function(){
+	document.getElementById("userright2").style.display = "none";
+	document.getElementById("userleft2").style.display = "none";
+	document.getElementById("avatar3").style.display = "none";
+	document.getElementById("avatar4").style.display = "none";
 	document.getElementById("userright").textContent = "IA";
 	document.getElementById("play-1v1").style.display = "none";
     document.getElementById("play-4players").style.display = "none";
