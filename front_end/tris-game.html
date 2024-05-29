@@ -15,11 +15,12 @@
 
   <body>
     <div class="header d-flex justify-content-center align-items-center">
-      <div style="flex: 1; text-align: center">
-        <button class="btn btn-dark go-to-main" style="max-width: 100px">Main Menu</button>
-      </div>
-      <h1 style="flex: 3; text-align: center">PONG</h1>
-      <div style="flex: 1"></div>
+      <h1
+        id="go-to-main2"
+        style="text-align: center; font-family: font-Despairs"
+      >
+        PONG
+      </h1>
     </div>
 
     <div class="container">
@@ -115,7 +116,7 @@
           <div class="alert-box">
             <h1 id="aler-message"></h1>
             <div class="alert-box-actions">
-              <button class="go-to-main btn btn-dark">
+              <button id="go-to-main" class="go-to-main btn btn-dark">
                 Go To Main Menu
               </button>
             </div>
@@ -124,5 +125,25 @@
       </div>
     </div>
     <script src="tris_game.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("go-to-main")
+          .addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
+
+        document
+          .getElementById("go-to-main2")
+          .addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
+      });
+
+
+      // se clicco su torneo mandare a tris-torneo.html
+    </script>
   </body>
 </html>

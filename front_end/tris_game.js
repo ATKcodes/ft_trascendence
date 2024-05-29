@@ -50,15 +50,6 @@ getId("playButton").addEventListener("click", function () {
   moveArround("game");
 });
 
-// Back to Main
-var elements = document.getElementsByClassName("go_to_main");
-
-for (var i = 0; i < elements.length; i++) {
-  elements[i].addEventListener("click", function () {
-    console.log("ciao");
-  });
-}
-
 // Game
 let currentPlayer = Math.random() < 0.5 ? "X" : "O";
 const cells = document.querySelectorAll(".cell");
@@ -115,3 +106,9 @@ function checkWin(player) {
     combination.every((index) => cells[index].textContent === player)
   );
 }
+
+// var matchData = {
+// 	game: "pong",
+// 	win: this.winorlose,
+// 	player2: document.querySelector('.userright').textContent, // Get User2 name
+// };
