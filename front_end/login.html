@@ -104,44 +104,47 @@
       <button id = "go_to_main" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
         Login
       </button>
-      <script>
-      document.getElementById("go_to_main").addEventListener("click", function() {
-        const nickInput = document.getElementById('nickInput').value;
-        const passwordInput = document.getElementById('passwordInput').value;
+	<script>
+		// document.getElementById("go_to_main").addEventListener("click", function() {
+			// window.parent.goToMain();
+document.getElementById("go_to_main").addEventListener("click", function() {
+ const nickInput = document.getElementById('nickInput').value;
+ const passwordInput = document.getElementById('passwordInput').value;
 
-        const data = {
-          username: nickInput,
-          password: passwordInput
-        };
-        //SET 8001 as a default port
-        fetch('http://127.0.0.1:8001/login/login/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json()) // Parse the JSON response
-        .then(data => {
-            console.log('Success:', data); // Debugging: Log the data to see its structure
-            if(data.token) {
-                localStorage.setItem('userToken', data.token); // Correctly access and store the token
-                console.log('Login successful');
-                localStorage.setItem('lastPage', "main-page");
-                document.getElementById('nickInput').value = '';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('Registerpassword').value = '';
-                document.getElementById('repeatPassword').value = '';
-                document.getElementById('Registernick').value = '';
-                window.parent.goToMain();
-            } else if(data.detail) {
-                console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
-            } else {
-                console.error('Token not found in response');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-      });
+ const data = {
+   username: nickInput,
+   password: passwordInput
+ };
+ //SET 8001 as a default port
+ fetch('http://127.0.0.1:8001/login/login/', {
+     method: 'POST',
+     headers: {
+         'Content-Type': 'application/json',
+     },
+     body: JSON.stringify(data),
+ })
+ .then(response => response.json()) // Parse the JSON response
+ .then(data => {
+     console.log('Success:', data); // Debugging: Log the data to see its structure
+     if(data.token) {
+         localStorage.setItem('userToken', data.token); // Correctly access and store the token
+         console.log('Login successful');
+         localStorage.setItem('lastPage', "main-page");
+         document.getElementById('nickInput').value = '';
+         document.getElementById('passwordInput').value = '';
+         document.getElementById('Registerpassword').value = '';
+         document.getElementById('repeatPassword').value = '';
+         document.getElementById('Registernick').value = '';
+         window.parent.goToMain();
+     } else if(data.detail) {
+         console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
+     } else {
+         console.error('Token not found in response');
+     }
+ })
+ .catch(error => console.error('Error:', error));
+});
+		// });
     </script>
 
 	  <button
@@ -287,8 +290,8 @@
     localStorage.setItem('language', 'EN');
   }
   // function changeLanguage() {
-  const selectedLanguage = localStorage.getItem('language');
-  if (selectedLanguage == 'IT') {    
+	const savedLanguage = localStorage.getItem('language');
+  if (savedLanguage== 'IT') {    
     document.getElementById('go_to_main').innerText = 'Accedi';
     document.getElementById('Register').innerText = 'Registrati';
     document.getElementById('login-error').innerText = 'Accesso non riuscito. Per favore riprova.'
@@ -306,7 +309,7 @@
     document.getElementById('Login42').placeholder = 'Accedi con 42';
     document.getElementById('nickInput').placeholder = 'Nome Utente';
     
-  } else if (selectedLanguage == 'EN') {
+  } else if (savedLanguage == 'EN') {
     document.getElementById('go_to_main').innerText = 'Login';
     document.getElementById('Register').innerText = 'Register';
     document.getElementById('login-error').innerText = 'Login unsuccessful. Please try again.'
@@ -326,20 +329,23 @@
    
     
     
-  } else if (selectedLanguage == 'VE') {
-    document.getElementById('go_to_main').innerText = 'Perfil';
-    document.getElementById('Register').innerText = 'Logout';
-    document.getElementById('login-error').innerText = 'Profilo'
-    document.getElementById('closeButton').innerText = 'Profilo';
-    document.getElementById('Register').innerText = 'Profilo';
-    
-    document.getElementById('registerModalLabel').innerText = 'Amigos';
-    document.getElementById('passwordError').innerText = 'Salir';
-    document.getElementById('closeButton').innerText = 'Logout';
-    
-    document.getElementById('Registernick').innerText = 'Logout';
-    document.getElementById('passwordError').innerText = 'Logout';
-    document.getElementById('passwordInvalid').innerText = 'Logout';
+  } else if (savedLanguage == 'ES') {
+    document.getElementById('go_to_main').innerText = 'Acceder';
+    document.getElementById('Register').innerText = 'Registrarse';
+    document.getElementById('login-error').innerText = 'No se ha podido iniciar sesión. Inténtalo de nuevo.'
+    document.getElementById('registerModalLabel').innerText = 'Registrarse';
+    document.getElementById('successMessage').innerText = 'Registro exitoso.';
+    document.getElementById('passwordError').innerText = 'La contraseña no coincide.';
+    document.getElementById('passwordInvalid').innerText = 'La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.';
+    document.getElementById('closeButton').innerText = 'Cerrar';
+    document.getElementById('registerButton').innerText = 'Registrarse';
+    document.getElementById('passwordError').innerText = 'La contraseña no coincide.';
+    document.getElementById('closeButton').innerText = 'Cerrar';
+    document.getElementById('Registernick').placeholder = 'Nombre de usuario';
+    document.getElementById('Registerpassword').placeholder = 'Contraseña';
+    document.getElementById('repeatPassword').placeholder = 'Repeat contraseña';
+    document.getElementById('Login42').placeholder = 'Acceder con 42';
+    document.getElementById('nickInput').placeholder = 'Nombre de usuario';
   }
   </script>
     </body>

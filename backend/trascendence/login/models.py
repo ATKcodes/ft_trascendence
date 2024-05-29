@@ -13,6 +13,7 @@ class User (AbstractUser):
     winrate_pong = models.FloatField(default=0)
     wins_tictactoe = models.IntegerField(default=0)
     loses_tictactoe = models.IntegerField(default=0)
+    draw_tictactoe = models.IntegerField(default=0)
     winrate_tictactoe = models.FloatField(default=0)
     profile_image = models.ImageField(upload_to='profile_images/', blank=True)
     player = models.CharField(max_length=250, blank=True)

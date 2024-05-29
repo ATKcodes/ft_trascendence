@@ -1,6 +1,10 @@
 // User.js
 export default class User {
-    constructor(name, token) {
+    nickname = 'ciao';
+	token = '';
+	
+	
+	constructor() {
         this.name = name;
         this.token = token;
     }

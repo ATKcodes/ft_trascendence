@@ -150,7 +150,7 @@
     }
 </style>
 <body>
-    <h2 class="div-title">PONG</h2>
+    <h2 id = "go_to_main"class="div-title">PONG</h2>
     <div class="profile">
         <div class="img-fluid">
             <div class="image-container">
@@ -199,6 +199,11 @@
     document.getElementById('image-upload').click();
 });
 
+document.getElementById("go_to_main").addEventListener("click", function() {
+            localStorage.setItem('lastPage', "main-page");
+            window.parent.goToMain();
+        });
+	
 document.getElementById('image-upload').addEventListener('change', function(e) {
     if (e.target.files[0].size > 2000000) {
         alert('Il file è troppo grande! Per favore carica un file di dimensioni inferiori a 2MB.');

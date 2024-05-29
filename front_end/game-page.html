@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<title>PONG</title>
 	<style>
+	/* CSS for the basics of the page */
 	.select-language{
 		background-color: #B6A999;
 		color: #000000;
@@ -28,13 +29,12 @@
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
-	
 	}
 	.div-title {
 		font-family: 'font-Despairs';
 		font-size: 250%;
 		position: absolute;
-		left: 45%; /* Change this to move the div horizontally */
+		left: 47%; /* Change this to move the div horizontally */
 		right: 2%;
 		top: 0%; /* Change this to move the div vertically */
 		width: 15%;
@@ -80,6 +80,67 @@
 		margin: 0 auto;
 		text-align: center;
 	}
+	.avatar3 {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		font-weight: lighter;
+		font-size :110%;
+		color: #ffffff;
+		position: absolute;
+		left: 17%;
+		top: 1.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.avatar4 {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		font-weight: lighter;
+		font-size :110%;
+		color: #ffffff;
+		position: absolute;
+		right: 17%;
+		top: 1.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.userleft{
+		position: absolute;
+		left: 5%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.userleft2{
+		position: absolute;
+		left: 20%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}	
+	.userright{
+		position: absolute;
+		right: 5%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.userright2{
+		position: absolute;
+		right: 20%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	/* CSS for the menu buttons*/
 	.btn-left {
 		font-weight: lighter;
 		font-size :110%;
@@ -171,13 +232,127 @@
 		color: #ffffff;
 		position: absolute;
 		right: 40%;
-		top: 55%;
+		top: 65%;
 		width: 20%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 		border-color: #ffffff;
 	}
+	/* CSS for tournament menu */
+	.btn-firstplace {
+		font-weight: lighter;
+		font-size :300%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		left: 25%;
+		top: 45%;
+		width: 20%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-secondplace {
+		font-weight: lighter;
+		font-size :220%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 21%;
+		top: 38%;
+		width: 13%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-thirdplace {
+		font-weight: lighter;
+		font-size :120%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 20%;
+		top: 55%;
+		width: 5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-thirdplace2 {
+		font-weight: lighter;
+		font-size :120%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 30%;
+		top: 55%;
+		width: 5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-firstplace-text {
+		font-weight: lighter;
+		font-size :150%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		left: 22%;
+		top: 40%;
+		width: 25%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-secondplace-text {
+		font-weight: lighter;
+		font-size :140%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 21%;
+		top: 30%;
+		width: 13%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-thirdplace-text {
+		font-weight: lighter;
+		font-size :120%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 25%;
+		top: 50%;
+		width: 5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+	.btn-endtournament {
+		font-weight: lighter;
+		font-size :110%;
+		background-color: #000000;
+		color: #ffffff;
+		position: absolute;
+		right: 46%;
+		top: 75%;
+		width: 10%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+		border-color: #ffffff;
+	}
+		/* CSS for miscellaneus */
 	.btn-nohover:hover {
 		visibility: visible !important;
         opacity: 1 !important;
@@ -223,22 +398,7 @@
 		display: none;
 		background-color: #f9f9f9;
 	}
-	.userleft{
-		position: absolute;
-		left: 5%;
-		top: 2.5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}	
-	.userright{
-		position: absolute;
-		right: 5%;
-		top: 2.5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
+	/* CSS for the game */
 	#pong-game {
     	position: relative;
 		width: 96%;
@@ -260,7 +420,7 @@
 		color : white;
 	}
 
-	#paddleA, #paddleB {
+	#paddleA, #paddleB, #paddleC, #paddleD{
 		position: absolute;
 		height: 80px;
 		width: 10px;
@@ -275,16 +435,24 @@
 	#paddleB {
 		right: 0;
 	}
+	#paddleC{
+		left : 25%
+	}
+	#paddleD{
+		right : 25%
+	}
 
-	#ball, #paddleA, #paddleB {
+	#ball, #paddleA, #paddleB, #paddleC, #paddleD {
 		background: white;
    		z-index: 2;
 }
 	</style>
 </head>
 <body>
-    <img src="download.jpeg" alt="Avatar" class="avatar" id="go_to_profle">
+    <img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
     <h5 id = "userleft" class = "userleft">User1</h5>
+	<img src="download.jpeg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
+	<h5 id = "userleft2" class = "userleft2" style = "display:none">User3</h5>
     <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     <script>
         document.getElementById("go_to_main").addEventListener("click", function() {
@@ -292,75 +460,116 @@
             window.parent.goToMain();
         });
     </script>
-    <img src="download.jpeg" alt="Avatar" class="avatar2" id="go_to_profle">
+    <img src="download.jpeg" alt="Avatar" class="avatar2" id = "avatar2">
     <h5 id = "userright"class = "userright">User2</h5>
+	<img src="download.jpeg" alt="Avatar" class="avatar4" id = "avatar4" style = "display:none">
+	<h5 id = "userright2" class = "userright2" style = "display:none">User4</h5>
     <div id="pong-game">
         <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
-            <div><span id="scoreA" style="font-size: 24px; color: white;">0</span></div>
-            <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white;">0</span></div>
+            <div><span id="scoreA" style="font-size: 24px; color: white; display:none">0</span></div>
+            <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white; display:none">0</span></div>
         </div>
-        <div id="ball"></div>
-        <div id="paddleA"></div>
-        <div id="paddleB"></div>
+        <div id="ball" style = "display: none;"></div>
+        <div id="paddleA" style = "display: none;"></div>
+		<div id="paddleC" style = "display: none;"></div>
+        <div id="paddleB" style = "display: none;"></div>
+		<div id="paddleD" style = "display: none;"></div>
     </div>
-    <input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
-    <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<input id="player2-username-tris" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
-    <button id="submit-username-tris" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-    <button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
-    <button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
-	<button id="play-tris-1v1" style="display: none;"type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
-	<button id="play-tris-tournament" style="display: none;" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
-    <button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
+	<!--first menu-->
+	<button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
+	<button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
+	<!--menu choose pong mode-->
+	<button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
     <button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
     <button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
     <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
+	<!--menu insert player2 nick in play-1v1-->
+	<input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+    <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<!--menu insert players nick in play-4players and tournament-->
+	<input id="player2-username2" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+    <button id="submit-username2" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<input id="player3-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player3 Nick">
+    <button id="submit-username3" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<input id="player4-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player4 Nick">
+    <button id="submit-username4" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<!--menu choose tris mode-->
+	<button id="play-tris-1v1" style="display: none;"type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
+	<button id="play-tris-tournament" style="display: none;" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
+	<!--menu insert player2 nick in play-tris-1v1-->
+	<input id="player2-username-tris" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
+	<button id="submit-username-tris" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
+	<!--menu NextMatch-->
 	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
-	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom btn-lg btn-block"></button>
+	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom btn-lg btn-block">Next Match</button>
+	<!--menu tournament between matches-->
+	<button id="Player1" style="display:none" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Player1</button>
+	<button id="Player2" style="display:none" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Player2</button>
+	<button id = "Readyup" style="display:none" class = "btn btn-center-bottom btn-lg btn-block ">Start</button>
+	<!--menu tournament end-->
+	<span id="firstplace-text" class="btn-firstplace-text" style="display:none;">The tournament is over, The winner is:</span>
+	<button id="FirstPlace" style="display:none" class="btn btn-firstplace btn-lg btn-block">First Place</button>
+	<span id="secondplace-text" class="btn-secondplace-text" style="display:none;">Second place:</span>
+	<button id="SecondPlace" style="display:none" class="btn btn-secondplace btn-lg btn-block">Second Place</button>
+	<span id="thirdplace-text" class="btn-thirdplace-text" style="display:none;">Third place:</span>
+	<button id="ThirdPlace" style="display:none" class="btn btn-thirdplace btn-lg btn-block">Third Place</button>
+	<button id="ThirdPlace2" style="display:none" class="btn btn-thirdplace2 btn-lg btn-block">Third Place</button>
+	<button id="EndTournament" style="display:none" class="btn btn-endtournament btn-lg btn-block">End Tournament</button>
 	<script>
-		const selectedLanguage = localStorage.getItem('language');
-		if (selectedLanguage == 'IT') {
-		document.getElementById('userleft').innerText = 'Giocatore 1';
-		document.getElementById('userright').innerText = 'Giocatore 2';
-		document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
-		document.getElementById('submit-username').innerText = 'Invia';
-		document.getElementById('player2-username-tris').placeholder = 'Inserisci nome giocatore2'
-		document.getElementById('submit-username-tris').innerText = 'Invia';
-		document.getElementById('play-pong').innerText = 'Gioca a Pong';
-		document.getElementById('play-tris').innerText = 'Gioca a Tris';
-		document.getElementById('play-tris-1v1').innerText = 'Gioca 1 contro 1';
-		document.getElementById('play-tris-tournament').innerText = 'Modalità torneo';
-		document.getElementById('play-1v1').innerText = 'Gioca 1 contro 1';
-		document.getElementById('play-4players').innerText = 'Modalità 4 Giocatori';
-		document.getElementById('play-vs-ia').innerText = 'Modalità contro computer';
-		document.getElementById('play-tournament').innerText = 'Modalità torneo';
-		document.getElementById('NextMatch').innerText = 'Prossima partita';
-		
-		} else if (selectedLanguage == 'EN') {
-		document.getElementById('userleft').innerText = 'Player 1';
-		document.getElementById('userright').innerText = 'Player 2';
-		document.getElementById('player2-username').placeholder = 'Insert Player2 Nick'
-		document.getElementById('submit-username').innerText = 'Submit';
-		document.getElementById('player2-username-tris').placeholder = 'Insert Player2 Nick'
-		document.getElementById('submit-username-tris').innerText = 'Submit';
-		document.getElementById('play-pong').innerText = 'Play Pong';
-		document.getElementById('play-tris').innerText = 'Play Tic Tac Toe';
-		document.getElementById('play-tris-1v1').innerText = 'Play 1v1';
-		document.getElementById('play-tris-tournament').innerText = 'Play Tournament';
-		document.getElementById('play-1v1').innerText = 'Play 1v1';
-		document.getElementById('play-4players').innerText = 'Play in 4 Players';
-		document.getElementById('play-vs-ia').innerText = 'Play vs IA';
-		document.getElementById('play-tournament').innerText = 'Play Tournament';
-		document.getElementById('NextMatch').innerText = 'Next Match';
-		
-		
-		
-		} else if (selectedLanguage == 'VE') {
-		document.getElementById('userright').innerText = 'Login';
-		document.getElementById('friends').innerText = 'Logout';
-		document.getElementById('player2-username').innerText = 'Login unsuccessful. Please try again.'
-		document.getElementById('submit-username').innerText = 'Register';
-		}
+		document.addEventListener('DOMContentLoaded', (event) => {
+			const  savedLanguage = localStorage.getItem('language');
+			if (savedLanguage == 'IT') {
+				document.getElementById('userleft').innerText = 'Giocatore 1';
+				document.getElementById('userright').innerText = 'Giocatore 2';
+				document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
+				document.getElementById('submit-username').innerText = 'Invia';
+				document.getElementById('player2-username-tris').placeholder = 'Inserisci nome giocatore2'
+				document.getElementById('submit-username-tris').innerText = 'Invia';
+				document.getElementById('play-pong').innerText = 'Gioca a Pong';
+				document.getElementById('play-tris').innerText = 'Gioca a Tris';
+				document.getElementById('play-tris-1v1').innerText = 'Gioca 1 contro 1';
+				document.getElementById('play-tris-tournament').innerText = 'Modalità torneo';
+				document.getElementById('play-1v1').innerText = 'Gioca 1 contro 1';
+				document.getElementById('play-4players').innerText = 'Modalità 4 Giocatori';
+				document.getElementById('play-vs-ia').innerText = 'Modalità contro computer';
+				document.getElementById('play-tournament').innerText = 'Modalità torneo';
+				document.getElementById('NextMatch').innerText = 'Prossima partita';
+				
+			} else if (savedLanguage == 'EN') {
+				document.getElementById('userleft').innerText = 'Player 1';
+				document.getElementById('userright').innerText = 'Player 2';
+				document.getElementById('player2-username').placeholder = 'Insert Player2 Nick'
+				document.getElementById('submit-username').innerText = 'Submit';
+				document.getElementById('player2-username-tris').placeholder = 'Insert Player2 Nick'
+				document.getElementById('submit-username-tris').innerText = 'Submit';
+				document.getElementById('play-pong').innerText = 'Play Pong';
+				document.getElementById('play-tris').innerText = 'Play Tic Tac Toe';
+				document.getElementById('play-tris-1v1').innerText = 'Play 1v1';
+				document.getElementById('play-tris-tournament').innerText = 'Play Tournament';
+				document.getElementById('play-1v1').innerText = 'Play 1v1';
+				document.getElementById('play-4players').innerText = '4 Player Mode';
+				document.getElementById('play-vs-ia').innerText = 'Play vs IA';
+				document.getElementById('play-tournament').innerText = 'Play Tournament';
+				document.getElementById('NextMatch').innerText = 'Next Match';
+				
+			} else if (savedLanguage == 'ES') {
+				document.getElementById('userleft').innerText = 'Jugador 1';
+				document.getElementById('userright').innerText = 'Jugador 2';
+				document.getElementById('player2-username').placeholder = 'Introduce el nombre del jugador2'
+				document.getElementById('submit-username').innerText = 'Entregar';
+				document.getElementById('player2-username-tris').placeholder = 'Introduce el nombre del jugador2'
+				document.getElementById('submit-username-tris').innerText = 'Entregar';
+				document.getElementById('play-pong').innerText = 'Jugar Pong';
+				document.getElementById('play-tris').innerText = 'Jugar al tres en raya';
+				document.getElementById('play-tris-1v1').innerText = 'Juega 1 contra 1';
+				document.getElementById('play-tris-tournament').innerText = 'Jugar torneo';
+				document.getElementById('play-1v1').innerText = 'Juega 1 contra 1';
+				document.getElementById('play-4players').innerText = 'Modo de 4 jugadores';
+				document.getElementById('play-vs-ia').innerText = 'Juega contra IA';
+				document.getElementById('play-tournament').innerText = 'Jugar torneo';
+				document.getElementById('NextMatch').innerText = 'Próximo partido';
+			}
+		});
 	</script>		
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -369,31 +578,46 @@
 	var pongGame;
 	window.onload = function(){
 	pongGame = {
+		animationFrameId: null,
 		gameMode: "1v1",
 		game: document.getElementById('pong-game'),
 		ball: document.getElementById('ball'),
 		paddleA: document.getElementById('paddleA'),
 		paddleB: document.getElementById('paddleB'),
+		paddleC: document.getElementById('paddleC'),
+		paddleD: document.getElementById('paddleD'),
 		ballPos: {x: 0, y: 0},
 		paddleAPos: {y: 0},
 		paddleBPos: {y: 0},
 	    ballSpeed: {x: 8, y: 8},
 		paddleASpeed: 0,
     	paddleBSpeed: 0,
+		paddleCSpeed: 0,
+   		paddleDSpeed: 0,
     	paddleSpeed: 6,
 		scoreA: 0,
    		scoreB: 0,
 		bouncecounter: 0,
 		balllimitfaster: 2,
-		ballaccelleration: 1,
 		matchdatasent : 0,
+		tournamentStatus: 0,
+		tournamentGame1Win: "player1",
+		tournamentGame2Win: "player3",
+		tournamentGame3Win: "player1", //FIRST PLACE
+		tournamentGame1Lose: "player2", //THIRD PLACE
+		tournamentGame2Lose: "player4", //THIRD PLACE
+		tournamentGame3Lose: "player3", //SECOND PLACE
 		winorlose : true,
+		placement : 1,
+		paddleCPos: {x: document.getElementById('pong-game').offsetWidth * 0.25, y: 0},
+		paddleDPos: {x: document.getElementById('pong-game').offsetWidth * 0.75, y: 0},
 
 		update: function() {
+		document.getElementById("scoreA").style.display = "block";
+        document.getElementById("scoreB").style.display = "block";
         // Update the position of the ball
         this.ballPos.x += this.ballSpeed.x;
         this.ballPos.y += this.ballSpeed.y;
-
 		// Update the position of the paddles
 		this.paddleAPos.y += this.paddleASpeed;
 		
@@ -406,7 +630,23 @@
         } else {
             pongGame.paddleBSpeed = 0;
         }
-    }
+   		}
+		else if (pongGame.gameMode === '4players')
+		{
+			// Add movement for paddleC and paddleD
+			this.paddleCPos.y += this.paddleCSpeed;
+			this.paddleDPos.y += this.paddleDSpeed;
+
+			// Prevent the paddles from going out of the game area
+			this.paddleCPos.y = Math.max(Math.min(this.paddleCPos.y, this.game.offsetHeight - this.paddleC.offsetHeight), 0);
+			this.paddleDPos.y = Math.max(Math.min(this.paddleDPos.y, this.game.offsetHeight - this.paddleD.offsetHeight), 0);
+			
+			if((this.ballPos.x < this.paddleCPos.x + this.paddleC.offsetWidth && this.ballPos.x > this.paddleCPos.x && this.ballPos.y + this.ball.offsetHeight > this.paddleCPos.y && this.ballPos.y < this.paddleCPos.y + this.paddleC.offsetHeight) ||
+				(this.ballPos.x + this.ball.offsetWidth > this.paddleDPos.x && this.ballPos.x + this.ball.offsetWidth < this.paddleDPos.x + this.paddleD.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleDPos.y && this.ballPos.y < this.paddleDPos.y + this.paddleD.offsetHeight)) {
+					this.ballSpeed.x *= -1; // Reverse the horizontal direction
+					this.bouncecounter++;
+			}
+		}
 		this.paddleBPos.y += this.paddleBSpeed;
         // Prevent the paddles from going out of the game area
         this.paddleAPos.y = Math.max(Math.min(this.paddleAPos.y, this.game.offsetHeight - this.paddleA.offsetHeight), 0);
@@ -436,6 +676,7 @@
             this.ballSpeed.x *= -1; // Reverse the horizontal direction
 			this.bouncecounter++;
         }
+
 		if (this.bouncecounter == this.balllimitfaster){
 			this.balllimitfaster = this.balllimitfaster * 2;
 			this.ballSpeed.x = this.ballSpeed.x + 1;
@@ -443,23 +684,35 @@
 		}
 		// Check if player A has reached 5 points
 		if (this.scoreA >= 5) {
+			this.resetBall();
 			this.endGame(document.querySelector('.userleft').textContent);
        		return;
 		}
 		// Check if player B has reached 5 points
 		else if (this.scoreB >= 5) {
-        this.endGame(document.querySelector('.userright').textContent);
-        return;
+			this.resetBall();
+        	this.endGame(document.querySelector('.userright').textContent);
+        	return;
     	}
     },
 	endGame: function(winner) {
     // Reset the ball
-    this.resetBall();
+	this.stop();
+	this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
+    this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
 	this.ballSpeed.x = 0;
 	this.ballSpeed.y = 0;
+	this.bouncecounter = 0;
+	this.balllimitfaster = 2;
 	this.ball.style.display = "none";
 	this.paddleA.style.display = "none";
 	this.paddleB.style.display = "none";
+	this.paddleC.style.display = "none";
+	this.paddleD.style.display = "none";
+	document.getElementById("scoreA").style.display = "none";
+    document.getElementById("scoreB").style.display = "none";
+	this.scoreA = 0;
+	this.scoreB = 0;
 	this.winorlose = "true";
 	if (winner === document.querySelector('.userleft').textContent)
 	{
@@ -476,19 +729,95 @@
 		score: this.scoreA,
         scoreplayer2: this.scoreB,
    		player2: document.querySelector('.userright').textContent, // Get User2 name
-        date: new Date().toISOString(),
     };
     var jsonMatchData = JSON.stringify(matchData);
 	this.scoreA = 0;
 	this.scoreB = 0;
+	if (this.gameMode !== "1v1")
+	{
+		this.matchdatasent = 1;
+	}
 	if (this.matchdatasent === 0)
 	{
 		sendMatchData(jsonMatchData);
 	}
-	document.getElementById('winner').textContent = winner;
-	document.querySelector('.open_text').style.display = "block";
-	document.getElementById('NextMatch').textContent = "Next Match";
-	document.getElementById('NextMatch').style.display = "block";
+	if (this.gameMode === "4players"){
+		if (winner === document.querySelector('.userleft').textContent)
+			document.getElementById('winner').textContent = "Team 1";
+		else
+			document.getElementById('winner').textContent = "Team 2";
+	}
+	else if (this.gameMode === "tournament"){
+		if (this.tournamentStatus === 0)
+		{
+			this.tournamentGame1Win = winner;
+			if (winner === document.querySelector('.userleft').textContent)
+				this.tournamentGame1Lose = document.querySelector('.userright').textContent;
+			else
+				this.tournamentGame1Lose = document.querySelector('.userleft').textContent;
+			document.getElementById("Player1").innerText = document.querySelector('.userleft2').textContent;
+			document.getElementById("Player2").innerText = document.querySelector('.userright2').textContent;
+			document.getElementById("Player1").style.display = "block";
+			document.getElementById("Player2").style.display = "block";
+			document.getElementById("Readyup").style.display = "block";
+			document.getElementById("winner").textContent = winner;
+			document.querySelector('.open_text').style.display = "block";
+		}
+		else if (this.tournamentStatus === 1)
+		{
+			if (winner === document.querySelector('.userleft').textContent)
+				this.tournamentGame2Win = document.querySelector('.userleft2').textContent;
+			else
+				this.tournamentGame2Win = document.querySelector('.userright2').textContent;
+			if (this.tournamentGame2Win = document.querySelector('.userleft2').textContent)
+				this.tournamentGame2Lose = document.querySelector('.userright2').textContent;
+			else
+				this.tournamentGame2Lose = document.querySelector('.userleft2').textContent;
+			document.getElementById("Player1").innerText = this.tournamentGame1Win;
+			document.getElementById("Player2").innerText = this.tournamentGame2Win;
+			document.getElementById("Player1").style.display = "block";
+			document.getElementById("Player2").style.display = "block";
+			document.getElementById("Readyup").style.display = "block";
+			document.getElementById("winner").textContent = this.tournamentGame2Win;
+			document.querySelector('.open_text').style.display = "block";
+		}
+		else if (pongGame.tournamentStatus === 2)
+		{
+			if (winner === document.querySelector('.userleft').textContent)
+				this.tournamentGame3Win = this.tournamentGame1Win;
+			else
+				this.tournamentGame3Win = this.tournamentGame2Win;
+			if (this.tournamentGame3Win === this.tournamentGame1Win)
+				this.tournamentGame3Lose = this.tournamentGame2Win;
+			else
+				this.tournamentGame3Lose = this.tournamentGame1Win;
+			document.getElementById("scoreA").style.display = "none";
+			document.getElementById("scoreB").style.display = "none";
+			document.getElementById("FirstPlace").innerText = this.tournamentGame3Win;
+			document.getElementById("SecondPlace").innerText = this.tournamentGame3Lose;
+			document.getElementById("ThirdPlace").innerText = this.tournamentGame1Lose;
+			document.getElementById("ThirdPlace2").innerText = this.tournamentGame2Lose;
+			document.getElementById("FirstPlace").style.display = "block";
+			document.getElementById("SecondPlace").style.display = "block";
+			document.getElementById("ThirdPlace").style.display = "block";
+			document.getElementById("ThirdPlace2").style.display = "block";
+			document.getElementById("firstplace-text").style.display = "block";
+			document.getElementById("secondplace-text").style.display = "block";
+			document.getElementById("thirdplace-text").style.display = "block";
+			document.getElementById("EndTournament").style.display = "block";
+			this.tournamentStatus = -1;
+		}
+		this.tournamentStatus++;
+	}
+	else
+	{
+		document.getElementById('winner').textContent = winner;
+	}
+	if (this.gameMode !== "tournament")
+	{
+		document.querySelector('.open_text').style.display = "block";
+		document.getElementById('NextMatch').style.display = "block";
+	}
 	document.getElementById('NextMatch').addEventListener('click', function() {
 		document.querySelector('.open_text').style.display = "none";
 		document.getElementById('NextMatch').style.display = "none";
@@ -526,14 +855,23 @@
 
     // Update the position of paddle B
     this.paddleB.style.top = this.paddleBPos.y + 'px';
+
+	// Update the position of paddle C
+	this.paddleC.style.top = this.paddleCPos.y + 'px';
+
+	// Update the position of paddle D
+	this.paddleD.style.top = this.paddleDPos.y + 'px';
 },
 
     loop: function() {
         pongGame.update();
         pongGame.draw();
-        requestAnimationFrame(pongGame.loop);
+        pongGame.animationFrameId = requestAnimationFrame(pongGame.loop);
     },
 
+	stop: function() {
+		cancelAnimationFrame(this.animationFrameId);
+	},
     start: function() {
         pongGame.loop();
     }
@@ -573,6 +911,18 @@ document.addEventListener('keydown', function(event) {
         case 'ArrowDown':
             pongGame.paddleBSpeed = pongGame.paddleSpeed;
             break;
+		case 'i':
+			pongGame.paddleCSpeed = -pongGame.paddleSpeed;
+			break;
+		case 'k':
+			pongGame.paddleCSpeed = pongGame.paddleSpeed;
+			break;
+		case '-':
+			pongGame.paddleDSpeed = -pongGame.paddleSpeed;
+			break;
+		case '+':
+			pongGame.paddleDSpeed = pongGame.paddleSpeed;
+			break;
     }
 });
 
@@ -586,6 +936,14 @@ document.addEventListener('keyup', function(event) {
         case 'ArrowDown':
             pongGame.paddleBSpeed = 0;
             break;
+		case 'i':
+		case 'k':
+			pongGame.paddleCSpeed = 0;
+			break;
+		case '-':
+		case '+':
+			pongGame.paddleDSpeed = 0;
+			break;
     }
 });
 
@@ -606,6 +964,10 @@ document.getElementById("play-pong").addEventListener("click", function() {
     
 });
 document.getElementById("play-1v1").addEventListener("click", function(){
+	document.getElementById("userright2").style.display = "none";
+	document.getElementById("userleft2").style.display = "none";
+	document.getElementById("avatar3").style.display = "none";
+	document.getElementById("avatar4").style.display = "none";
 	document.getElementById("play-1v1").style.display = "none";
     document.getElementById("play-4players").style.display = "none";
     document.getElementById("play-vs-ia").style.display = "none";
@@ -615,56 +977,243 @@ document.getElementById("play-1v1").addEventListener("click", function(){
 });
 //Funzione per cambiare il nick dell'user2.
 document.getElementById("submit-username").addEventListener("click", function() {
-    var username = document.getElementById("player2-username").value;
-
-    if (username) {
-        // Save the username for player 2
+	console.log("Submit username clicked"); // Add this line
+	var username = document.getElementById("player2-username").value;
+	if (username) {
+		// Save the username for player 2
 		document.getElementById("userright").textContent = username;
 		document.getElementById("player2-username").style.display = "none";
 		document.getElementById("submit-username").style.display = "none";
-        // Start the game
-        pongGame.start();
-    } else {
-        alert("Please enter a username for player 2.");
-    }
+		document.getElementById("scoreA").style.display = "block";
+		document.getElementById("scoreB").style.display = "block";
+		document.getElementById("ball").style.display = "block";
+		document.getElementById("paddleA").style.display = "block";
+		document.getElementById("paddleB").style.display = "block";
+		pongGame.gameMode = "1v1";
+		pongGame.resetBall();
+		pongGame.start();
+	} else {
+		alert("Please enter a username for player 2.");
+	}
 });
+
+//IA menu
 document.getElementById("play-vs-ia").addEventListener("click", function(){
+	document.getElementById("userright2").style.display = "none";
+	document.getElementById("userleft2").style.display = "none";
+	document.getElementById("avatar3").style.display = "none";
+	document.getElementById("avatar4").style.display = "none";
 	document.getElementById("userright").textContent = "IA";
 	document.getElementById("play-1v1").style.display = "none";
     document.getElementById("play-4players").style.display = "none";
     document.getElementById("play-vs-ia").style.display = "none";
     document.getElementById("play-tournament").style.display = "none";
 	pongGame.gameMode = "vs-ai";
+	pongGame.resetBall();
+	document.getElementById("scoreA").style.display = "block";
+	document.getElementById("scoreB").style.display = "block";
+	document.getElementById("ball").style.display = "block";
+	document.getElementById("paddleA").style.display = "block";
+	document.getElementById("paddleB").style.display = "block";
 	pongGame.start();
 });
 
-//TRIS CODE
-document.getElementById("play-tris").addEventListener("click", function(){
-	document.getElementById("play-pong").style.display = "none";
-	document.getElementById("play-tris").style.display = "none";
-	document.getElementById("play-tris-1v1").style.display = "block";
-	document.getElementById("play-tris-tournament").style.display = "block";
+
+//4 players menu
+document.getElementById("play-4players").addEventListener("click", function(){
+	document.getElementById("play-1v1").style.display = "none";
+	document.getElementById("play-4players").style.display = "none";
+	document.getElementById("play-vs-ia").style.display = "none";
+	document.getElementById("play-tournament").style.display = "none";
+	pongGame.gameMode = "4players";
+	document.getElementById("player2-username").style.display = "block";
+	document.getElementById("submit-username2").style.display = "block";
+	document.getElementById("userright2").style.display = "block";
+	document.getElementById("userleft2").style.display = "block";
+	document.getElementById("avatar3").style.display = "block";
+	document.getElementById("avatar4").style.display = "block";
 });
-document.getElementById("play-tris-1v1").addEventListener("click", function(){
-	document.getElementById("play-tris-1v1").style.display = "none";
-    document.getElementById("play-tris-tournament").style.display = "none";
-	document.getElementById("player2-username-tris").style.display = "block";
-    document.getElementById("submit-username-tris").style.display = "block";
-});
-//Funzione per cambiare il nick dell'user2 nel gioco tris
-document.getElementById("submit-username-tris").addEventListener("click", function() {
-    var username = document.getElementById("player2-username-tris").value;
+
+document.getElementById("submit-username2").addEventListener("click", function() {
+    var username = document.getElementById("player2-username").value;
 
     if (username) {
         // Save the username for player 2
 		document.getElementById("userright").textContent = username;
-		document.getElementById("player2-username-tris").style.display = "none";
-		document.getElementById("submit-username-tris").style.display = "none";
-        // Start the game
-		// QUI INSERISCI LA FUNZIONE CHE FA PARTIRE TRIS
+		document.getElementById("player2-username").style.display = "none";
+		document.getElementById("submit-username2").style.display = "none";
+		document.getElementById("player3-username").style.display = "block";
+		document.getElementById("submit-username3").style.display = "block";
     } else {
         alert("Please enter a username for player 2.");
     }
+});
+
+document.getElementById("submit-username3").addEventListener("click", function() {
+    var username = document.getElementById("player3-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userleft2").textContent = username;
+		document.getElementById("player3-username").style.display = "none";
+		document.getElementById("submit-username3").style.display = "none";
+		document.getElementById("player4-username").style.display = "block";
+		document.getElementById("submit-username4").style.display = "block";
+    } else {
+        alert("Please enter a username for player 3.");
+    }
+});
+
+
+//Tournament menu
+document.getElementById("play-tournament").addEventListener("click", function(){
+	document.getElementById("play-1v1").style.display = "none";
+	document.getElementById("play-4players").style.display = "none";
+	document.getElementById("play-vs-ia").style.display = "none";
+	document.getElementById("play-tournament").style.display = "none";
+	pongGame.gameMode = "tournament";
+	document.getElementById("player2-username").style.display = "block";
+	document.getElementById("submit-username2").style.display = "block";
+	document.getElementById("userright2").style.display = "block";
+	document.getElementById("userleft2").style.display = "block";
+	document.getElementById("avatar3").style.display = "block";
+	document.getElementById("avatar4").style.display = "block";
+});
+
+document.getElementById("submit-username2").addEventListener("click", function() {
+    var username = document.getElementById("player2-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userright").textContent = username;
+		document.getElementById("player2-username").style.display = "none";
+		document.getElementById("submit-username2").style.display = "none";
+		document.getElementById("player3-username").style.display = "block";
+		document.getElementById("submit-username3").style.display = "block";
+    } else {
+        alert("Please enter a username for player 2.");
+    }
+});
+
+document.getElementById("submit-username3").addEventListener("click", function() {
+    var username = document.getElementById("player3-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userleft2").textContent = username;
+		document.getElementById("player3-username").style.display = "none";
+		document.getElementById("submit-username3").style.display = "none";
+		document.getElementById("player4-username").style.display = "block";
+		document.getElementById("submit-username4").style.display = "block";
+    } else {
+        alert("Please enter a username for player 3.");
+    }
+});
+
+document.getElementById("submit-username4").addEventListener("click", function() {
+    var username = document.getElementById("player4-username").value;
+
+    if (username) {
+        // Save the username for player 2
+		document.getElementById("userright2").textContent = username;
+		document.getElementById("player4-username").style.display = "none";
+		document.getElementById("submit-username4").style.display = "none";
+		if (pongGame.gameMode === "tournament")
+		{
+			// Case for Tournament Gamemode
+			document.getElementById("Player1").innerText = document.querySelector('.userleft').textContent;
+			document.getElementById("Player2").innerText = document.querySelector('.userright').textContent;
+			document.getElementById("Player1").style.display = "block";
+			document.getElementById("Player2").style.display = "block";
+			document.getElementById("Readyup").style.display = "block";
+		}
+		else {
+			// Case for 4 players gamemode
+			document.getElementById("scoreA").style.display = "block";
+			document.getElementById("scoreB").style.display = "block";
+			document.getElementById("ball").style.display = "block";
+			document.getElementById("paddleA").style.display = "block";
+			document.getElementById("paddleB").style.display = "block";
+			document.getElementById("paddleC").style.display = "block";
+			document.getElementById("paddleD").style.display = "block";
+			pongGame.resetBall();
+			pongGame.start();
+		}
+    } else {
+        alert("Please enter a username for player 4.");
+    }
+});
+// Ready up button for tournament
+document.getElementById("Readyup").addEventListener("click", function(){
+	document.querySelector('.open_text').style.display = "none";
+	document.getElementById('NextMatch').style.display = "none";
+	document.getElementById("Player1").style.display = "none";
+	document.getElementById("Player2").style.display = "none";
+	document.getElementById("Readyup").style.display = "none";
+	document.getElementById("scoreA").style.display = "block";
+	document.getElementById("scoreB").style.display = "block";
+	document.getElementById("ball").style.display = "block";
+	document.getElementById("paddleA").style.display = "block";
+	document.getElementById("paddleB").style.display = "block";
+	pongGame.resetBall();
+	pongGame.start();
+});
+
+
+document.getElementById('EndTournament').addEventListener('click', function() {
+		document.getElementById("FirstPlace").style.display = "none";
+		document.getElementById("SecondPlace").style.display = "none";
+		document.getElementById("ThirdPlace").style.display = "none";
+		document.getElementById("ThirdPlace2").style.display = "none";
+		document.getElementById("firstplace-text").style.display = "none";
+		document.getElementById("secondplace-text").style.display = "none";
+		document.getElementById("thirdplace-text").style.display = "none";
+		document.getElementById('EndTournament').style.display = "none";
+		pongGame.ballSpeed.x = 0;
+		pongGame.ballSpeed.y = 0;
+		pongGame.bouncecounter = 0;
+		pongGame.balllimitfaster = 2;
+		pongGame.scoreA = 0;
+		pongGame.scoreB = 0;
+		if (pongGame.tournamentGame3Lose === document.querySelector('.userleft').textContent)
+			pongGame.placement = 2;
+		else if (pongGame.tournament1Lose === document.querySelector('.userleft').textContent || pongGame.tournamentGame2Lose === document.querySelector('.userleft').textContent)
+			pongGame.placement = 3;
+		else
+			pongGame.placement = 1;
+		var TournamentData = {
+		game: "pong",
+		placement: pongGame.placement,
+    	};
+    	var jsonTournamentData = JSON.stringify(TournamentData);
+		var token = localStorage.getItem('userToken');
+		fetch('http://localhost:8001/main/winlose/', { //Change the URL
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+				body: jsonTournamentData
+			}).then(response => {
+				if (response.ok) {
+					console.log('Tournament data sent successfully');
+				} else {
+					console.error('Error sending tournament data:', response.statusText);
+				}
+			}).catch(error => {
+				console.error('Network error:', error);
+			});
+
+		document.getElementById('scoreA').style.display = "none";
+		document.getElementById('scoreB').style.display = "none";
+		document.getElementById('play-pong').style.display = "block";
+		document.getElementById('play-tris').style.display = "block";
+	});
+
+//TRIS CODE
+document.getElementById("play-tris").addEventListener("click", function(){
+	localStorage.setItem('lastPage', "tris-game");
+	window.parent.goToTris();
 });
 }
 </script>
