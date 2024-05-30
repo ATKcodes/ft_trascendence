@@ -18,6 +18,7 @@ class User (AbstractUser):
     profile_image = models.ImageField(upload_to='profile_images/', blank=True)
     player = models.CharField(max_length=250, blank=True)
     player2 = models.CharField(max_length=250, blank=True)
+    language = models.CharField(max_length=10, default="EN")
     score = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
     scoreplayer2 = models.IntegerField(default=0)

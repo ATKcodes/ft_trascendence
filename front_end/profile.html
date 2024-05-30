@@ -217,14 +217,15 @@ document.getElementById('image-upload').addEventListener('change', function(e) {
         reader.readAsDataURL(e.target.files[0]);
 
         // Creare un nuovo oggetto FormData e aggiungere il file
-        var formData = new FormData();
-        formData.append('image', e.target.files[0]);
+        let imageFile = document.getElementById('profileImage').files[0];
+        let formData = new FormData();
+        formData.append('image', imageFile);
+
 
         // Invia il file al server utilizzando fetch
         fetch('http://localhost:8001/main/profile_image/', {
             method: 'POST',
             headers: {
-            "Content-Type": "application/json",
             Authorization: "Token " + localStorage.getItem("userToken"),
           },
             body: formData

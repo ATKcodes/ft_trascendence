@@ -22,6 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
             "winrate_tictactoe",
             "matchHistorypong",
             "matchHistorytictactoe",
+            "language",
         ]
         extra_kwargs = {"password": {"write_only": True}}
 

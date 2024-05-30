@@ -7,14 +7,16 @@ RUN apk add --no-cache openssl
 # Create a directory for the keys
 RUN mkdir -p /etc/nginx/ssl
 
-# Generate a self-signed SSL certificate and key
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=US/ST=Denial/L=Shelbyville/O=Dis/CN=www.tuanonna.com" && chmod +r /etc/nginx/ssl/nginx.crt /etc/nginx/ssl/nginx.key
 
 # Remove the default Nginx configuration file
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy the HTML file to the Nginx document root
 COPY *.html /usr/share/nginx/html/
+
+COPY nginx.key /etc/nginx/ssl/
+
+COPY nginx.crt /etc/nginx/ssl/
 
 COPY Despairs-X3Wxo.ttf /usr/share/nginx/html/
 

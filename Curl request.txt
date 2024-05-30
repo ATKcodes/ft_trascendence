@@ -30,3 +30,16 @@ CURL for delete accout from the database:
 curl -X DELETE -H "Content-Type: application/json" \
      -H "Authorization: Token 3lmSf0aJSEvdk9tDgzY2tIDaMPX3JywvIechkkuEFqvo90GqQhoKuaCxUWmOiqoPVnwFaNWeoOhVmzwGHPfjFCDr83o2mCQ72HcnlcR7RSZukEv0BiCDAT6SNKQBJCNN" \
      http://localhost:8001/main/delete_user/
+
+
+
+
+CURL for update image 
+
+curl -X POST -H "Authorization: Token NE20xla26z8gAub02wYu2Y4R4vSUVLugbhFTkDN0f2qfWp0TEMqfnGsNRynps9lvwodpBMf7APgKEQtvQojJkyL3jzEa1kDy3vW3iTkuU7PCd300d3fp6OHL72V8U3kI" -F "image=@/nfs/homes/ldi-masc/Desktop/net_practice/download.jpeg" http://localhost:8001/main/profile_image/
+
+
+
+CURL for getting path image
+
+curl -X GET -H "Authorization: Token NE20xla26z8gAub02wYu2Y4R4vSUVLugbhFTkDN0f2qfWp0TEMqfnGsNRynps9lvwodpBMf7APgKEQtvQojJkyL3jzEa1kDy3vW3iTkuU7PCd300d3fp6OHL72V8U3kI" http://localhost:8001/main/profile_image/
