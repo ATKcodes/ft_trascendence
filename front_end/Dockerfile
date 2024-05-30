@@ -14,14 +14,14 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/n
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy the HTML file to the Nginx document root
-COPY *.html /usr/share/nginx/html
+COPY *.html /usr/share/nginx/html/
 
-COPY Despairs-X3Wxo.ttf /usr/share/nginx/html
+COPY Despairs-X3Wxo.ttf /usr/share/nginx/html/
 
-COPY download.jpeg /usr/share/nginx/html
+COPY download.jpeg /usr/share/nginx/html/
 
 # Copy the CSS file to the Nginx document root
-COPY styles.css /usr/share/nginx/html
+COPY styles.css /usr/share/nginx/html/
 
 # Copy a configuration file from the current directory
 COPY nginx.conf /etc/nginx/conf.d
