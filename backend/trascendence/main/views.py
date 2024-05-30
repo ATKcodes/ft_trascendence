@@ -123,17 +123,16 @@ def WinLose_tictac(request):
         status=status.HTTP_200_OK,
     )
 
-
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def update_profile_image(request):
-    serializer = ProfileImageSerializer(data=request.data, instance=request.user)
-    if serializer.is_valid():
-        serializer.save()
-        return JsonResponse({"response": "successful"})
-    else:
-        return JsonResponse({"response": "failed"})
+    if request.method == 'POST':
+        file = request.FILES['image']
+        file_name = default_storage.save(file.name, file)
+        file_url = default_storage.url(file_name)
+    
+    return JsonResponse({'file_url': file_url})
 
 
 @api_view(["POST"])

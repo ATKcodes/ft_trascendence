@@ -211,11 +211,31 @@ document.getElementById('image-upload').addEventListener('change', function(e) {
         alert('Il file è troppo grande! Per favore carica un file di dimensioni inferiori a 2MB.');
     } else {
         var reader = new FileReader();
-        console.log(reader);
         reader.onload = function(e) {
             document.getElementById('profile-image').src = e.target.result;
         }
         reader.readAsDataURL(e.target.files[0]);
+
+        // Creare un nuovo oggetto FormData e aggiungere il file
+        var formData = new FormData();
+        formData.append('image', e.target.files[0]);
+
+        // Invia il file al server utilizzando fetch
+        fetch('http://localhost:8001/main/profile_image/', {
+            method: 'POST',
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: "Token " + localStorage.getItem("userToken"),
+          },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 });
     document.getElementById('modify-icon').addEventListener('click', function() {
