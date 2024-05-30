@@ -150,10 +150,6 @@
             font-size: 24px;
             cursor: pointer;
         }
-        .pong, .tris {
-            max-height: calc(1.2em * 7); /* 1.2em è l'altezza approssimativa di una riga di testo, moltiplicata per il numero di righe che vuoi visualizzare */
-            overflow-y: auto; /* Abilita lo scorrimento verticale se il contenuto supera l'altezza massima */
-        }
     }
 </style>
 <body>
@@ -217,11 +213,15 @@ document.getElementById('image-upload').addEventListener('change', function(e) {
         reader.readAsDataURL(e.target.files[0]);
     }
 });
-
-document.getElementById('modify-icon').addEventListener('click', function() {
-    var newNickname = prompt('Inserisci il nuovo nickname:');
-    if (newNickname) {
-        document.getElementById('nickname').textContent = newNickname;
-    }
-});
+    document.getElementById('modify-icon').addEventListener('click', function() {
+        var newNickname = prompt('Inserisci il nuovo nickname:');
+        if (newNickname) {
+            var nicknameData = {
+                nickname: newNickname
+            };
+            document.getElementById('nickname').textContent = newNickname;
+            var jsonData = JSON.stringify(nicknameData);
+            // Send jsonData to the database
+        }
+    });
 </script>
