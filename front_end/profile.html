@@ -150,10 +150,6 @@
             font-size: 24px;
             cursor: pointer;
         }
-        .pong, .tris {
-            max-height: calc(1.2em * 7); /* 1.2em è l'altezza approssimativa di una riga di testo, moltiplicata per il numero di righe che vuoi visualizzare */
-            overflow-y: auto; /* Abilita lo scorrimento verticale se il contenuto supera l'altezza massima */
-        }
     }
 </style>
 <body>
@@ -215,38 +211,17 @@ document.getElementById('image-upload').addEventListener('change', function(e) {
             document.getElementById('profile-image').src = e.target.result;
         }
         reader.readAsDataURL(e.target.files[0]);
-
-        // Creare un nuovo oggetto FormData e aggiungere il file
-        let imageFile = document.getElementById('profileImage').files[0];
-        let formData = new FormData();
-        formData.append('image', imageFile);
-
-
-        // Invia il file al server utilizzando fetch
-        fetch('http://localhost:8001/main/profile_image/', {
-            method: 'POST',
-            headers: {
-            Authorization: "Token " + localStorage.getItem("userToken"),
-          },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
     }
 });
-    document.getElementById('modify-icon').addEventListener('click', function() {
+ document.getElementById('modify-icon').addEventListener('click', function() {
         var newNickname = prompt('Inserisci il nuovo nickname:');
         if (newNickname) {
             var nicknameData = {
                 player: newNickname
             };
             document.getElementById('player').textContent = newNickname;
-            // var jsonData = JSON.stringify(nicknameData);
+            console.log(nicknameData);
+            //var jsonData = JSON.stringify(nicknameData);
             fetch("http://localhost:8001/main/nick/", {
             method: "POST",
             headers: {
@@ -262,6 +237,6 @@ document.getElementById('image-upload').addEventListener('change', function(e) {
             .catch((error) => {
                 console.error("Error:", error);
             });
-            }
+        }
     });
 </script>
