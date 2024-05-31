@@ -84,10 +84,8 @@
 		window.onload = function() {
 			// Attempt to get the lastPage from localStorage
 			var lastPage = localStorage.getItem('lastPage');
-
 			// Hide all pages
 			hidePages();
-
 			// Function to show the page based on id
 			function showPage(pageId) {
 				var pageElement = document.getElementById(pageId);
