@@ -13,15 +13,15 @@ class UserSerializer(serializers.ModelSerializer):
             "profile_image",
             "player",
             "password",
-            "friend_list",
+            "friendlist",
             "wins_pong",
             "loses_pong",
             "winrate_pong",
             "wins_tictactoe",
             "loses_tictactoe",
             "winrate_tictactoe",
-            "matchHistorypong",
-            "matchHistorytictactoe",
+            "matchistory_pong",
+            "matchistory_tictactoe",
             "language",
         ]
         extra_kwargs = {"password": {"write_only": True}}

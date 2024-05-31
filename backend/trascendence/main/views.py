@@ -50,7 +50,7 @@ def WinLose_pong(request):
             user.wins_pong += 1
             user.score = request.data["score"]
             user.scoreplayer2 = request.data["scoreplayer2"]
-            user.matchHistorypong.append(
+            user.matchistory_pong.append(
                 {
                     "game": "pong",
                     "win": "true",
@@ -62,7 +62,7 @@ def WinLose_pong(request):
             user.loses_pong += 1
             user.score = request.data["score"]
             user.scoreplayer2 = request.data["scoreplayer2"]
-            user.matchHistorypong.append(
+            user.matchistory_pong.append(
                 {
                     "game": "pong",
                     "win": "false",
@@ -80,7 +80,7 @@ def WinLose_pong(request):
                     "wins": user.wins_pong,
                     "loses": user.loses_pong,
                     "winrate": user.winrate_pong,
-                    "matchHistory": user.matchHistorypong,
+                    "matchHistory": user.matchistory_pong,
                 }
             },
             status=status.HTTP_200_OK,
@@ -96,13 +96,13 @@ def WinLose_tictac(request):
     if request.data["game"] == "tictactoe":
         if request.data["win"] == "true":
             user.wins_tictactoe += 1
-            user.matchHistorytictactoe.append({"game": "tictactoe", "win": "true", "player2": user.player2})
+            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "true", "player2": user.player2})
         elif request.data["win"] == "false":
             user.loses_tictactoe += 1
-            user.matchHistorytictactoe.append({"game": "tictactoe", "win": "false", "player2": user.player2})
+            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "false", "player2": user.player2})
         else:
             user.draw_tictactoe += 1
-            user.matchHistorytictactoe.append({"game": "tictactoe", "win": "draw", "player2": user.player2})
+            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "draw", "player2": user.player2})
         user.winrate_tictactoe = (
             user.wins_tictactoe / (user.wins_tictactoe + user.loses_tictactoe) * 100
         )
@@ -117,7 +117,7 @@ def WinLose_tictac(request):
                 "loses": user.loses_tictactoe,
                 "winrate": user.winrate_tictactoe,
                 "draws": user.draw_tictactoe,
-                "matchHistory": user.matchHistorytictactoe,
+                "matchHistory": user.matchistory_tictactoe,
             }
         },
         status=status.HTTP_200_OK,
