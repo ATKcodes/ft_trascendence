@@ -128,7 +128,7 @@ def WinLose_tictac(request):
 @permission_classes([IsAuthenticated])
 def update_profile_image(request):
     user = request.user
-    user.profile_image = request.data["profile_image"]
+    user.profile_image = request.data["image"]
     user.save()
     serializer = ProfileImageSerializer(data=request.data, instance=request.user)
     if serializer.is_valid():
