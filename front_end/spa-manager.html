@@ -16,7 +16,14 @@
 		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id = "tris-game" src="tris-game.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
-
+			console.log("Script loaded");
+			window.onload = function() {
+				console.log("Window loaded");
+				let url = new URL(window.location.href);
+				console.log(url);
+				let code = url.searchParams.get("code");
+				console.log(code);
+			}
 		function goToMain() {
 			hidePages();
 			document.getElementById("main-page").style.display = "block";
