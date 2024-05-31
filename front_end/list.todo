@@ -33,7 +33,7 @@ front:
       ✔ 1v1 tris M @done (5/26/2024, 12:41:54 PM)
       ✔ torneo tris M @done (5/30/2024, 3:42:40 PM)
     ✔ immagine defalut @done (5/23/2024, 6:36:38 PM)
-    ☐ immagine che posso cambiare (mandare dati al back per salvari)// in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M
+    ✔ immagine che posso cambiare (mandare dati al back per salvari)// in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M @done (5/31/2024, 1:46:21 PM)
     ✔ nick che posso cambiare (mandare dati al back per salvari)M @done (5/30/2024, 3:42:29 PM)
     ✔ tasto indietro @done (5/23/2024, 6:36:43 PM)
 
