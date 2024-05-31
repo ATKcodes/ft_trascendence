@@ -174,48 +174,46 @@
 <select class="select-language rounded-pill">
   <option value="EN">EN</option>
   <option value="IT">IT</option>
-  <option value="VE">VE</option>
+  <option value="ES">ES</option>
 </select>
 <script>
-  document.addEventListener('DOMContentLoaded', (event) => {
-    // Ottieni il riferimento al tuo elemento select
-    var selectLanguage = document.querySelector('.select-language');
+  	document.addEventListener('DOMContentLoaded', (event) => {
+  // Seleziona l'elemento select
+  var selectLanguage = document.querySelector('.select-language');
 
-    // Aggiungi un event listener per l'evento 'change'
-    selectLanguage.addEventListener('change', function() {
-      // Quando l'utente seleziona una nuova lingua, salvala nel localStorage
-      localStorage.setItem('language', this.value);
+  // Aggiungi un event listener per l'evento 'change'
+  selectLanguage.addEventListener('change', function() {
+    // Quando l'utente seleziona una nuova lingua, salvala nel localStorage
+    localStorage.setItem('language', this.value);
 
-      // Aggiorna il testo sulla pagina
-      updateText(this.value);
-    });
-
-    // Funzione per aggiornare il testo sulla pagina
-    function updateText(language) {
-      if (language == 'IT') {
-        document.getElementById('go_to_profile').innerText = 'Profilo';
-        document.getElementById('amici').innerText = 'Amici';
-        document.getElementById('go_to_login').innerText = 'Esci';
-        document.getElementById('go_to_game').innerText = 'Gioca';
-      } else if (language == 'EN') {
-        document.getElementById('go_to_profile').innerText = 'Profile';
-        document.getElementById('amici').innerText = 'Friends';
-        document.getElementById('go_to_login').innerText = 'Logout';
-        document.getElementById('go_to_game').innerText = 'Play';
-      } else if (language == 'VE') {
-        document.getElementById('go_to_profile').innerText = 'Perfil';
-        document.getElementById('amici').innerText = 'Amigos';
-        document.getElementById('go_to_login').innerText = 'Salir';
-        document.getElementById('go_to_game').innerText = 'Jugar';
-      }
-    }
-
-    // Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
-    var savedLanguage = localStorage.getItem('language');
-    if (savedLanguage) {
-      updateText(savedLanguage);
-    }
+    // Aggiorna il testo sulla pagina
+    updateText(this.value);
   });
+
+	function updateText(language) {
+    if (language == 'IT') {
+      document.getElementById('go_to_profile').innerText = 'Profilo';
+      document.getElementById('amici').innerText = 'Amici';
+      document.getElementById('go_to_login').innerText = 'Esci';
+      document.getElementById('go_to_game').innerText = 'Gioca';
+    } else if (language == 'EN') {
+      document.getElementById('go_to_profile').innerText = 'Profile';
+      document.getElementById('amici').innerText = 'Friends';
+      document.getElementById('go_to_login').innerText = 'Logout';
+      document.getElementById('go_to_game').innerText = 'Play';
+    } else if (language == 'ES') {
+      document.getElementById('go_to_profile').innerText = 'Perfil';
+      document.getElementById('amici').innerText = 'Amigos';
+      document.getElementById('go_to_login').innerText = 'Salir';
+      document.getElementById('go_to_game').innerText = 'Jugar';
+    }
+  }
+  // Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
+  var savedLanguage = localStorage.getItem('language');
+  if (savedLanguage) {
+    updateText(savedLanguage);
+  }
+});
 </script>
         <script>
             document.getElementById("go_to_login").addEventListener("click", function() {
