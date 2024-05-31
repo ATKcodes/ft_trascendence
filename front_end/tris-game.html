@@ -185,6 +185,7 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+      resetTris();
         document
           .getElementById("go-to-main")
           .addEventListener("click", function () {
@@ -340,6 +341,20 @@
           .catch((error) => {
             console.error("Error:", error);
           });
+      }
+
+      function resetTris() {
+        player1 = "";
+        player2 = "";
+        result = "";
+        getId("nickPlayer1").textContent = "";
+        getId("nickPlayer2").textContent = "";
+        const cells = document.querySelectorAll(".cell");
+        cells.forEach((cell) => {
+          cell.textContent = "";
+        });
+        getId("alert").style.display = "none";
+        currentPlayer = Math.random() < 0.5 ? "X" : "O";
       }
     </script>
   </body>
