@@ -19,44 +19,7 @@ from rest_framework import exceptions
 import requests
 import os
 from requests.auth import HTTPBasicAuth
-
-@api_view(['GET', 'POST'])
-def user_list(request):
-    if request.method == 'GET':
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED, safe=False)
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, pk):
-
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = UserSerializer(user, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        user.delete()
-        return HttpResponse(status=204)
+from django.utils.crypto import get_random_string
 
 class RegisterView(APIView):
     def post(self, request):
@@ -80,7 +43,9 @@ class LoginView(APIView):
             }
 
             token, created = CustomToken.objects.get_or_create(user=user)
-            response = Response({"response": "successful", "token": token.key, "nickname": user.player})
+            user.status = True
+            user.save()
+            response = Response({"response": "successful", "token": token.key, "user": response_data})
             return response
         return Response({"detail": "Invalid credentials"})
 
@@ -95,7 +60,9 @@ def TestView(request):
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def logout(request):
-    request.user.auth_token.delete()
+    user = request.user
+    user.status = False
+    user.save()
     return Response({"detail": "You are logged out"})
 
 
@@ -118,6 +85,8 @@ def get_42token(request):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
             user = User.objects.get(username=username)
+        user.status = True
+        user.save()
         token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
         return JsonResponse({'access_token': response.json()['access_token']})
     else:
