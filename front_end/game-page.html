@@ -711,14 +711,10 @@
 			this.paddleCPos.y = Math.max(Math.min(this.paddleCPos.y, this.game.offsetHeight - this.paddleC.offsetHeight), 0);
 			this.paddleDPos.y = Math.max(Math.min(this.paddleDPos.y, this.game.offsetHeight - this.paddleD.offsetHeight), 0);
 			
-			if (this.ballPos.y <= this.paddleC.offsetHeight && this.ballPos.x + this.ball.offsetWidth >= this.paddleCPos.x && this.ballPos.x <= this.paddleCPos.x + this.paddleC.offsetWidth) {
-				this.ballSpeed.y *= -1; // Reverse the vertical direction
-				this.ballPos.y = this.paddleC.offsetHeight; // Move the ball outside the paddle
-				this.bouncecounter++;
-			} else if (this.ballPos.y + this.ball.offsetHeight >= this.game.offsetHeight - this.paddleD.offsetHeight && this.ballPos.x + this.ball.offsetWidth >= this.paddleDPos.x && this.ballPos.x <= this.paddleDPos.x + this.paddleD.offsetWidth) {
-				this.ballSpeed.y *= -1; // Reverse the vertical direction
-				this.ballPos.y = this.game.offsetHeight - this.paddleD.offsetHeight - this.ball.offsetHeight; // Move the ball outside the paddle
-				this.bouncecounter++;
+			if((this.ballPos.x < this.paddleCPos.x + this.paddleC.offsetWidth && this.ballPos.x > this.paddleCPos.x && this.ballPos.y + this.ball.offsetHeight > this.paddleCPos.y && this.ballPos.y < this.paddleCPos.y + this.paddleC.offsetHeight) ||
+				(this.ballPos.x + this.ball.offsetWidth > this.paddleDPos.x && this.ballPos.x + this.ball.offsetWidth < this.paddleDPos.x + this.paddleD.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleDPos.y && this.ballPos.y < this.paddleDPos.y + this.paddleD.offsetHeight)) {
+					this.ballSpeed.x *= -1; // Reverse the horizontal direction
+					this.bouncecounter++;
 			}
 		}
 		this.paddleBPos.y += this.paddleBSpeed;

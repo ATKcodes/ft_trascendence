@@ -5,6 +5,8 @@ front:
   ☐ classe user? resettare quando logout A
   ✔ quando entro nella pagina vedere localstorage se c'e' token entrare @done (5/23/2024, 6:35:07 PM)
   ✔ utilizzare variabile ambiente per IP V @done (5/31/2024, 12:14:26 PM)
+  ☐ fix paddle 4 players.
+  ☐ intra 42 login.
 
   registrazione/login html:
     ✔ controlli password e id ? A @done (5/26/2024, 3:17:30 PM)
@@ -29,7 +31,7 @@ front:
   profilo html:
     history:
       ✔ 1v1 pong A @done (5/31/2024, 12:14:47 PM)
-      ☐ torneo pong A
+      ✔ torneo pong A @done (5/31/2024, 5:20:42 PM)
       ✔ 1v1 tris M @done (5/31/2024, 12:15:43 PM)
       ☐ torneo tris M
     ✔ immagine defalut @done (5/23/2024, 6:36:38 PM)
