@@ -43,3 +43,10 @@ curl -X POST -H "Authorization: Token NE20xla26z8gAub02wYu2Y4R4vSUVLugbhFTkDN0f2
 CURL for getting path image
 
 curl -X GET -H "Authorization: Token NE20xla26z8gAub02wYu2Y4R4vSUVLugbhFTkDN0f2qfWp0TEMqfnGsNRynps9lvwodpBMf7APgKEQtvQojJkyL3jzEa1kDy3vW3iTkuU7PCd300d3fp6OHL72V8U3kI" http://localhost:8001/main/profile_image/
+
+
+
+CURL for 42login
+
+curl http://localhost:8001/login/token42/ \
+     -H "Content-Type: application/x-www-form-urlencoded"

@@ -153,3 +153,9 @@ REST_FRAMEWORK = {
     ],
 }
 
+
+CORS_ORIGIN_WHITELIST = [
+    "https://localhost:8443",
+    # Add any other domains that need to make cross-origin requests here
+]
+
