@@ -23,34 +23,7 @@
 			console.log(pippo);
 			let code = pippo.searchParams.get("code")
 			if (code) {
-				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
-					method: 'GET',
-				})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
-					}
-					return response.json();
-				})
-				.then(data => {
-					console.log('Success:', data); // Debugging: Log the data to see its structure
-					if(data.token) {
-						localStorage.setItem('userToken', data.token); // Correctly access and store the token
-						console.log('Login successful');
-						localStorage.setItem('lastPage', "main-page");
-						document.getElementById('nickInput').value = '';
-						document.getElementById('passwordInput').value = '';
-						document.getElementById('Registerpassword').value = '';
-						document.getElementById('repeatPassword').value = '';
-						document.getElementById('Registernick').value = '';
-						window.parent.goToMain();
-					} else if(data.detail) {
-						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
-					} else {
-						console.error('Token not found in response');
-					}
-				})
-				.catch(error => console.error('Error:', error));
+				login42(code);
 			}
 			});
 		function goToMain() {
@@ -117,10 +90,36 @@
 		}
 		
 
+		function login42(code){
+				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
+					method: 'GET',
+				})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					console.log('Success:', data); // Debugging: Log the data to see its structure
+					if(data.token) {
+						localStorage.setItem('userToken', data.token); // Correctly access and store the token
+						console.log('Login successful');
+						localStorage.setItem('lastPage', "main-page");
+						window.goToMain();
+					} else if(data.detail) {
+						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
+					} else {
+						console.error('Token not found in response');
+					}
+				})
+				.catch(error => console.error('Error:', error));
+			}
+
+
 		window.onload = function() {
 			// Attempt to get the lastPage from localStorage
-			var lastPage = localStorage.getItem('lastPage');
-
+			var lastPage = localStorage.getItem('lastPage');			
 			// Hide all pages
 			hidePages();
 

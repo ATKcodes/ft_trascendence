@@ -87,6 +87,6 @@ def get_42token(request):
         user = User.objects.get(username=username)
         user.save()
         token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
-        return JsonResponse({'token': token.key})
+        return JsonResponse({'token': token.key, 'user': UserSerializer(user).data})
     else:
         return JsonResponse({'error': 'Failed to get access token'}, status=400)

@@ -285,6 +285,13 @@ document.getElementById("go_to_main").addEventListener("click", function() {
 		var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 	</script>
    <script>
+    document.getElementById("login42").addEventListener("click", function() {
+      document.getElementById('nickInput').value = '';
+						document.getElementById('passwordInput').value = '';
+						document.getElementById('Registerpassword').value = '';
+						document.getElementById('repeatPassword').value = '';
+						document.getElementById('Registernick').value = '';
+    });
     // se non cé'una lingua nel local storage mettere EN di default
     if (localStorage.getItem('language') === null) {
     localStorage.setItem('language', 'EN');
