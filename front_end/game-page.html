@@ -32,9 +32,9 @@
 	}
 	.div-title {
 		font-family: 'font-Despairs';
-		font-size: 250%;
+		font-size: 420%;
 		position: absolute;
-		left: 47%; /* Change this to move the div horizontally */
+		left: 45.69%; /* Change this to move the div horizontally */
 		right: 2%;
 		top: 0%; /* Change this to move the div vertically */
 		width: 15%;
@@ -414,8 +414,8 @@
 
 	#ball {
 		position: absolute;
-		height: 10px;
-		width: 10px;
+		height: 20px;
+		width: 20px;
 		background: black;
 		color : white;
 	}
@@ -423,7 +423,7 @@
 	#paddleA, #paddleB, #paddleC, #paddleD{
 		position: absolute;
 		height: 80px;
-		width: 10px;
+		width: 20px;
 		background: black;
 		color : white;
 	}
@@ -578,7 +578,8 @@
 	var pongGame;
 	window.onload = function(){
 	pongGame = {
-		animationFrameId: null,
+		lastTime: 0,
+		fpsInterval:1000 / 80, // 60 FPS
 		gameMode: "1v1",
 		game: document.getElementById('pong-game'),
 		ball: document.getElementById('ball'),
@@ -587,20 +588,24 @@
 		paddleC: document.getElementById('paddleC'),
 		paddleD: document.getElementById('paddleD'),
 		ballPos: {x: 0, y: 0},
+		futureBallPos: {x: 0, y: 0},
+		futureEdgeHit: 0,
 		paddleAPos: {y: 0},
 		paddleBPos: {y: 0},
-	    ballSpeed: {x: 8, y: 8},
+	    ballSpeed: {x: 9, y: 9},
+		ballSize: 10,
 		paddleASpeed: 0,
     	paddleBSpeed: 0,
 		paddleCSpeed: 0,
    		paddleDSpeed: 0,
-    	paddleSpeed: 6,
+    	paddleSpeed: 12,
 		scoreA: 0,
    		scoreB: 0,
 		bouncecounter: 0,
 		balllimitfaster: 2,
 		matchdatasent : 0,
 		tournamentStatus: 0,
+		aiInterval: null,
 		tournamentGame1Win: "player1",
 		tournamentGame2Win: "player3",
 		tournamentGame3Win: "player1", //FIRST PLACE
@@ -612,25 +617,90 @@
 		paddleCPos: {x: document.getElementById('pong-game').offsetWidth * 0.25, y: 0},
 		paddleDPos: {x: document.getElementById('pong-game').offsetWidth * 0.75, y: 0},
 
-		update: function() {
+		calculateFuturePos: function() {
+    // Simulate the ball's movement for 1 second into the future
+    let updatesPerSecond = this.frameRate || 80; // replace with your actual frame rate
+    let ballTravel = { y: this.ballSpeed.y * updatesPerSecond, x: this.ballSpeed.x * updatesPerSecond};
+    let overshoot = 0;
+    let temp = 0;
+    let temp2 = 0;
+
+    // Calculate when the ball will hit the right edge
+    if (this.ballPos.x + ballTravel.x > this.game.offsetWidth - this.ballSize / 2) {
+        overshoot = (this.ballPos.x + ballTravel.x) - (this.game.offsetWidth - this.ballSize / 2);
+        this.futureBallPos.x = this.game.offsetWidth - this.ballSize / 2 - overshoot;
+    } else {
+        this.futureBallPos.x = this.ballPos.x + ballTravel.x;
+    }
+    if (overshoot !== 0)
+    {
+        temp = ballTravel.x - overshoot;
+        temp2 = temp / ballTravel.x;
+        this.futureEdgeHit = temp2 * ballTravel.y;
+    }
+    else
+        this.futureEdgeHit = ballTravel.y;
+
+    // If the ball hits a wall, it will bounce back
+    if (this.ballPos.y + this.futureEdgeHit <  this.ballSize / 2) {
+        this.futureBallPos.y = this.ballSize / 2 + (this.ballSize / 2 - (this.ballPos.y + this.futureEdgeHit));
+    } else if (this.ballPos.y + this.futureEdgeHit > this.game.offsetHeight - this.ballSize / 2) {
+        this.futureBallPos.y = this.game.offsetHeight - this.ballSize / 2 - ((this.ballPos.y + this.futureEdgeHit) - (this.game.offsetHeight - this.ballSize / 2));
+    } else {
+        this.futureBallPos.y = this.ballPos.y + this.futureEdgeHit;
+    }
+	let AIdifficulty = 99;
+	let randomOffset = { x: (Math.random() - 0.5) * AIdifficulty, y: (Math.random() - 0.5) * AIdifficulty };
+    this.futureBallPos.x += randomOffset.x;
+    this.futureBallPos.y += randomOffset.y;
+	},
+	initAI: function() {
+		// Bind the context of calculateFuturePos to this
+		this.calculateFuturePos = this.calculateFuturePos.bind(this);
+		// Call the function for the first time
+		this.calculateFuturePos();
+		// Call this function again every 1 second and store the interval ID
+		this.aiInterval = setInterval(this.calculateFuturePos, 1000);
+		this.lastTimestamp = performance.now();
+		this.frameCount = 0;
+		this.frameRate;
+		this.accumulatedTime = 0;
+	},
+
+	update: function() {
+		let now = performance.now();
+		let deltaTime = now - this.lastTimestamp;
+		this.lastTimestamp = now;
+		this.frameCount++;
+
+		this.accumulatedTime += deltaTime;
+		if (this.accumulatedTime >= 1000) { // Every second
+			this.frameRate = this.frameCount;
+			this.frameCount = 0;
+			this.accumulatedTime -= 1000;
+			console.log('Frame rate:', this.frameRate);
+		}
+
 		document.getElementById("scoreA").style.display = "block";
         document.getElementById("scoreB").style.display = "block";
         // Update the position of the ball
         this.ballPos.x += this.ballSpeed.x;
         this.ballPos.y += this.ballSpeed.y;
 		// Update the position of the paddles
+		let intervalSet = false;
 		this.paddleAPos.y += this.paddleASpeed;
-		
-		if (pongGame.gameMode === 'vs-ai') {
-        // Move the right paddle based on the ball's position
-        if (pongGame.ballPos.y > pongGame.paddleBPos.y) {
-            pongGame.paddleBSpeed = pongGame.paddleSpeed;
-        } else if (pongGame.ballPos.y < pongGame.paddleBPos.y) {
-            pongGame.paddleBSpeed = -pongGame.paddleSpeed;
-        } else {
-            pongGame.paddleBSpeed = 0;
-        }
-   		}
+
+		if (this.gameMode === 'vs-ai') {
+			let paddleMiddle = this.paddleBPos.y + this.paddleB.offsetHeight / 2;
+			if (Math.abs(this.futureBallPos.y - paddleMiddle) < this.paddleSpeed) {
+				// If the paddle is close enough to the futureBallPos.y, stop it
+				this.paddleBSpeed = 0;
+			} else if (this.futureBallPos.y > paddleMiddle) {
+				this.paddleBSpeed = this.paddleSpeed;
+			} else {
+				this.paddleBSpeed = -this.paddleSpeed;
+			}
+    	}
 		else if (pongGame.gameMode === '4players')
 		{
 			// Add movement for paddleC and paddleD
@@ -670,12 +740,16 @@
         document.getElementById("scoreA").textContent = this.scoreA;
         document.getElementById("scoreB").textContent = this.scoreB;
 
-        // Collision detection with the paddles
-        if ((this.ballPos.x < this.paddleA.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleAPos.y && this.ballPos.y < this.paddleAPos.y + this.paddleA.offsetHeight) ||
-            (this.ballPos.x + this.ball.offsetWidth > this.game.offsetWidth - this.paddleB.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleBPos.y && this.ballPos.y < this.paddleBPos.y + this.paddleB.offsetHeight)) {
-            this.ballSpeed.x *= -1; // Reverse the horizontal direction
+		// Collision detection with the paddles
+		if (this.ballPos.x <= this.paddleA.offsetWidth && this.ballPos.y + this.ball.offsetHeight >= this.paddleAPos.y && this.ballPos.y <= this.paddleAPos.y + this.paddleA.offsetHeight) {
+			this.ballSpeed.x *= -1; // Reverse the horizontal direction
+			this.ballPos.x = this.paddleA.offsetWidth; // Move the ball outside the paddle
 			this.bouncecounter++;
-        }
+		} else if (this.ballPos.x + this.ball.offsetWidth >= this.game.offsetWidth - this.paddleB.offsetWidth && this.ballPos.y + this.ball.offsetHeight >= this.paddleBPos.y && this.ballPos.y <= this.paddleBPos.y + this.paddleB.offsetHeight) {
+			this.ballSpeed.x *= -1; // Reverse the horizontal direction
+			this.ballPos.x = this.game.offsetWidth - this.paddleB.offsetWidth - this.ball.offsetWidth; // Move the ball outside the paddle
+			this.bouncecounter++;
+		}
 
 		if (this.bouncecounter == this.balllimitfaster){
 			this.balllimitfaster = this.balllimitfaster * 2;
@@ -698,6 +772,7 @@
 	endGame: function(winner) {
     // Reset the ball
 	this.stop();
+	clearInterval(this.aiInterval);
 	this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
     this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
 	this.ballSpeed.x = 0;
@@ -750,29 +825,35 @@
 	else if (this.gameMode === "tournament"){
 		if (this.tournamentStatus === 0)
 		{
-			this.tournamentGame1Win = winner;
 			if (winner === document.querySelector('.userleft').textContent)
-				this.tournamentGame1Lose = document.querySelector('.userright').textContent;
+			{
+				this.tournamentGame1Win = this.tournamentP1;
+				this.tournamentGame1Lose = this.tournamentP2;
+			}
 			else
-				this.tournamentGame1Lose = document.querySelector('.userleft').textContent;
-			document.getElementById("Player1").innerText = document.querySelector('.userleft2').textContent;
-			document.getElementById("Player2").innerText = document.querySelector('.userright2').textContent;
+			{
+				this.tournamentGame1Win = this.tournamentP2;
+				this.tournamentGame1Lose = this.tournamentP1;
+			}
+			document.getElementById("Player1").innerText = this.tournamentP3;
+			document.getElementById("Player2").innerText = this.tournamentP4;
 			document.getElementById("Player1").style.display = "block";
 			document.getElementById("Player2").style.display = "block";
 			document.getElementById("Readyup").style.display = "block";
-			document.getElementById("winner").textContent = winner;
+			document.getElementById("winner").textContent = this.tournamentGame1Win ;
 			document.querySelector('.open_text').style.display = "block";
 		}
 		else if (this.tournamentStatus === 1)
-		{
-			if (winner === document.querySelector('.userleft').textContent)
-				this.tournamentGame2Win = document.querySelector('.userleft2').textContent;
+		{if (winner === document.querySelector('.userleft').textContent)
+			{
+				this.tournamentGame2Win = this.tournamentP3;
+				this.tournamentGame2Lose = this.tournamentP4;
+			}
 			else
-				this.tournamentGame2Win = document.querySelector('.userright2').textContent;
-			if (this.tournamentGame2Win = document.querySelector('.userleft2').textContent)
-				this.tournamentGame2Lose = document.querySelector('.userright2').textContent;
-			else
-				this.tournamentGame2Lose = document.querySelector('.userleft2').textContent;
+			{
+				this.tournamentGame2Win = this.tournamentP4;
+				this.tournamentGame2Lose = this.tournamentP3;
+			}
 			document.getElementById("Player1").innerText = this.tournamentGame1Win;
 			document.getElementById("Player2").innerText = this.tournamentGame2Win;
 			document.getElementById("Player1").style.display = "block";
@@ -839,8 +920,8 @@
         this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
         this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
         // Optionally, reset ball speed or direction
-		this.ballSpeed.x = 8;
-		this.ballSpeed.y = 8;
+		this.ballSpeed.x = 9;
+		this.ballSpeed.y = 9;
 		this.bouncecounter = 0;
 		this.balllimitfaster = 2;
 	},
@@ -863,10 +944,17 @@
 	this.paddleD.style.top = this.paddleDPos.y + 'px';
 },
 
-    loop: function() {
-        pongGame.update();
-        pongGame.draw();
-        pongGame.animationFrameId = requestAnimationFrame(pongGame.loop);
+	loop: function(currentTime) {
+        requestAnimationFrame(pongGame.loop);
+
+        let elapsedTime = currentTime - pongGame.lastTime;
+
+        if (elapsedTime > pongGame.fpsInterval) {
+            pongGame.lastTime = currentTime - (elapsedTime % pongGame.fpsInterval);
+
+            pongGame.update();
+            pongGame.draw();
+        }
     },
 
 	stop: function() {
@@ -1015,6 +1103,7 @@ document.getElementById("play-vs-ia").addEventListener("click", function(){
 	document.getElementById("ball").style.display = "block";
 	document.getElementById("paddleA").style.display = "block";
 	document.getElementById("paddleB").style.display = "block";
+	pongGame.initAI();
 	pongGame.start();
 });
 
@@ -1121,8 +1210,20 @@ document.getElementById("submit-username4").addEventListener("click", function()
 		if (pongGame.gameMode === "tournament")
 		{
 			// Case for Tournament Gamemode
-			document.getElementById("Player1").innerText = document.querySelector('.userleft').textContent;
-			document.getElementById("Player2").innerText = document.querySelector('.userright').textContent;
+			var players = [document.querySelector('.userleft').textContent, document.querySelector('.userleft2').textContent, document.querySelector('.userright').textContent, document.querySelector('.userright2').textContent];
+
+			// Shuffle the players array
+			players.sort(function() {
+				return 0.5 - Math.random();
+			});
+
+			// Assign the shuffled players to the tournament variables
+			pongGame.tournamentP1 = players[0];
+			pongGame.tournamentP2 = players[1];
+			pongGame.tournamentP3 = players[2];
+			pongGame.tournamentP4 = players[3];
+			document.getElementById("Player1").innerText = pongGame.tournamentP1;
+			document.getElementById("Player2").innerText = pongGame.tournamentP2;
 			document.getElementById("Player1").style.display = "block";
 			document.getElementById("Player2").style.display = "block";
 			document.getElementById("Readyup").style.display = "block";
