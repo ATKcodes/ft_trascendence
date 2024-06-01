@@ -711,10 +711,29 @@
 			this.paddleCPos.y = Math.max(Math.min(this.paddleCPos.y, this.game.offsetHeight - this.paddleC.offsetHeight), 0);
 			this.paddleDPos.y = Math.max(Math.min(this.paddleDPos.y, this.game.offsetHeight - this.paddleD.offsetHeight), 0);
 			
-			if((this.ballPos.x < this.paddleCPos.x + this.paddleC.offsetWidth && this.ballPos.x > this.paddleCPos.x && this.ballPos.y + this.ball.offsetHeight > this.paddleCPos.y && this.ballPos.y < this.paddleCPos.y + this.paddleC.offsetHeight) ||
-				(this.ballPos.x + this.ball.offsetWidth > this.paddleDPos.x && this.ballPos.x + this.ball.offsetWidth < this.paddleDPos.x + this.paddleD.offsetWidth && this.ballPos.y + this.ball.offsetHeight > this.paddleDPos.y && this.ballPos.y < this.paddleDPos.y + this.paddleD.offsetHeight)) {
-					this.ballSpeed.x *= -1; // Reverse the horizontal direction
-					this.bouncecounter++;
+			// Check for collisions with paddles C and D
+			if ((this.ballPos.y < this.paddleCPos.y + this.paddleC.offsetHeight && this.ballPos.y > this.paddleCPos.y && this.ballPos.x + this.ball.offsetWidth > this.paddleCPos.x && this.ballPos.x < this.paddleCPos.x + this.paddleC.offsetWidth)) {
+				this.ballSpeed.x *= -1; // Reverse the horizontal direction
+				if (this.ballPos.y + this.ball.offsetHeight > this.game.offsetHeight) {
+					this.ballPos.y = this.game.offsetHeight - this.ball.offsetHeight; // Move the ball just inside the bottom border
+				}
+				if (this.ballSpeed.x > 0)
+					this.ballPos.x = this.paddleCPos.x + this.paddleC.offsetWidth + 1; // Move the ball just to the right of paddle C and add a small buffer
+				if (this.ballPos.x + this.ball.offsetWidth > this.game.offsetWidth) {
+					this.ballPos.x = this.game.offsetWidth - this.ball.offsetWidth; // Move the ball just inside the right border
+				}
+				this.bouncecounter++;
+			} else if ((this.ballPos.y + this.ball.offsetHeight > this.paddleDPos.y && this.ballPos.y + this.ball.offsetHeight < this.paddleDPos.y + this.paddleD.offsetHeight && this.ballPos.x + this.ball.offsetWidth > this.paddleDPos.x && this.ballPos.x < this.paddleDPos.x + this.paddleD.offsetWidth)) {
+				this.ballSpeed.x *= -1; // Reverse the horizontal direction
+				if (this.ballPos.y < 0) {
+					this.ballPos.y = 0; // Move the ball just inside the top border
+				}
+				if (this.ballSpeed.x < 0)
+					this.ballPos.x = this.paddleDPos.x - this.ball.offsetWidth - 1; // Move the ball just to the left of paddle D and add a small buffer
+				if (this.ballPos.x < 0) {
+					this.ballPos.x = 0; // Move the ball just inside the left border
+				}
+				this.bouncecounter++;
 			}
 		}
 		this.paddleBPos.y += this.paddleBSpeed;

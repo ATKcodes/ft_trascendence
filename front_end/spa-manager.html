@@ -209,13 +209,11 @@ function setPageBasedOnState(state) {
 		})();
 
         window.fillUserData = function(data){
-            console.log(data);
             if (data.user) {
                 window.userInstance.fillData(data.user);
             } else {
                 window.userInstance.fillData(data);
             }
-            console.log(window.userInstance.username);
         };
 	</script>
   </body>

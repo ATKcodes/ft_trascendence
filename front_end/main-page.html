@@ -133,17 +133,18 @@
         margin: 0 auto;
         text-align: left;
       }
-      nav {
-        width: 20%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: #4F4537;
-        z-index: 69;
-        transition: .3s;
-        transform: translateX(-100%);
-      }
+	  nav {
+		width: 20%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: linear-gradient(to right, #B6A999,#DFA100);
+		z-index: 69;
+		transition: .3s;
+		transform: translateX(-100%);
+		border-right: 1px solid #000;
+	}
       .wide{
         transform: translateX(0);
       }
@@ -164,85 +165,77 @@
     </div>
     <nav class="nav">
       <ul>
-        <li style="margin-top: 10%;">Mvolpi</li>
+        <li id="Username" style="margin-top: 10%; font-size: 50px;">User</li>
         <li id="go_to_profile" style="margin-top: 5%;">Profilo</li>
         <li style="margin-top: 5%;" id="amici">Amici</li>
         <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
       </ul>
     </nav>
     <h2 class="div-title">PONG</h2>
-<select class="select-language rounded-pill">
-  <option value="EN">EN</option>
-  <option value="IT">IT</option>
-  <option value="ES">ES</option>
-</select>
-<script>
+	<select class="select-language rounded-pill">
+	<option value="EN">EN</option>
+	<option value="IT">IT</option>
+	<option value="ES">ES</option>
+	</select>
+    <div class="game">
+      <button id = "go_to_game" type="button" class="btn btn-primary btn-lg btn-block">Play</button>
+    </div>
+  </body>
+
+  <script>
   	document.addEventListener('DOMContentLoaded', (event) => {
-  // Seleziona l'elemento select
-  var selectLanguage = document.querySelector('.select-language');
+		// Seleziona l'elemento select
+		var selectLanguage = document.querySelector('.select-language');
+		document.getElementById('Username').textContent = window.parent.userInstance.username;
 
-  // Aggiungi un event listener per l'evento 'change'
-  selectLanguage.addEventListener('change', function() {
-    // Quando l'utente seleziona una nuova lingua, salvala nel localStorage
-    localStorage.setItem('language', this.value);
+		// Aggiungi un event listener per l'evento 'change'
+		selectLanguage.addEventListener('change', function() {
+		// Quando l'utente seleziona una nuova lingua, salvala nel localStorage
+		localStorage.setItem('language', this.value);
 
-    // Aggiorna il testo sulla pagina
-    updateText(this.value);
-  });
+		// Aggiorna il testo sulla pagina
+		updateText(this.value);
+  	});
 
 	function updateText(language) {
-    if (language == 'IT') {
-      document.getElementById('go_to_profile').innerText = 'Profilo';
-      document.getElementById('amici').innerText = 'Amici';
-      document.getElementById('go_to_login').innerText = 'Esci';
-      document.getElementById('go_to_game').innerText = 'Gioca';
-    } else if (language == 'EN') {
-      document.getElementById('go_to_profile').innerText = 'Profile';
-      document.getElementById('amici').innerText = 'Friends';
-      document.getElementById('go_to_login').innerText = 'Logout';
-      document.getElementById('go_to_game').innerText = 'Play';
-    } else if (language == 'ES') {
-      document.getElementById('go_to_profile').innerText = 'Perfil';
-      document.getElementById('amici').innerText = 'Amigos';
-      document.getElementById('go_to_login').innerText = 'Salir';
-      document.getElementById('go_to_game').innerText = 'Jugar';
-    }
-  }
-  // Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
-  var savedLanguage = localStorage.getItem('language');
-  if (savedLanguage) {
-    updateText(savedLanguage);
-  }
-});
-</script>
-        <script>
-            document.getElementById("go_to_login").addEventListener("click", function() {
-            localStorage.setItem('lastPage', "login");
-            window.parent.goToLogin();
+		if (language == 'IT') {
+		document.getElementById('go_to_profile').innerText = 'Profilo';
+		document.getElementById('amici').innerText = 'Amici';
+		document.getElementById('go_to_login').innerText = 'Esci';
+		document.getElementById('go_to_game').innerText = 'Gioca';
+		} else if (language == 'EN') {
+		document.getElementById('go_to_profile').innerText = 'Profile';
+		document.getElementById('amici').innerText = 'Friends';
+		document.getElementById('go_to_login').innerText = 'Logout';
+		document.getElementById('go_to_game').innerText = 'Play';
+		} else if (language == 'ES') {
+		document.getElementById('go_to_profile').innerText = 'Perfil';
+		document.getElementById('amici').innerText = 'Amigos';
+		document.getElementById('go_to_login').innerText = 'Salir';
+		document.getElementById('go_to_game').innerText = 'Jugar';
+		}
+	}
+	// Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
+	var savedLanguage = localStorage.getItem('language');
+	if (savedLanguage) {
+		updateText(savedLanguage);
+	}
+	});
+    document.getElementById("go_to_login").addEventListener("click", function() {
+		window.parent.userInstance.resetData();
+        localStorage.setItem('lastPage', "login");
+		localStorage.setItem('userToken', '');
+        window.parent.goToLogin();
         });
-        </script>
-      </div>
-      </div>
-    <script>
-      document.getElementById("go_to_profile").addEventListener("click", function() {
+	document.getElementById("go_to_profile").addEventListener("click", function() {
         localStorage.setItem('lastPage', "profile");
         window.parent.goToProfile();
       });
-    </script>
-    <div class="game">
-      <button id = "go_to_game" type="button" class="btn btn-primary btn-lg btn-block">
-        Play
-      </button>
-      <script>
-        document.getElementById("go_to_game").addEventListener("click", function() {
-          localStorage.setItem('lastPage', "profile");
-          window.parent.goToGame();
-        });
-      </script>
-    </div>
-
-  </body>
-
+	document.getElementById("go_to_game").addEventListener("click", function() {
+	  localStorage.setItem('lastPage', "profile");
+	  window.parent.goToGame();
+	});
+  </script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>

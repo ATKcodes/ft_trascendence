@@ -17,10 +17,8 @@ export default class User {
 
 	constructor(){}
 	fillData(data){
-		console.log("Data: ", data);
 		console.log("filling user data.")
 		this.username = data.user.username;
-		console.log("username: ", this.username);
 		this.player = data.user.player;
 		this.password = data.user.password;
 		this.profile_image = data.user.profile_image;
@@ -50,5 +48,6 @@ export default class User {
 		this.wins_tictactoe = 0;
 		this.winrate_pong = 0;
 		this.winrate_tictactoe = 0;
+		console.log("User data reset.")
 	}
 }
