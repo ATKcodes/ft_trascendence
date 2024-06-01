@@ -2,11 +2,11 @@ front:
   ✔ rendere sito responsive @done (5/23/2024, 6:34:48 PM)
   ☐ token in ogni chiamata A
   ✔ tasti indietro ovunque @done (5/23/2024, 6:34:59 PM)
-  ☐ classe user? resettare quando logout A
+  ✔ classe user? resettare quando logout A @done (6/1/2024, 5:40:29 PM)
   ✔ quando entro nella pagina vedere localstorage se c'e' token entrare @done (5/23/2024, 6:35:07 PM)
   ✔ utilizzare variabile ambiente per IP V @done (5/31/2024, 12:14:26 PM)
-  ☐ fix paddle 4 players.
-  ☐ intra 42 login.
+  ✔ fix paddle 4 players. @done (6/1/2024, 5:40:32 PM)
+  ☐ bugfix 42 login
 
   registrazione/login html:
     ✔ controlli password e id ? A @done (5/26/2024, 3:17:30 PM)
@@ -15,7 +15,7 @@ front:
     ✔ rimane anche nei campi di login A @done (5/25/2024, 3:49:10 PM)
 
   main-menu html:
-    ☐ lingue
+    ✔ lingue @done (6/1/2024, 5:40:46 PM)
     ✔ pulsante play pong e play tris @done (5/23/2024, 6:35:28 PM)
 
   profilo nel main-menu:
