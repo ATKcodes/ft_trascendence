@@ -456,7 +456,10 @@
     <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     <script>
         document.getElementById("go_to_main").addEventListener("click", function() {
-            localStorage.setItem('lastPage', "main-page");
+            if(pongGame.animationFrameId) {
+				cancelAnimationFrame(pongGame.animationFrameId);
+			}
+			localStorage.setItem('lastPage', "main-page");
             window.parent.goToMain();
         });
     </script>
@@ -789,6 +792,7 @@
     	}
     },
 	endGame: function(winner) {
+	pongGame.matchdatasent = 0;
     // Reset the ball
 	this.stop();
 	clearInterval(this.aiInterval);
@@ -985,7 +989,7 @@
 };
 function sendMatchData(jsonMatchData){
 	var token = localStorage.getItem('userToken');
-	fetch('http://localhost:8001/main/winlose/', {
+	fetch('http://localhost:8001/main/pong_result/', {
 			method: 'POST',
 			headers: {
 				'Authorization' : 'Token ' + token,
@@ -1001,7 +1005,6 @@ function sendMatchData(jsonMatchData){
 		}).catch(error => {
 			console.error('Network error:', error);
 		});
-	pongGame.matchdatasent = 0;
 }
 
 document.addEventListener('keydown', function(event) {
@@ -1324,10 +1327,7 @@ document.getElementById('EndTournament').addEventListener('click', function() {
 				console.error('Network error:', error);
 			});
 
-		document.getElementById('scoreA').style.display = "none";
-		document.getElementById('scoreB').style.display = "none";
-		document.getElementById('play-pong').style.display = "block";
-		document.getElementById('play-tris').style.display = "block";
+		resetPage();
 	});
 
 //TRIS CODE
@@ -1336,5 +1336,52 @@ document.getElementById("play-tris").addEventListener("click", function(){
 	window.parent.goToTris();
 });
 }
+
+window.addEventListener('message', function(event) {
+	if (event.data.type === 'reset')
+	{
+		console.log("entra?");
+		document.getElementById("play-pong").style.display = "block";
+		document.getElementById("play-tris").style.display = "block";
+		document.getElementById("play-1v1").style.display = "none";
+		document.getElementById("play-4players").style.display = "none";
+		document.getElementById("play-vs-ia").style.display = "none";
+		document.getElementById("play-tournament").style.display = "none";
+		document.getElementById("player2-username").style.display = "none";
+		document.getElementById("submit-username").style.display = "none";
+		document.getElementById("player2-username").style.display = "none";
+		document.getElementById("submit-username2").style.display = "none";
+		document.getElementById("player3-username").style.display = "none";
+		document.getElementById("submit-username3").style.display = "none";
+		document.getElementById("player4-username").style.display = "none";
+		document.getElementById("submit-username4").style.display = "none";
+		document.getElementById("userright2").style.display = "none";
+		document.getElementById("userleft2").style.display = "none";
+		document.getElementById("avatar3").style.display = "none";
+		document.getElementById("avatar4").style.display = "none";
+		document.getElementById("userright").textContent = "Player 1";
+		document.getElementById("userleft").textContent = "Player 2";
+		document.getElementById("userright2").textContent = "Player 3";
+		document.getElementById("userleft2").textContent = "Player 4";
+		document.getElementById("player2-username").value = "";
+		document.getElementById("player3-username").value = "";
+		document.getElementById("player4-username").value = "";
+		document.getElementById("scoreA").style.display = "none";
+		document.getElementById("scoreB").style.display = "none";
+		document.getElementById("ball").style.display = "none";
+		document.getElementById("paddleA").style.display = "none";
+		document.getElementById("paddleB").style.display = "none";
+		document.getElementById("paddleC").style.display = "none";
+		document.getElementById("paddleD").style.display = "none";
+		document.getElementById("Player1").style.display = "none";
+		document.getElementById("Player2").style.display = "none";
+		document.getElementById("Readyup").style.display = "none";
+		document.getElementById("FirstPlace").style.display = "none";
+		document.getElementById("SecondPlace").style.display = "none";
+		document.getElementById("ThirdPlace").style.display = "none";
+		document.getElementById("ThirdPlace2").style.display = "none";
+		console.log("entrato");
+	}
+});
 </script>
 </html>

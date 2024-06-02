@@ -68,3 +68,21 @@ docker:
 chiedere:
   ☐ mostrare profilo
   ✔ cosa si intende matchmaking secondo gioco @done (5/31/2024, 12:15:30 PM)
+
+bug:
+
+  ☐ se refresho il nick non rimane
+  ☐ se torno indietro dopo che finisce la partita, continua a fare chiamate al backend
+  ☐ torneo tris da collegare
+  ☐ eliminare chiamata torneo pong
+  ☐ quando torno indietro da torneo pong, si mischiano i placement
+  ☐ chiamate al backend per salvare le immagini di profilo
+  ☐ chiamate al backend per salvare gli amici
+  ☐ chiamate al backend per salvare match history
+  ☐ pulsanto pong pagina profilo
+  ☐ salvare cambialingua nel database
+  ☐ verificare le dimensioni delle immagini
+
+
+
+  1G9R3CFhmXgqKsLgZyTRYVQUbuUDjjbIAre15ZlF0luqzBP8FExjJyHkzoq1cJFdVOm10IoCkQ3RKf8hrR1V2pjzidBeHVXbWqKo2a287hsEkHWUvtynahwYqKHdoSqS

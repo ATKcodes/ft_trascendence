@@ -79,7 +79,7 @@ def get_42token(request):
     response = requests.post('https://api.intra.42.fr/oauth/token', json=data)
     if response.status_code == 200:
         response2 = requests.get('https://api.intra.42.fr/v2/me', headers={'Authorization': 'Bearer ' + response.json()['access_token']})
-        username = response2.json()['login']
+        username = response2.json()['login'] + '#42'
         token42 = response.json()['access_token']
         if not User.objects.filter(username=username).exists():
             serializer = UserSerializer(data={'username': username, 'password': get_random_string(length=40)})

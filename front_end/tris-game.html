@@ -10,12 +10,76 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="tris_game.css" />
+    <style>
+      /* Black screen */
+      .gameDashboard {
+        border-radius: 16px;
+        background: black;
+        position: relative;
+        width: 100%;
+        height: 85%;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        color: white;
+      }
+
+      .tris-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        height: 80%;
+        width: 80%;
+        margin-top: 5%;
+      }
+
+      .cell {
+        border: 1px solid #000;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.5em;
+        border-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 50;
+      }
+
+      .alert-box {
+        color: black;
+        position: fixed;
+        top: 30vh;
+        left: 30vw;
+        width: 40vw;
+        padding: 16px;
+        z-index: 100;
+        background: #dfa100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+      }
+
+      .alert-box-actions {
+        text-align: right;
+      }
+    </style>
   </head>
 
   <body>
     <div class="header d-flex justify-content-center align-items-center">
-      <h1 id = "go-to-main2" style="text-align: center; font-family: font-Despairs">PONG</h1>
+      <h1
+        id="go-to-main2"
+        style="text-align: center; font-family: font-Despairs"
+      >
+        PONG
+      </h1>
     </div>
 
     <div class="container">
@@ -111,7 +175,7 @@
           <div class="alert-box">
             <h1 id="aler-message"></h1>
             <div class="alert-box-actions">
-              <button id = "go-to-main"class="go-to-main btn btn-dark">
+              <button id="go-to-main" class="go-to-main btn btn-dark">
                 Go To Main Menu
               </button>
             </div>
@@ -119,19 +183,179 @@
         </div>
       </div>
     </div>
-    <script src="tris_game.js"></script>
-	<script> 
-	document.addEventListener('DOMContentLoaded', function() {
-		document.getElementById("go-to-main").addEventListener("click", function () {
-		localStorage.setItem('lastPage', "main-page");
-		window.parent.goToMain();
-	});
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      resetTris();
+        document
+          .getElementById("go-to-main")
+          .addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
 
-	document.getElementById("go-to-main2").addEventListener("click", function () {
-		localStorage.setItem('lastPage', "main-page");
-		window.parent.goToMain();
-	});
-});
-	</script>
+        document
+          .getElementById("go-to-main2")
+          .addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
+      });
+
+      // Variables
+      let player1 = "";
+      let player2 = "";
+      let result = "";
+
+      function getId(id) {
+        return document.getElementById(id);
+      }
+
+      // Move in the page
+      let path = ["chosePlay", "insertNick", "game"];
+
+      function moveArround(were) {
+        for (let i = 0; i < path.length; i++) {
+          if (path[i] === were) {
+            getId(were).style.display = "block";
+          } else {
+            getId(path[i]).style.display = "none";
+          }
+        }
+      }
+
+      getId("btn1v1").addEventListener("click", function () {
+        moveArround("insertNick");
+      });
+
+      getId("backChose").addEventListener("click", function () {
+        var input = getId("nicknameInput");
+        input.value = "";
+        moveArround("chosePlay");
+      });
+
+      getId("nicknameInput").addEventListener("input", function () {
+        var input = getId("nicknameInput");
+        var button = getId("playButton");
+        if (input.value.trim() === "") {
+          button.disabled = true;
+        } else {
+          button.disabled = false;
+        }
+      });
+
+      getId("playButton").addEventListener("click", function () {
+        player1 = "Prendere da user";
+        let input = getId("nicknameInput");
+        player2 = input.value;
+        input.value = "";
+        console.log("player1: ", player1, "player2: ", player2);
+        getId("nickPlayer1").textContent = player1;
+        getId("nickPlayer2").textContent = player2;
+        moveArround("game");
+      });
+
+      // Game
+      let currentPlayer = Math.random() < 0.5 ? "X" : "O";
+      const cells = document.querySelectorAll(".cell");
+
+      cells.forEach((cell) => {
+        cell.addEventListener("click", handleClick, { once: true });
+      });
+
+      highlightPlayer();
+
+      function handleClick(e) {
+        if (e.target.textContent !== "") return;
+        e.target.textContent = currentPlayer;
+        if (checkWin(currentPlayer)) {
+          if (playerWins() === player1) {
+            result = "true";
+          } else {
+            result = "false";
+          }
+          sendBack();
+          getId("alert").style.display = "block";
+          getId("aler-message").textContent = `${playerWins()} wins!`;
+        } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
+          result = "draw";
+          sendBack();
+          getId("alert").style.display = "block";
+          getId("aler-message").textContent = `It's a draw!`;
+          currentPlayer = "X";
+        } else {
+          currentPlayer = currentPlayer === "X" ? "O" : "X";
+        }
+        highlightPlayer();
+      }
+
+      function highlightPlayer() {
+        getId("nickPlayer1").style.color =
+          currentPlayer === "X" ? "green" : "white";
+        getId("nickPlayer2").style.color =
+          currentPlayer === "O" ? "green" : "white";
+      }
+
+      function playerWins() {
+        return currentPlayer === "X" ? player1 : player2;
+      }
+
+      function checkWin(player) {
+        const winningCombinations = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        return winningCombinations.some((combination) =>
+          combination.every((index) => cells[index].textContent === player)
+        );
+      }
+
+      var matchData = {
+        game: "tictactoe",
+        win: result, // true false draw
+        player2: player2, // Get User2 name
+      };
+
+      function sendBack() {
+        matchData.win = result;
+        matchData.player2 = player2;
+        console.log("matchData: ", matchData);
+        fetch("http://localhost:8001/main/tictactoe_result/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Token " + localStorage.getItem("userToken"),
+          },
+          body: JSON.stringify(matchData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      function resetTris() {
+        player1 = "";
+        player2 = "";
+        result = "";
+        getId("nickPlayer1").textContent = "";
+        getId("nickPlayer2").textContent = "";
+        const cells = document.querySelectorAll(".cell");
+        cells.forEach((cell) => {
+          cell.textContent = "";
+        });
+        getId("alert").style.display = "none";
+        currentPlayer = Math.random() < 0.5 ? "X" : "O";
+      }
+    </script>
   </body>
 </html>
