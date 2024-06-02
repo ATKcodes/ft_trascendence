@@ -109,6 +109,9 @@
         .data {
             font-size: 200%;
         }
+        .history {
+            font-size: 200%;
+        }
         .pong {
             margin-bottom: 10%;
         }
@@ -154,13 +157,13 @@
     <div class="profile">
         <div class="img-fluid">
             <div class="image-container">
-                <img id="profile-image" url="download.jpeg" alt="Your Image">
+                <img id="profile-image" src="download.jpeg" alt="Your Image">
                 <i id="edit-icon" class="fas fa-edit edit-icon"></i>
                 <input type="file" id="image-upload" accept=".jpg" style="display: none;">
             </div>
             <div class="nickname">
                 <div>
-                    <h2 id="nickname">Mvolpi</h2>
+                    <h2 id="player">Mvolpi</h2>
                 </div>
                 <div class="modify">
                     <i id="modify-icon" class="fas fa-edit modify"></i>
@@ -170,22 +173,22 @@
         <div class="statistics">
             <div class="pong">
                 <h2 class="game_title">Pong</h2>
-                <h6 class="data">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
-                <h6 class="data">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
-                <h6 class="data">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
+                <h6 class="history">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
+                <h6 class="history">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
+                <h6 class="history">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
                 <h6 class="data">Vinte</h6>
                 <h6 class="data">Perse</h6>
             </div>
             <hr>
             <div class="tris">
                 <h2 class="game_title">Tris</h2>
-                <h6 class="data">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
-                <h6 class="data">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
-                <h6 class="data">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
-                <h6 class="data">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
+                <h6 class="history">Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro pallino: 11/06/24 13.00 pallino ha vinto</h6>
+                <h6 class="history">Partita contro tizio: 12/06/24 13.00 tizio ha vinto</h6>
+                <h6 class="history">Partita contro caio: 13/06/24 13.00 mvolpi ha vinto</h6>
+                <h6 class="history">Partita contro Jino: 14/06/24 13.00 Jino ha vinto</h6>
                 <h6 class="data">Vinte</h6>
                 <h6 class="data">Perse</h6>
             </div>
@@ -210,11 +213,30 @@ document.getElementById('image-upload').addEventListener('change', function(e) {
         reader.readAsDataURL(e.target.files[0]);
     }
 });
-
-document.getElementById('modify-icon').addEventListener('click', function() {
-    var newNickname = prompt('Inserisci il nuovo nickname:');
-    if (newNickname) {
-        document.getElementById('nickname').textContent = newNickname;
-    }
-});
+ document.getElementById('modify-icon').addEventListener('click', function() {
+        var newNickname = prompt('Inserisci il nuovo nickname:');
+        if (newNickname) {
+            var nicknameData = {
+                player: newNickname
+            };
+            document.getElementById('player').textContent = newNickname;
+            console.log(nicknameData);
+            //var jsonData = JSON.stringify(nicknameData);
+            fetch("http://localhost:8001/main/nick/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Token " + localStorage.getItem("userToken"),
+            },
+            body: JSON.stringify(nicknameData),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+        }
+    });
 </script>

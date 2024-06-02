@@ -1,3 +1,40 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+  const  savedLanguage = localStorage.getItem('language');
+  if (savedLanguage == 'IT') {
+    document.getElementById('btn1v1').innerText = '1v1';
+    document.getElementById('btn tournament').innerText = 'Torneo';
+    document.getElementById('playButton').innerText = 'Gioca'
+    document.getElementById('backChose').innerText = 'Indietro';
+    document.getElementById('nickPlayer1').placeholder = 'Giocatore 1 è X'
+    document.getElementById('nickPlayer2').innerText = 'Giocatore 2 è O';
+    document.getElementById('go-to-main').innerText = 'Vai al Menu Principale';
+    document.getElementById('nicknameInput').placeholder = 'Giocatore2';
+
+
+    
+  } else if (savedLanguage == 'EN') {
+    document.getElementById('btn1v1').innerText = '1v1';
+    document.getElementById('btn tournament').innerText = 'Tournament';
+    document.getElementById('playButton').innerText = 'Play'
+    document.getElementById('backChose').innerText = 'Back';
+    document.getElementById('nickPlayer1').placeholder = 'Player 1 is X'
+    document.getElementById('nickPlayer2').innerText = 'Player 2 is O';
+    document.getElementById('go-to-main').innerText = 'Go To Main Menu';
+    document.getElementById('nicknameInput').placeholder = 'User2';
+    
+  } else if (savedLanguage == 'ES') {
+    document.getElementById('btn1v1').innerText = '1v1';
+    document.getElementById('btn tournament').innerText = 'Torneo';
+    document.getElementById('playButton').innerText = 'Jugar'
+    document.getElementById('backChose').innerText = 'Atrás';
+    document.getElementById('nickPlayer1').placeholder = 'El jugador 1 es X'
+    document.getElementById('nickPlayer2').innerText = 'El jugador 2 es O';
+    document.getElementById('go-to-main').innerText = 'Ir al Menú Principal';
+    document.getElementById('nicknameInput').placeholder = 'Jugador2';
+  }
+});	
+
+
 // Variables
 let player1 = "";
 let player2 = "";

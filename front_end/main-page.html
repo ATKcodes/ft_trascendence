@@ -43,9 +43,9 @@
       }
       .div-title {
           font-family: 'font-Despairs';
-          font-size: 400%; /* Change this to move the div horizontally */
+          font-size: 500%; /* Change this to move the div horizontally */
           position: absolute;
-          left: 42%; /* Change this to move the div horizontally */
+          left: 45%; /* Change this to move the div horizontally */
           right: 2%;
           top: 3%; /* Change this to move the div vertically */
           width: 15%;
@@ -167,19 +167,54 @@
         <li style="margin-top: 10%;">Mvolpi</li>
         <li id="go_to_profile" style="margin-top: 5%;">Profilo</li>
         <li style="margin-top: 5%;" id="amici">Amici</li>
-        <div id="lista-amici" style="display: none;">
-          <p>Amico 1</p>
-          <p>Amico 2</p>
-          <p>Amico 3</p>
-        </div>
         <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
       </ul>
     </nav>
-    <select class = "select-language rounded-pill">
-      <option value="IT">IT</option>
-      <option value="EN">EN</option>
-      <option value="VE">VE</option>
-    </select>
+    <h2 class="div-title">PONG</h2>
+<select class="select-language rounded-pill">
+  <option value="EN">EN</option>
+  <option value="IT">IT</option>
+  <option value="ES">ES</option>
+</select>
+<script>
+  	document.addEventListener('DOMContentLoaded', (event) => {
+  // Seleziona l'elemento select
+  var selectLanguage = document.querySelector('.select-language');
+
+  // Aggiungi un event listener per l'evento 'change'
+  selectLanguage.addEventListener('change', function() {
+    // Quando l'utente seleziona una nuova lingua, salvala nel localStorage
+    localStorage.setItem('language', this.value);
+
+    // Aggiorna il testo sulla pagina
+    updateText(this.value);
+  });
+
+	function updateText(language) {
+    if (language == 'IT') {
+      document.getElementById('go_to_profile').innerText = 'Profilo';
+      document.getElementById('amici').innerText = 'Amici';
+      document.getElementById('go_to_login').innerText = 'Esci';
+      document.getElementById('go_to_game').innerText = 'Gioca';
+    } else if (language == 'EN') {
+      document.getElementById('go_to_profile').innerText = 'Profile';
+      document.getElementById('amici').innerText = 'Friends';
+      document.getElementById('go_to_login').innerText = 'Logout';
+      document.getElementById('go_to_game').innerText = 'Play';
+    } else if (language == 'ES') {
+      document.getElementById('go_to_profile').innerText = 'Perfil';
+      document.getElementById('amici').innerText = 'Amigos';
+      document.getElementById('go_to_login').innerText = 'Salir';
+      document.getElementById('go_to_game').innerText = 'Jugar';
+    }
+  }
+  // Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
+  var savedLanguage = localStorage.getItem('language');
+  if (savedLanguage) {
+    updateText(savedLanguage);
+  }
+});
+</script>
         <script>
             document.getElementById("go_to_login").addEventListener("click", function() {
             localStorage.setItem('lastPage', "login");
@@ -205,7 +240,9 @@
         });
       </script>
     </div>
+
   </body>
+
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
@@ -214,16 +251,11 @@
         $('.nav').toggleClass('wide');
       });
     });
-    
+    let variabileBooleana = false;
+  
     document.getElementById('amici').addEventListener('click', function() {
-    var listaAmici = document.getElementById('lista-amici');
-    // Qui dovresti recuperare la lista dei tuoi amici. Per ora, userò un array di esempio.
-    var amici = ['Amico 1', 'Amico 2', 'Amico 3'];
-    listaAmici.innerHTML = '';
-    for (var i = 0; i < amici.length; i++) {
-        listaAmici.innerHTML += '<p>' + amici[i] + '</p>';
-    }
-    listaAmici.style.display = 'block';
-});
-</script>
+      variabileBooleana = !variabileBooleana;
+      console.log(variabileBooleana);
+  });
+    </script>
 </html>
