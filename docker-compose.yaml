@@ -5,6 +5,9 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
+    networks:
+      - frontend-backend
+
   backend:
     depends_on:
       - db
@@ -18,6 +21,10 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
     env_file:
       - .env
+    networks:
+      - frontend-backend
+      - backend-db
+
   db:
     image: postgres:12
     environment:
@@ -26,3 +33,9 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
     env_file:
       - .env
+    networks:
+      - backend-db
+
+networks:
+  frontend-backend:
+  backend-db:

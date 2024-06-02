@@ -85,6 +85,10 @@ def WinLose_pong(request):
             },
             status=status.HTTP_200_OK,
         )
+    else:
+        return Response(
+            {"error": "Game not found"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 @api_view(["POST"])
@@ -110,18 +114,22 @@ def WinLose_tictac(request):
         user.date_played_tictactoe = now
         user.save()
 
-    return Response(
-        {
-            "tictactoe": {
-                "wins": user.wins_tictactoe,
-                "loses": user.loses_tictactoe,
-                "winrate": user.winrate_tictactoe,
-                "draws": user.draw_tictactoe,
-                "matchHistory": user.matchistory_tictactoe,
-            }
-        },
-        status=status.HTTP_200_OK,
-    )
+        return Response(
+            {
+                "tictactoe": {
+                    "wins": user.wins_tictactoe,
+                    "loses": user.loses_tictactoe,
+                    "winrate": user.winrate_tictactoe,
+                    "draws": user.draw_tictactoe,
+                    "matchHistory": user.matchistory_tictactoe,
+                }
+            },
+            status=status.HTTP_200_OK,
+        )
+    else:
+        return Response(
+            {"error": "Game not found"}, status=status.HTTP_400_BAD_REQUEST
+        )
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])

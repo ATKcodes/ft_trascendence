@@ -197,9 +197,7 @@
   <script>
   	document.addEventListener('DOMContentLoaded', (event) => {
 		// Seleziona l'elemento select
-    console.log("Porcodidio.");
 		var selectLanguage = document.querySelector('.select-language');
-		document.getElementById('Username').textContent = window.parent.userInstance.username;
 
 		// Aggiungi un event listener per l'evento 'change'
 		selectLanguage.addEventListener('change', function() {
@@ -209,6 +207,15 @@
 		// Aggiorna il testo sulla pagina
 		updateText(this.value);
   	});
+	// Add an event listener for the custom event
+	window.addEventListener('message', function(event) {
+    // Check the type of the message
+    if (event.data.type === 'userDataLoaded') {
+        console.log('userDataLoaded event triggered');
+        // Access the userInstance from the parent window
+        document.getElementById('Username').textContent = window.parent.userInstance.username;
+    }
+});
 
 	function updateText(language) {
 		if (language == 'IT') {
