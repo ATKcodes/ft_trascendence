@@ -63,22 +63,28 @@ docker:
   ✔ IP_ADDR: localhost // 10.11.10.1 @done (5/31/2024, 12:15:19 PM)
   ✔ https? @done (5/31/2024, 12:15:20 PM)
 
-chiedere:
-  ☐ mostrare profilo
+profilo amici:
+  ☐ capire come passare la user class dell'amico alla pagina profilo
+  ☐ cambiare tutte le informazioni della pagina profilo alle informazioni dell'amico
+
   ✔ cosa si intende matchmaking secondo gioco @done (5/31/2024, 12:15:30 PM)
 
 bug:
   ✔ non poter metter # in nick fixato front@done (6/2/2024, 8:28:00 PM)
+  ☐ chiedere a Kevin se la funzione resetTris dovrebbe funzionare
+  ☐ mostrare la  match history sulla pagina profilo.
   ☐ Volendo non poter metter # in nick anche in backend.
   ☐ chiamata tasto aggiungi amici
   ☐ status amici per il backend? come funziona
   ☐ show lista amici e status
   ☐ caricare pagine profilo amici
+  ☐ controllare bene tutte le chiamate per l'aggiornamento della match history
   ✔ se refresho il nick non rimane @done (6/2/2024, 8:14:25 PM)
   ✔ se torno indietro dopo che finisce la partita, continua a fare chiamate al backend @done (6/2/2024, 8:14:27 PM)
   ☐ torneo tris da collegare
   ✔ eliminare chiamata torneo pong @done (6/2/2024, 8:14:30 PM)
   ✔ quando torno indietro da torneo pong, si mischiano i placement @done (6/2/2024, 8:14:33 PM)
+  ☐ immagine profilo default definita dal backend.
   ☐ chiamate al backend per salvare le immagini di profilo
   ☐ chiamate al backend per salvare gli amici
   ☐ chiamate al backend per salvare match history

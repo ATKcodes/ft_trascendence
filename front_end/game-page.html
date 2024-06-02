@@ -53,57 +53,57 @@
 		background-color: #B6A999;
 	}
 	.avatar {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
 		left: 2%;
-		top: 1.5%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 	}
 	.avatar2 {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
 		right: 2%;
-		top: 1.5%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 	}
 	.avatar3 {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
-		left: 17%;
-		top: 1.5%;
+		left: 15%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 	}
 	.avatar4 {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
-		right: 17%;
-		top: 1.5%;
+		right: 15%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
@@ -450,9 +450,9 @@
 </head>
 <body>
     <img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
-    <h5 id = "userleft" class = "userleft">User1</h5>
+    <h5 id = "userleft" style = "margin-left: 1%" class = "userleft">User1</h5>
 	<img src="download.jpeg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
-	<h5 id = "userleft2" class = "userleft2" style = "display:none">User3</h5>
+	<h5 id = "userleft2" style = "margin-left: 1%; display:none" class = "userleft2">User3</h5>
     <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     <script>
         document.getElementById("go_to_main").addEventListener("click", function() {
@@ -464,9 +464,9 @@
         });
     </script>
     <img src="download.jpeg" alt="Avatar" class="avatar2" id = "avatar2">
-    <h5 id = "userright"class = "userright">User2</h5>
+    <h5 id = "userright" style = "margin-right: 1%" class = "userright">User2</h5>
 	<img src="download.jpeg" alt="Avatar" class="avatar4" id = "avatar4" style = "display:none">
-	<h5 id = "userright2" class = "userright2" style = "display:none">User4</h5>
+	<h5 id = "userright2" style = "margin-right: 1%; display:none" class = "userright2" style = "display:none">User4</h5>
     <div id="pong-game">
         <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
             <div><span id="scoreA" style="font-size: 24px; color: white; display:none">0</span></div>
@@ -1378,6 +1378,11 @@ window.addEventListener('message', function(event) {
 		pongGame.scoreB = 0;
 		console.log("entrato");
 	}
+	// Check the type of the message
+	else if (event.data.type === 'loadProfile') {
+        document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+        document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+    }
 });
 </script>
 </html>

@@ -168,7 +168,21 @@
         font-size: 30px;
         color: #ffffff;
       }
-      </style>
+	  .online, .offline {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+	}
+
+	.online {
+		background-color: rgb(3, 194, 3);
+	}
+
+	.offline {
+		background-color: rgb(248, 26, 26);
+	}
+		</style>
     <!-- Bootstrap JS -->
   </head>
   <body>
@@ -249,22 +263,37 @@
 		// Get the list of friends
 		var friends = window.parent.userInstance.friendlists;
 		// Check if the friends list is not undefined and not empty
-		if (friends && friends.length > 0) {
-			// Limit the number of friends to display
-			var maxFriends = 10; // Change this to the maximum number of friends you want to display
-			friends = friends.slice(0, maxFriends);
+// Check if the friends list is not undefined and not empty
+	if (friends && friends.length > 0) {
+		// Limit the number of friends to display
+		var maxFriends = 10; // Change this to the maximum number of friends you want to display
+		friends = friends.slice(0, maxFriends);
 
-			// Create an HTML element for each friend and append it to the container
-			for (var i = 0; i < friends.length; i++) {
-				var friendElement = document.createElement('p');
-				friendElement.textContent = friends[i]; // Change this to display the friend's name or other property
-				container.appendChild(friendElement);
-			}
-		} else {
-			// Display a message if there are no friends to display
-			document.getElementById('noFriends').style.display = 'block';
-}
-    }
+		// Create an HTML element for each friend and append it to the container
+		for (var i = 0; i < friends.length; i++) {
+			var friendElement = document.createElement('p');
+			friendElement.textContent = friends[i].name; // Change this to display the friend's name or other property
+
+			// Create a span element for the online status indicator
+			var statusIndicator = document.createElement('span');
+			statusIndicator.className = friends[i].online ? 'online' : 'offline'; // Replace 'online' and 'offline' with the classes that set the color of the indicator
+			statusIndicator.style.marginLeft = '10px'; // Add some space between the name and the indicator
+
+			// Append the status indicator to the friend element
+			friendElement.appendChild(statusIndicator);
+
+			// Add an event listener to the friend element that calls goToFriendProfile() when clicked
+			friendElement.addEventListener('click', function() {
+				goToFriendProfile(friends[i].id); // Replace friends[i].id with the friend's unique identifier
+			});
+
+			container.appendChild(friendElement);
+		}
+	} else {
+		// Display a message if there are no friends to display
+		document.getElementById('noFriends').style.display = 'block';
+	}
+};
 });
 
 	function updateText(language) {

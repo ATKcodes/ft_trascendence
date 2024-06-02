@@ -197,8 +197,8 @@
           <h6 class="history">
             Partita contro Jino: 14/06/24 13.00 Jino ha vinto
           </h6>
-          <h6 class="data">Vinte</h6>
-          <h6 class="data">Perse</h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
         </div>
         <hr />
         <div class="tris">
@@ -218,8 +218,8 @@
           <h6 class="history">
             Partita contro Jino: 14/06/24 13.00 Jino ha vinto
           </h6>
-          <h6 class="data">Vinte</h6>
-          <h6 class="data">Perse</h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
         </div>
       </div>
     </div>
@@ -227,6 +227,27 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
+
+	window.addEventListener('message', function(event) {
+		// Check the type of the message
+		if (event.data.type === 'loadProfile') {
+        document.getElementById("player").innerText  = window.parent.userInstance.player;
+        document.getElementById("profile-image").src = window.parent.userInstance.image;
+
+        // Add the number of matches won and lost for Pong
+        var pongWins = document.querySelector('.pong .data.wins');
+        var pongLosses = document.querySelector('.pong .data.losses');
+        pongWins.textContent = 'Vinte: ' + window.parent.userInstance.wins_pong;
+        pongLosses.textContent = 'Perse: ' + window.parent.userInstance.loses_pong;
+
+        // Add the number of matches won and lost for Tris
+        var trisWins = document.querySelector('.tris .data.wins');
+        var trisLosses = document.querySelector('.tris .data.losses');
+        trisWins.textContent = 'Vinte: ' + window.parent.userInstance.wins_tictactoe;
+        trisLosses.textContent = 'Perse: ' + window.parent.userInstance.loses_tictactoe;
+    }
+	});
+
     document.getElementById("edit-icon").addEventListener("click", function () {
       document.getElementById("image-upload").click();
     });

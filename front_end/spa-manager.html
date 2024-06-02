@@ -17,6 +17,7 @@
 		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id = "tris-game" src="tris-game.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id = "tris-tournament" src="tris-torneo.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id = "friend-profile" src="friendProfile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
 		var loginIframe = document.getElementById('login');
 		var mainPageIframe = document.getElementById('main-page');
@@ -25,13 +26,15 @@
 		var notFoundIframe = document.getElementById('404');
 		var trisGameIframe = document.getElementById('tris-game');
 		var trisTournamentIframe = document.getElementById('tris-tournament');
+		var friendProfileIframe = document.getElementById('friend-profile');
 		let loginWindow = loginIframe.contentWindow;
 		let mainPageWindow = mainPageIframe.contentWindow;
 		let profileWindow = profileIframe.contentWindow;
 		let gamePageWindow = gamePageIframe.contentWindow;
 		let notFoundWindow = notFoundIframe.contentWindow;
 		let trisGameWindow = trisGameIframe.contentWindow;
-		let trisTournamentIframe = trisTournamentIframe.contentWindow;
+		let trisTournamentWindow = trisTournamentIframe.contentWindow;
+		let friendProfileWindow = friendProfileIframe.contentWindow;
 		console.log("Script loaded");
 		document.addEventListener('DOMContentLoaded', (event) => {
 		console.log("Window loaded");
@@ -42,7 +45,7 @@
 			login42(code);
 		}
 		});
-		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game', 'spa-manager', 'tris-tournament'];
+		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game', 'spa-manager', 'tris-tournament', 'friend-profile'];
 		// Handle the back and forward navigation
 		window.onpopstate = function(event) {
 			// Hide all iframes
@@ -93,6 +96,8 @@
 					document.getElementById("tris-game").style.display = "block";
 				} else if (event.state.page === 'tris-tournament') {
 					document.getElementById("tris-tournament").style.display = "block";
+				} else if(document.getElementById("friend-profile").style.display = "block"){
+					document.getElementById("friend-profile").style.display = "block";
 				} else if (event.state.page === '404') {
 					document.getElementById("404").style.display = "block";
 				}
@@ -118,12 +123,18 @@
 		}
 		function goToProfile() {
 			profileIframe.src = "profile.html";
+			profileIframe.onload = function() {
+				profileIframe.contentWindow.postMessage({ type: 'loadProfile' }, '*');
+			}
 			hidePages();
 			profileIframe.style.display = "block";
 			history.pushState({page: 'profile'}, null, 'profile');
   		}
 		  function goToGame() {
-			gamePageIframe.src = "game-page.html"; 
+			gamePageIframe.src = "game-page.html";
+			gamePageIframe.onload = function() {
+				gamePageIframe.contentWindow.postMessage({ type: 'loadProfile' }, '*');
+			}
     		hidePages();
 			gamePageIframe.style.display = "block";
 			history.pushState({page: 'game-page'}, null, 'game-page');
@@ -146,6 +157,13 @@
 			hidePages();
 			trisTournamentIframe.style.display = "block";
 			history.pushState({page: 'tris-tournament'}, null, 'tris-tournament');
+		}
+
+		function goToFriendProfile() {
+			friendProfileIframe.src = "friendProfile.html";
+			hidePages();
+			friendProfileIframe.style.display = "block";
+			history.pushState({page: 'friend-profile'}, null, 'friend-profile');
 		}
 
 		function login42(code){
@@ -222,6 +240,7 @@
 		trisGameIframe.src = "tris-game.html";
 		loginIframe.src = "login.html";
 		trisTournamentIframe.src = "tris-torneo.html";
+		friendProfileIframe.src = "friendProfile.html";
 		
 			// Attempt to get the lastPage from localStorage
 			var lastPage = localStorage.getItem('lastPage');
@@ -248,6 +267,8 @@
 				var url = window.location.href;
 				if (url.includes('spa-manager')) {
 					showPage("login"); // Default to login if 'spa-manager' is in the URL but no lastPage is saved
+				} else if (url.include('friend-profile')){
+					showPage("friend-profile");
 				} else if (url.includes('profile')) {
 					showPage("profile");
 				} else if (url.includes('game-page')) {
@@ -262,7 +283,7 @@
 					showPage("tris-game");
 				} else if (url.includes('tris-tournament')) {
 					showPage("tris-tournament"); 
-				}else if (url.includes('404')){
+				} else if (url.includes('404')){
 					showPage("404")
 				}
 			}
@@ -284,7 +305,7 @@
 });
 
 function setPageBasedOnState(state) {
-    const pageIds = ["login", "profile", "main-page", "game-page", "tris-game", "tris-tournament", "spa-manager" ,"404"];
+    const pageIds = ["login", "profile", "main-page", "game-page", "tris-game", "tris-tournament", "spa-manager", "friend-profile" ,"404"];
     pageIds.forEach(id => {
         const pageElement = document.getElementById(id);
         if (pageElement) {
@@ -315,6 +336,7 @@ function setPageBasedOnState(state) {
 		document.getElementById("404").style.display = "none";
 		document.getElementById("tris-game").style.display = "none";
 		document.getElementById("tris-tournament").style.display = "none";
+		document.getElementById("friend-profile").style.display = "none";
 	}
 	</script>
 	<script>
