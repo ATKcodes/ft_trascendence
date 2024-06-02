@@ -17,13 +17,22 @@
 		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id = "tris-game" src="tris-game.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
-
-		function goToMain() {
-			hidePages();
-			document.getElementById("main-page").style.display = "block";
-			// Change the URL to 'main-page.html'
-			history.pushState({page: 'main-page'}, null, 'main-page');
+		var loginIframe = document.getElementById('login');
+		var mainPageIframe = document.getElementById('main-page');
+		var profileIframe = document.getElementById('profile');
+		var gamePageIframe = document.getElementById('game-page');
+		var notFoundIframe = document.getElementById('404');
+		var trisGameIframe = document.getElementById('tris-game');
+		console.log("Script loaded");
+		document.addEventListener('DOMContentLoaded', (event) => {
+		console.log("Window loaded");
+		let pippo = new URL(window.location.href);
+		console.log(pippo);
+		let code = pippo.searchParams.get("code")
+		if (code) {
+			login42(code);
 		}
+		});
 		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game'];
 		// Handle the back and forward navigation
 		window.onpopstate = function(event) {
@@ -45,13 +54,20 @@
 		}
 	};
 
-	function goTo404() {
+		function goTo404() {
 			hidePages();
 			var errorPage = document.getElementById("404");
 			errorPage.style.display = "block";
 			errorPage.src = errorPage.src; // This will refresh the iframe
 			history.replaceState({page: '404'}, null, '404');
-		};
+		}
+		function goToMain() {
+			mainPageIframe.src = "main-page.html";
+			hidePages();
+			document.getElementById("main-page").style.display = "block";
+			// Change the URL to 'main-page.html'
+			history.pushState({page: 'main-page'}, null, 'main-page');
+		}
 		function goToProfile() {
 			hidePages();
 			var profilePage = document.getElementById("profile");
@@ -80,7 +96,32 @@
 			TrisPage.src = TrisPage.src; // This will refresh the iframe
 			history.pushState({page: 'tris-game'}, null, 'tris-game');
 		}
-		
+
+		function login42(code){
+				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
+					method: 'GET',
+				})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					console.log('Success:', data); // Debugging: Log the data to see its structure
+					if(data.token) {
+						localStorage.setItem('userToken', data.token); // Correctly access and store the token
+						console.log('Login successful');
+						localStorage.setItem('lastPage', "main-page");
+						window.goToMain();
+					} else if(data.detail) {
+						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
+					} else {
+						console.error('Token not found in response');
+					}
+				})
+				.catch(error => console.error('Error:', error));
+			}
 
 		window.onload = function() {
 			// Attempt to get the lastPage from localStorage

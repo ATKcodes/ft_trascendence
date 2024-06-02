@@ -67,15 +67,16 @@ def logout(request):
 
 
 
+@api_view(['GET'])
 def get_42token(request):
     data = {
         'grant_type': 'authorization_code',
         'client_id': os.getenv('CLIENT_ID'),
         'client_secret': os.getenv('CLIENT_SECRET'),
-        'code': 'b3ec5979f078f1ea6f6bbc86296470f47c3e0d3ff26e342120c9e2caba05405a',
-        'redirect_uri': 'https://127.0.0.1:8443/main-page.html',
+        'code': request.GET.get('code'),
+        'redirect_uri': 'https://localhost:8443/spa-manager.html',
     }
-    response = requests.post('https://api.intra.42.fr/oauth/token', data=data)
+    response = requests.post('https://api.intra.42.fr/oauth/token', json=data)
     if response.status_code == 200:
         response2 = requests.get('https://api.intra.42.fr/v2/me', headers={'Authorization': 'Bearer ' + response.json()['access_token']})
         username = response2.json()['login']
@@ -84,10 +85,9 @@ def get_42token(request):
             serializer = UserSerializer(data={'username': username, 'password': get_random_string(length=40)})
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-            user = User.objects.get(username=username)
-        user.status = True
+        user = User.objects.get(username=username)
         user.save()
         token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
-        return JsonResponse({'access_token': response.json()['access_token']})
+        return JsonResponse({'token': token.key, 'user': UserSerializer(user).data})
     else:
         return JsonResponse({'error': 'Failed to get access token'}, status=400)
