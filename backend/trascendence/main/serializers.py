@@ -22,3 +22,9 @@ class ProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['profile_image']
+
+
+class FriendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'profile_image', 'player', 'wins_pong', 'loses_pong', 'winrate_pong', 'wins_tictactoe', 'loses_tictactoe', 'draw_tictactoe', 'winrate_tictactoe', 'status', 'matchistory_pong', 'matchistory_tictactoe']
