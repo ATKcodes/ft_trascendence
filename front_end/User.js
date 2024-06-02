@@ -17,6 +17,10 @@ export default class User {
 
 	constructor(){}
 	fillData(data){
+		if (!data || !data.user) {
+			console.error('Data or data.user is undefined');
+			return;
+		}
 		console.log("filling user data.")
 		this.username = data.user.username;
 		this.player = data.user.player;

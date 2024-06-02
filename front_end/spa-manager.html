@@ -23,6 +23,12 @@
 		var gamePageIframe = document.getElementById('game-page');
 		var notFoundIframe = document.getElementById('404');
 		var trisGameIframe = document.getElementById('tris-game');
+		let loginWindow = loginIframe.contentWindow;
+		let mainPageWindow = mainPageIframe.contentWindow;
+		let profileWindow = profileIframe.contentWindow;
+		let gamePageWindow = gamePageIframe.contentWindow;
+		let notFoundWindow = notFoundIframe.contentWindow;
+		let trisGameWindow = trisGameIframe.contentWindow;
 		console.log("Script loaded");
 		document.addEventListener('DOMContentLoaded', (event) => {
 		console.log("Window loaded");
@@ -52,48 +58,78 @@
 			// If it's not, show the 404 page
 			goTo404();
 		}
-	};
+		console.log('onpopstate event triggered');
+			console.log(event.state);
+        	if (event.state) {
+            	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
+            	if (event.state.page === 'spa-manager') {
+                	history.replaceState({page: 'spa-manager'}, null, 'login');
+            	}
+				// Hide all pages
+				hidePages();
+
+				// Show the page based on the state object
+				if (event.state.page === 'spa-manager') {
+					history.replaceState({page: 'spa-manager'}, null, 'login');
+					document.getElementById("login").style.display = "block";
+				} else if (event.state.page === 'profile') {
+					document.getElementById("profile").style.display = "block";
+				} else if (event.state.page === 'game-page') {
+					gamePageWindow.postMessage({ type: 'reset' }, '*');
+					console.log("reset chiamata");
+					document.getElementById("game-page").style.display = "block";
+				} else if (event.state.page === 'login') {
+					document.getElementById("login").style.display = "block";
+				} else if (event.state.page === 'main-page') {
+					document.getElementById("main-page").style.display = "block";
+				} else if (event.state.page === 'tris-game') {
+					document.getElementById("tris-game").style.display = "block";
+				} else if (event.state.page === '404') {
+					document.getElementById("404").style.display = "block";
+				}
+			}
+			setPageBasedOnState(event.state);
+		};
 
 		function goTo404() {
 			hidePages();
 			var errorPage = document.getElementById("404");
-			errorPage.style.display = "block";
-			errorPage.src = errorPage.src; // This will refresh the iframe
+			notFoundWindow.style.display = "block";
+			notFoundWindow.src = "404.html";
 			history.replaceState({page: '404'}, null, '404');
 		}
 		function goToMain() {
 			mainPageIframe.src = "main-page.html";
+			mainPageIframe.onload = function() {
+				mainPageIframe.contentWindow.postMessage({ type: 'userDataLoaded' }, '*');
+			}
 			hidePages();
-			document.getElementById("main-page").style.display = "block";
+			mainPageIframe.style.display = "block";
 			// Change the URL to 'main-page.html'
 			history.pushState({page: 'main-page'}, null, 'main-page');
 		}
 		function goToProfile() {
+			profileIframe.src = "profile.html";
 			hidePages();
-			var profilePage = document.getElementById("profile");
-			profilePage.style.display = "block";
-			profilePage.src = profilePage.src; // This will refresh the iframe
+			profileIframe.style.display = "block";
 			history.pushState({page: 'profile'}, null, 'profile');
   		}
 		  function goToGame() {
+			gamePageIframe.src = "game-page.html"; 
     		hidePages();
-			var gamePage = document.getElementById("game-page");
-			gamePage.style.display = "block";
-			gamePage.src = gamePage.src; // This will refresh the iframe
+			gamePageIframe.style.display = "block";
 			history.pushState({page: 'game-page'}, null, 'game-page');
 		}
 		function goToLogin() {
+			loginIframe.src = "login.html";
 			hidePages();
-			var LoginPage = document.getElementById("login");
-			LoginPage.style.display = "block";
-			LoginPage.src = LoginPage.src; // This will refresh the iframe
+			loginIframe.style.display = "block";
 			history.pushState({page: 'login'}, null, 'login');
 		}
 		function goToTris() {
+			trisGameIframe.src = "tris-game.html";
 			hidePages();
-			var TrisPage = document.getElementById("tris-game");
-			TrisPage.style.display = "block";
-			TrisPage.src = TrisPage.src; // This will refresh the iframe
+			trisGameIframe.style.display = "block";
 			history.pushState({page: 'tris-game'}, null, 'tris-game');
 		}
 
@@ -123,17 +159,68 @@
 				.catch(error => console.error('Error:', error));
 			}
 
-		window.onload = function() {
+	window.onload = async function() {
+		try {
+			const module = await import("./User.js");
+			const User = module.default;
+			window.User = User;
+			window.userInstance = new User();
+			console.log("User.js loaded", window.userInstance.username);
+		} catch (error) {
+			console.log("Error loading User.js:", error);
+		}
+
+		const tokenData = {
+			token: localStorage.getItem('userToken'),
+		};
+
+		fetch('http://127.0.0.1:8001/login/info/', {
+			method: 'POST',
+			headers: {
+				'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(tokenData),
+		})
+		.then(response => response.json()) // Parse the JSON response
+		.then(data => {
+			console.log('Success:', data);
+			if(data.token) {
+				try {
+					window.userInstance.fillData(data);
+					console.log('Dispatching userDataLoaded event');
+					mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
+				} catch (error) {
+					console.error('Error calling fillData:', error);
+				}
+			} else if(data.detail) {
+				console.error('Error:', data.detail);
+			} else {
+				console.error('Token not found in response');
+			}
+		})
+		.catch(error => console.error('Error:', error));
+		mainPageIframe.src = "main-page.html";
+		profileIframe.src = "profile.html";
+		gamePageIframe.src = "game-page.html";
+		notFoundIframe.src = "404.html";
+		trisGameIframe.src = "tris-game.html";
+		loginIframe.src = "login.html";
+		
 			// Attempt to get the lastPage from localStorage
 			var lastPage = localStorage.getItem('lastPage');
-			// Hide all pages
-			hidePages();
 			// Function to show the page based on id
 			function showPage(pageId) {
-				var pageElement = document.getElementById(pageId);
-				if (pageElement) {
-					pageElement.style.display = "block";
-					history.replaceState({page: pageId}, null, pageId);
+				// Hide all pages
+				hidePages();
+
+				// Show the requested page
+				document.getElementById(pageId).style.display = "block";
+
+				// If the game page is being shown, reset the game
+				if (pageId === 'game-page') {
+					gamePageWindow.postMessage({ type: 'reset' }, '*');
+					console.log("reset chiamata");
 				}
 			}
 
@@ -148,6 +235,8 @@
 				} else if (url.includes('profile')) {
 					showPage("profile");
 				} else if (url.includes('game-page')) {
+					gamePageWindow.postMessage({ type: 'reset' }, '*');
+					console.log("reset chiamata");
 					showPage("game-page");
 				} else if (url.includes('login')) {
 					showPage("login");
@@ -161,35 +250,6 @@
 			}
 		};
 
-    	// Handle the back and forward navigation
-    	window.onpopstate = function(event) {
-        	if (event.state) {
-            	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
-            	if (event.state.page === 'spa-manager') {
-                	history.replaceState({page: 'spa-manager'}, null, 'login');
-            	}
-				// Hide all pages
-				hidePages();
-
-				// Show the page based on the state object
-				if (event.state.page === 'spa-manager') {
-					history.replaceState({page: 'spa-manager'}, null, 'login');
-					document.getElementById("login").style.display = "block";
-				} else if (event.state.page === 'profile') {
-					document.getElementById("profile").style.display = "block";
-				} else if (event.state.page === 'game-page') {
-					document.getElementById("game-page").style.display = "block";
-				} else if (event.state.page === 'login') {
-					document.getElementById("login").style.display = "block";
-				} else if (event.state.page === 'main-page') {
-					document.getElementById("main-page").style.display = "block";
-				} else if (event.state.page === 'tris-game') {
-					document.getElementById("tris-game").style.display = "block";
-				} else if (event.state.page === '404') {
-					document.getElementById("404").style.display = "block";
-				}
-			}
-    	};
 
 	document.addEventListener('DOMContentLoaded', function() {
     const userToken = localStorage.getItem('userToken');
@@ -223,10 +283,6 @@ function setPageBasedOnState(state) {
     }
 }
 
-	// Handle page state on popstate event
-	window.onpopstate = function(event) {
-		setPageBasedOnState(event.state);
-	};
 	function hidePages(){
 		document.getElementById("game-page").style.display = "none";
 		document.getElementById("main-page").style.display = "none";

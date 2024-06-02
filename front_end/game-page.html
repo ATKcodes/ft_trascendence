@@ -1284,6 +1284,11 @@ document.getElementById("Readyup").addEventListener("click", function(){
 
 
 document.getElementById('EndTournament').addEventListener('click', function() {
+	
+		document.getElementById("scoreA").style.display = "none";
+		document.getElementById("scoreB").style.display = "none";
+		document.getElementById("play-pong").style.display = "block";
+		document.getElementById("play-tris").style.display = "block";
 		document.getElementById("FirstPlace").style.display = "none";
 		document.getElementById("SecondPlace").style.display = "none";
 		document.getElementById("ThirdPlace").style.display = "none";
@@ -1298,36 +1303,6 @@ document.getElementById('EndTournament').addEventListener('click', function() {
 		pongGame.balllimitfaster = 2;
 		pongGame.scoreA = 0;
 		pongGame.scoreB = 0;
-		if (pongGame.tournamentGame3Lose === document.querySelector('.userleft').textContent)
-			pongGame.placement = 2;
-		else if (pongGame.tournament1Lose === document.querySelector('.userleft').textContent || pongGame.tournamentGame2Lose === document.querySelector('.userleft').textContent)
-			pongGame.placement = 3;
-		else
-			pongGame.placement = 1;
-		var TournamentData = {
-		game: "pong",
-		placement: pongGame.placement,
-    	};
-    	var jsonTournamentData = JSON.stringify(TournamentData);
-		var token = localStorage.getItem('userToken');
-		fetch('http://localhost:8001/main/winlose/', { //Change the URL
-				method: 'POST',
-				headers: {
-					'Authorization' : 'Token ' + token,
-					'Content-Type': 'application/json'
-				},
-				body: jsonTournamentData
-			}).then(response => {
-				if (response.ok) {
-					console.log('Tournament data sent successfully');
-				} else {
-					console.error('Error sending tournament data:', response.statusText);
-				}
-			}).catch(error => {
-				console.error('Network error:', error);
-			});
-
-		resetPage();
 	});
 
 //TRIS CODE
@@ -1336,10 +1311,13 @@ document.getElementById("play-tris").addEventListener("click", function(){
 	window.parent.goToTris();
 });
 }
-
 window.addEventListener('message', function(event) {
 	if (event.data.type === 'reset')
 	{
+		pongGame.resetBall();
+		pongGame.ballSpeed.x = 0;
+		pongGame.ballSpeed.y = 0;
+		pongGame.stop();
 		console.log("entra?");
 		document.getElementById("play-pong").style.display = "block";
 		document.getElementById("play-tris").style.display = "block";
@@ -1380,6 +1358,12 @@ window.addEventListener('message', function(event) {
 		document.getElementById("SecondPlace").style.display = "none";
 		document.getElementById("ThirdPlace").style.display = "none";
 		document.getElementById("ThirdPlace2").style.display = "none";
+		document.getElementById("EndTournament").style.display = "none";
+		pongGame.tournamentStatus = 0;
+		pongGame.bouncecounter = 0;
+		pongGame.balllimitfaster = 2;
+		pongGame.scoreA = 0;
+		pongGame.scoreB = 0;
 		console.log("entrato");
 	}
 });

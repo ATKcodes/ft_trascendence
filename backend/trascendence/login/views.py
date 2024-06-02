@@ -53,8 +53,11 @@ class LoginView(APIView):
 @api_view(['POST'])  
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
-def TestView(request):
-    return Response({"detail": "You are authenticfewfated"})
+def Info(request):
+	user = request.user
+	serializer = UserSerializer(user)
+	token = CustomToken.objects.get(user=user)
+	return Response({"user": serializer.data,"token" : token.key})
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
