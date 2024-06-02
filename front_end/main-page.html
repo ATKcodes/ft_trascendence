@@ -176,15 +176,20 @@
       <img class="icon-bar"></img>
     </div>
     <nav class="nav">
-      <ul>
-        <li id="Username" style="margin-top: 10%; font-size: 50px;">User</li>
-        <li id="go_to_profile" style="margin-top: 5%;">Profilo</li>
-        <li style="margin-top: 5%;" id="amici">Amici</li>
-        <li id = "go_to_login"style="margin-top: 250%;">Logout</li>
-      </ul>
+		<ul>
+			<li id="Username" style="margin-top: 10%; font-size: 50px;">User</li>
+			<li id="go_to_profile" style="margin-top: 5%;">Profile</li>
+			<li style="margin-top: 5%; display: flex; align-items: center;">
+				<span id="amici">Friends</span>
+				<button id="addFriend" class="btn" style="font-size: 15px; margin-left: 25%; background-color: #000; color:#ffffff">addFriend</button>
+			</li>
+			<li id="noFriends" style = "display: none; margin-top:5%; font-size: 22px;">No friends to display yet</li>
+			<li id="friendsList" style="margin-top: 5%;"></li> <!-- New element for the friends list -->
+			<li id = "go_to_login"style="margin-top: 250%;">Logout</li>
+		</ul>
     </nav>
     <h2 class="div-title">PONG</h2>
-	<select class="select-language rounded-pill">
+	<select id = "select-language"class="select-language rounded-pill">
 	<option value="EN">EN</option>
 	<option value="IT">IT</option>
 	<option value="ES">ES</option>
@@ -193,7 +198,6 @@
       <button id = "go_to_game" type="button" class="btn btn-primary btn-lg btn-block">Play</button>
     </div>
   </body>
-
   <script>
   	document.addEventListener('DOMContentLoaded', (event) => {
 		// Seleziona l'elemento select
@@ -203,7 +207,28 @@
 		selectLanguage.addEventListener('change', function() {
 		// Quando l'utente seleziona una nuova lingua, salvala nel localStorage
 		localStorage.setItem('language', this.value);
+		console.log('Language changed to:', this.value);
+		window.parent.userInstance.changeLanguage(this.value);
+		console.log("User language = "+window.parent.userInstance.language);
+		var language = JSON.stringify( {language: this.value});
+		var token = localStorage.getItem('userToken');
 
+		fetch('http://localhost:8001/main/language/', {
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+				body: language,
+			}).then(response => {
+				if (response.ok) {
+					console.log('Language change sent successfully');
+				} else {
+					console.error('Error sending language change:', response.statusText);
+				}
+			}).catch(error => {
+				console.error('Network error:', error);
+			});
 		// Aggiorna il testo sulla pagina
 		updateText(this.value);
   	});
@@ -214,25 +239,56 @@
         console.log('userDataLoaded event triggered');
         // Access the userInstance from the parent window
         document.getElementById('Username').textContent = window.parent.userInstance.username;
+
+		// Change the selected language
+		var languageSelect = document.getElementById('select-language'); // Replace 'languageSelect' with the ID of your select element
+        languageSelect.value = window.parent.userInstance.language;
+		
+		// Get the container where you want to display the friends
+		var container = document.getElementById('friendsList');
+		// Get the list of friends
+		var friends = window.parent.userInstance.friendlists;
+		// Check if the friends list is not undefined and not empty
+		if (friends && friends.length > 0) {
+			// Limit the number of friends to display
+			var maxFriends = 10; // Change this to the maximum number of friends you want to display
+			friends = friends.slice(0, maxFriends);
+
+			// Create an HTML element for each friend and append it to the container
+			for (var i = 0; i < friends.length; i++) {
+				var friendElement = document.createElement('p');
+				friendElement.textContent = friends[i]; // Change this to display the friend's name or other property
+				container.appendChild(friendElement);
+			}
+		} else {
+			// Display a message if there are no friends to display
+			document.getElementById('noFriends').style.display = 'block';
+}
     }
 });
 
 	function updateText(language) {
 		if (language == 'IT') {
+		document.getElementById('addFriend').innerText = 'Aggiungi Amico';
 		document.getElementById('go_to_profile').innerText = 'Profilo';
 		document.getElementById('amici').innerText = 'Amici';
 		document.getElementById('go_to_login').innerText = 'Esci';
 		document.getElementById('go_to_game').innerText = 'Gioca';
+		document.getElementById('noFriends').innerText = 'Non hai ancora nessun amico :\(';
 		} else if (language == 'EN') {
+		document.getElementById('addFriend').innerText = 'Add Friend';
 		document.getElementById('go_to_profile').innerText = 'Profile';
 		document.getElementById('amici').innerText = 'Friends';
 		document.getElementById('go_to_login').innerText = 'Logout';
 		document.getElementById('go_to_game').innerText = 'Play';
+		document.getElementById('noFriends').innerText = 'No friends to display yet :\(';
 		} else if (language == 'ES') {
+		document.getElementById('addFriend').innerText = 'Añadir Amigo';
 		document.getElementById('go_to_profile').innerText = 'Perfil';
 		document.getElementById('amici').innerText = 'Amigos';
 		document.getElementById('go_to_login').innerText = 'Salir';
 		document.getElementById('go_to_game').innerText = 'Jugar';
+		document.getElementById('noFriends').innerText = 'Aún no tienes amigos :\(';
 		}
 	}
 	// Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
@@ -255,6 +311,11 @@
 	  localStorage.setItem('lastPage', "profile");
 	  window.parent.goToGame();
 	});
+	//Aggiungere qui la chiamata al backend per l'aggiunta di un amico
+	document.getElementById("addFriend").addEventListener("click", function() {
+	});
+
+
   </script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

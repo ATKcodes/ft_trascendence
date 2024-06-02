@@ -95,7 +95,7 @@
                 >
                   1v1
                 </button>
-                <button class="btn btn-dark ml-1" style="margin-left: 10px">
+                <button id = "go_to_trisTournament"class="btn btn-dark ml-1" style="margin-left: 10px">
                   Torneo
                 </button>
               </div>
@@ -193,11 +193,9 @@
             window.parent.goToMain();
           });
 
-        document
-          .getElementById("go-to-main2")
-          .addEventListener("click", function () {
-            localStorage.setItem("lastPage", "main-page");
-            window.parent.goToMain();
+        document.getElementById("go_to_trisTournament").addEventListener("click", function() {
+            localStorage.setItem("lastPage", "tris-game");
+            window.parent.goToTrisTournament();
           });
       });
 

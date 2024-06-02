@@ -162,7 +162,7 @@
     }
   </style>
   <body>
-    <h2 class="div-title">PONG</h2>
+    <h2 id = "go_to_main" class="div-title">PONG</h2>
     <div class="profile">
       <div class="img-fluid">
         <div class="image-container">
@@ -231,9 +231,12 @@
       document.getElementById("image-upload").click();
     });
 
-    document
-      .getElementById("image-upload")
-      .addEventListener("change", function () {
+	document.getElementById("go_to_main").addEventListener("click", function() {
+			localStorage.setItem('lastPage', "main-page");
+            window.parent.goToMain();
+        });
+
+    document.getElementById("image-upload").addEventListener("change", function () {
         let inputElement = document.getElementById("image-upload");
         let file = inputElement.files[0];
         let url = "http://localhost:8001/main/profile_image/";

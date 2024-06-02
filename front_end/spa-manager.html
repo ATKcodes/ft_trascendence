@@ -16,6 +16,7 @@
 		<iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<iframe id = "tris-game" src="tris-game.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id = "tris-tournament" src="tris-torneo.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
 		<script>
 		var loginIframe = document.getElementById('login');
 		var mainPageIframe = document.getElementById('main-page');
@@ -23,12 +24,14 @@
 		var gamePageIframe = document.getElementById('game-page');
 		var notFoundIframe = document.getElementById('404');
 		var trisGameIframe = document.getElementById('tris-game');
+		var trisTournamentIframe = document.getElementById('tris-tournament');
 		let loginWindow = loginIframe.contentWindow;
 		let mainPageWindow = mainPageIframe.contentWindow;
 		let profileWindow = profileIframe.contentWindow;
 		let gamePageWindow = gamePageIframe.contentWindow;
 		let notFoundWindow = notFoundIframe.contentWindow;
 		let trisGameWindow = trisGameIframe.contentWindow;
+		let trisTournamentIframe = trisTournamentIframe.contentWindow;
 		console.log("Script loaded");
 		document.addEventListener('DOMContentLoaded', (event) => {
 		console.log("Window loaded");
@@ -39,24 +42,29 @@
 			login42(code);
 		}
 		});
-		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game'];
+		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game', 'spa-manager', 'tris-tournament'];
 		// Handle the back and forward navigation
 		window.onpopstate = function(event) {
-		// Get the current path
-		var currentPath = window.location.pathname.slice(1);
+			// Hide all iframes
+			hidePages();
 
-		// Hide all iframes
-		hidePages();
+			// Get the current path
+			var currentPath = window.location.pathname.slice(1);
 
-		// Check if the current path is in the list of valid paths
-		if (validPaths.includes(currentPath)) {
-			// If it is, show the iframe of the current page
-			if (event.state) {
-				document.getElementById(event.state.page).style.display = "block";
+			// Check if the current path is in the list of valid paths
+			if (validPaths.includes(currentPath)) {
+				// If it is, show the iframe of the current page
+				if (event.state) {
+					document.getElementById(event.state.page).style.display = "block";
+				}
+			} else {
+				// If it's not, show the 404 page
+				goTo404();
 			}
-		} else {
-			// If it's not, show the 404 page
-			goTo404();
+		// If the user navigates back to the 'spa-manager' page, change the URL to '/login' and display the login page
+		if (!event.state || event.state.page === 'spa-manager') {
+			history.replaceState({page: 'login'}, null, '/login');
+			document.getElementById("login").style.display = "block";
 		}
 		console.log('onpopstate event triggered');
 			console.log(event.state);
@@ -69,14 +77,13 @@
 				hidePages();
 
 				// Show the page based on the state object
-				if (event.state.page === 'spa-manager') {
-					history.replaceState({page: 'spa-manager'}, null, 'login');
+				if (event.state && event.state.page === 'spa-manager') {
 					document.getElementById("login").style.display = "block";
+   					window.history.pushState({page: 'login'}, "", "/login");
 				} else if (event.state.page === 'profile') {
 					document.getElementById("profile").style.display = "block";
 				} else if (event.state.page === 'game-page') {
 					gamePageWindow.postMessage({ type: 'reset' }, '*');
-					console.log("reset chiamata");
 					document.getElementById("game-page").style.display = "block";
 				} else if (event.state.page === 'login') {
 					document.getElementById("login").style.display = "block";
@@ -84,6 +91,8 @@
 					document.getElementById("main-page").style.display = "block";
 				} else if (event.state.page === 'tris-game') {
 					document.getElementById("tris-game").style.display = "block";
+				} else if (event.state.page === 'tris-tournament') {
+					document.getElementById("tris-tournament").style.display = "block";
 				} else if (event.state.page === '404') {
 					document.getElementById("404").style.display = "block";
 				}
@@ -93,8 +102,7 @@
 
 		function goTo404() {
 			hidePages();
-			var errorPage = document.getElementById("404");
-			notFoundWindow.style.display = "block";
+			notFoundIframe.style.display = "block";
 			notFoundWindow.src = "404.html";
 			history.replaceState({page: '404'}, null, '404');
 		}
@@ -131,6 +139,13 @@
 			hidePages();
 			trisGameIframe.style.display = "block";
 			history.pushState({page: 'tris-game'}, null, 'tris-game');
+		}
+
+		function goToTrisTournament(){
+			trisTournamentIframe.src = "tris-torneo.html";
+			hidePages();
+			trisTournamentIframe.style.display = "block";
+			history.pushState({page: 'tris-tournament'}, null, 'tris-tournament');
 		}
 
 		function login42(code){
@@ -206,6 +221,7 @@
 		notFoundIframe.src = "404.html";
 		trisGameIframe.src = "tris-game.html";
 		loginIframe.src = "login.html";
+		trisTournamentIframe.src = "tris-torneo.html";
 		
 			// Attempt to get the lastPage from localStorage
 			var lastPage = localStorage.getItem('lastPage');
@@ -244,7 +260,9 @@
 					showPage("main-page");
 				} else if (url.includes('tris-game')) {
 					showPage("tris-game");
-				} else if (url.includes('404')){
+				} else if (url.includes('tris-tournament')) {
+					showPage("tris-tournament"); 
+				}else if (url.includes('404')){
 					showPage("404")
 				}
 			}
@@ -266,17 +284,23 @@
 });
 
 function setPageBasedOnState(state) {
-    const pageIds = ["login", "profile", "main-page", "game-page", "tris-game", "404"];
+    const pageIds = ["login", "profile", "main-page", "game-page", "tris-game", "tris-tournament", "spa-manager" ,"404"];
     pageIds.forEach(id => {
         const pageElement = document.getElementById(id);
         if (pageElement) {
             pageElement.style.display = "none";
         }
     });
-    if (state.page && document.getElementById(state.page)) {
+    if (state && state.page && document.getElementById(state.page)) {
         console.log("Showing page:", state.page);
-        document.getElementById(state.page).style.display = "block";
-        localStorage.setItem('lastPage', state.page); // Correctly update localStorage
+        if (state.page === 'spa-manager') {
+            window.history.replaceState({page: 'login'}, "", "/login");
+            document.getElementById("login").style.display = "block";
+            localStorage.setItem('lastPage', 'login'); // Correctly update localStorage
+        } else {
+            document.getElementById(state.page).style.display = "block";
+            localStorage.setItem('lastPage', state.page); // Correctly update localStorage
+        }
     } else {
         console.log("No page specified, showing login");
         document.getElementById("login").style.display = "block";
@@ -290,6 +314,7 @@ function setPageBasedOnState(state) {
 		document.getElementById("login").style.display = "none";
 		document.getElementById("404").style.display = "none";
 		document.getElementById("tris-game").style.display = "none";
+		document.getElementById("tris-tournament").style.display = "none";
 	}
 	</script>
 	<script>

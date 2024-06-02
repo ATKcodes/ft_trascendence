@@ -37,6 +37,9 @@ export default class User {
 		this.winrate_pong = data.user.winrate_pong;
 		this.winrate_tictactoe = data.user.winrate_tictactoe;
 	}
+	changeLanguage(language){
+		this.language = language;
+	}
 	resetData(){
 		this.username = 'username1';
 		this.player = 'Player1';

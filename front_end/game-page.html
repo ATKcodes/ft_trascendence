@@ -608,6 +608,7 @@
 		balllimitfaster: 2,
 		matchdatasent : 0,
 		tournamentStatus: 0,
+		running: false,
 		aiInterval: null,
 		tournamentGame1Win: "player1",
 		tournamentGame2Win: "player3",
@@ -967,8 +968,13 @@
 	this.paddleD.style.top = this.paddleDPos.y + 'px';
 },
 
+
 	loop: function(currentTime) {
-        requestAnimationFrame(pongGame.loop);
+		if (!pongGame.running)
+		{
+			return;
+		}
+        pongGame.animationFrameId = requestAnimationFrame(pongGame.loop);
 
         let elapsedTime = currentTime - pongGame.lastTime;
 
@@ -981,9 +987,11 @@
     },
 
 	stop: function() {
+		pongGame.running = false;
 		cancelAnimationFrame(this.animationFrameId);
 	},
     start: function() {
+		pongGame.running = true;
         pongGame.loop();
     }
 };
@@ -1346,6 +1354,9 @@ window.addEventListener('message', function(event) {
 		document.getElementById("player4-username").value = "";
 		document.getElementById("scoreA").style.display = "none";
 		document.getElementById("scoreB").style.display = "none";
+		document.getElementById("firstplace-text").style.display = "none";
+		document.getElementById("secondplace-text").style.display = "none";
+		document.getElementById("thirdplace-text").style.display = "none";
 		document.getElementById("ball").style.display = "none";
 		document.getElementById("paddleA").style.display = "none";
 		document.getElementById("paddleB").style.display = "none";
@@ -1359,6 +1370,7 @@ window.addEventListener('message', function(event) {
 		document.getElementById("ThirdPlace").style.display = "none";
 		document.getElementById("ThirdPlace2").style.display = "none";
 		document.getElementById("EndTournament").style.display = "none";
+		document.querySelector('.open_text').style.display = "none";
 		pongGame.tournamentStatus = 0;
 		pongGame.bouncecounter = 0;
 		pongGame.balllimitfaster = 2;
