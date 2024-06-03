@@ -64,6 +64,7 @@
 				// If it's not, show the 404 page
 				goTo404();
 			}
+		
 		// If the user navigates back to the 'spa-manager' page, change the URL to '/login' and display the login page
 		if (!event.state || event.state.page === 'spa-manager') {
 			history.replaceState({page: 'login'}, null, '/login');
@@ -96,7 +97,7 @@
 					document.getElementById("tris-game").style.display = "block";
 				} else if (event.state.page === 'tris-tournament') {
 					document.getElementById("tris-tournament").style.display = "block";
-				} else if(document.getElementById("friend-profile").style.display = "block"){
+				} else if (event.state.page === 'friend-profile') {
 					document.getElementById("friend-profile").style.display = "block";
 				} else if (event.state.page === '404') {
 					document.getElementById("404").style.display = "block";
@@ -104,6 +105,60 @@
 			}
 			setPageBasedOnState(event.state);
 		};
+		let loadUserClassPromise = null;
+		// Load the user class
+		async function loadUserClass() {
+			if (loadUserClassPromise) {
+				// If loadUserClass is already running, wait for it to finish
+				return loadUserClassPromise;
+			}
+
+			loadUserClassPromise = new Promise(async (resolve, reject) => {
+        try {
+            const module = await import("./User.js");
+            const User = module.default;
+            window.User = User;
+            window.userInstance = new User();
+            console.log("User.js loaded", window.userInstance.username);
+
+            const tokenData = {
+                token: localStorage.getItem('userToken'),
+            };
+
+			const response = await fetch('http://127.0.0.1:8001/login/info/', {
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(tokenData),
+			});
+
+            const data = await response.json(); // Parse the JSON response
+
+            if(data.token) {
+                window.userInstance.fillData(data);
+                console.log('Dispatching userDataLoaded event');
+                mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
+                resolve(); // Resolve the Promise
+            } else {
+                reject('Token not found in response'); // Reject the Promise
+            }
+        } catch (error) {
+            console.log("Error loading User.js:", error);
+            reject(error); // Reject the Promise
+        }
+    });
+	try {
+        await loadUserClassPromise;
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        loadUserClassPromise = null;
+    }
+
+    return loadUserClassPromise;
+}
 
 		function goTo404() {
 			hidePages();
@@ -111,16 +166,24 @@
 			notFoundWindow.src = "404.html";
 			history.replaceState({page: '404'}, null, '404');
 		}
-		function goToMain() {
+		async function goToMain() {
+		try {
+			await loadUserClass(); // Wait for the user class to load
+
 			mainPageIframe.src = "main-page.html";
 			mainPageIframe.onload = function() {
+				// Send the postMessage after the iframe has finished loading
 				mainPageIframe.contentWindow.postMessage({ type: 'userDataLoaded' }, '*');
+				hidePages();
+				mainPageIframe.style.display = "block";
+				// Change the URL to 'main-page.html'
+				history.pushState({page: 'main-page'}, null, 'main-page');
 			}
-			hidePages();
-			mainPageIframe.style.display = "block";
-			// Change the URL to 'main-page.html'
-			history.pushState({page: 'main-page'}, null, 'main-page');
+		} catch (error) {
+			// Handle any errors
+			console.error('Error:', error);
 		}
+	}
 		function goToProfile() {
 			profileIframe.src = "profile.html";
 			profileIframe.onload = function() {
@@ -198,7 +261,6 @@
 			const User = module.default;
 			window.User = User;
 			window.userInstance = new User();
-			console.log("User.js loaded", window.userInstance.username);
 		} catch (error) {
 			console.log("Error loading User.js:", error);
 		}
@@ -221,8 +283,12 @@
 			if(data.token) {
 				try {
 					window.userInstance.fillData(data);
-					console.log('Dispatching userDataLoaded event');
+					console.log("User.js loaded", window.userInstance.username);
 					mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
+					gamePageWindow.postMessage({ type: 'loadProfile' }, '*');
+					profileWindow.postMessage({ type: 'loadProfile' }, '*');
+					trisGameWindow.postMessage({ type: 'loadProfile' }, '*');
+					trisTournamentWindow.postMessage({ type: 'loadProfile' }, '*');
 				} catch (error) {
 					console.error('Error calling fillData:', error);
 				}

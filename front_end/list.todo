@@ -31,7 +31,7 @@ front:
       ✔ 1v1 pong A @done (5/31/2024, 12:14:47 PM)
       ✔ torneo pong A @done (5/31/2024, 5:20:42 PM)
       ✔ 1v1 tris M @done (5/31/2024, 12:15:43 PM)
-      ☐ torneo tris M
+      ✔ torneo tris M @done (6/3/2024, 4:57:25 PM)
     ✔ immagine defalut @done (5/23/2024, 6:36:38 PM)
     ✔ immagine che posso cambiare // in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M @done (5/31/2024, 12:14:59 PM)
     ✔ nick che posso cambiare M @done (5/31/2024, 12:14:58 PM)
@@ -72,24 +72,26 @@ profilo amici:
 bug:
   ✔ non poter metter # in nick fixato front@done (6/2/2024, 8:28:00 PM)
   ☐ chiedere a Kevin se la funzione resetTris dovrebbe funzionare
-  ☐ mostrare la  match history sulla pagina profilo.
+  ☐ debuggare la matchHistory
   ☐ Volendo non poter metter # in nick anche in backend.
-  ☐ chiamata tasto aggiungi amici
-  ☐ status amici per il backend? come funziona
+  ✔ chiamata tasto aggiungi amici @done (6/3/2024, 4:58:47 PM)
+  ✔ status amici per il backend? come funziona @done (6/3/2024, 4:58:48 PM)
   ☐ show lista amici e status
   ☐ caricare pagine profilo amici
   ☐ controllare bene tutte le chiamate per l'aggiornamento della match history
   ✔ se refresho il nick non rimane @done (6/2/2024, 8:14:25 PM)
   ✔ se torno indietro dopo che finisce la partita, continua a fare chiamate al backend @done (6/2/2024, 8:14:27 PM)
-  ☐ torneo tris da collegare
+  ✔ torneo tris da collegare @done (6/3/2024, 4:58:55 PM)
   ✔ eliminare chiamata torneo pong @done (6/2/2024, 8:14:30 PM)
   ✔ quando torno indietro da torneo pong, si mischiano i placement @done (6/2/2024, 8:14:33 PM)
   ☐ immagine profilo default definita dal backend.
   ☐ chiamate al backend per salvare le immagini di profilo
   ☐ chiamate al backend per salvare gli amici
-  ☐ chiamate al backend per salvare match history
+  ✔ chiamate al backend per salvare match history @done (6/3/2024, 4:59:10 PM)
   ✔ pulsante pong pagina profilo deve tornare indietro @done (6/2/2024, 8:27:59 PM)
   ✔ salvare cambialingua nel database @done (6/2/2024, 8:15:25 PM)
   ☐ verificare le dimensioni delle immagini
-
-
+  ✔ chiamata per cambio immagine e cambio nick player(forse fatta) @done (6/3/2024, 4:59:15 PM)
+  ✔ userleft cambia? gamepage probabilmente il reset la fotte. _ forse fixato @done (6/3/2024, 4:59:18 PM)
+  ☐ se refresho la pagina, la lista amici non si aggiorna
+  ☐ controllare se si resettano i campi della pagnia tris

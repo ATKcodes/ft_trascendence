@@ -183,19 +183,14 @@
         <div class="pong">
           <h2 class="game_title">Pong</h2>
           <h6 class="history">
-            Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro pallino: 11/06/24 13.00 pallino ha vinto
           </h6>
           <h6 class="history">
-            Partita contro tizio: 12/06/24 13.00 tizio ha vinto
           </h6>
           <h6 class="history">
-            Partita contro caio: 13/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro Jino: 14/06/24 13.00 Jino ha vinto
           </h6>
 		  <h6 class="data wins">Wins: </h6>
 		  <h6 class="data losses">Losses: </h6>
@@ -204,19 +199,14 @@
         <div class="tris">
           <h2 class="game_title">Tris</h2>
           <h6 class="history">
-            Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro pallino: 11/06/24 13.00 pallino ha vinto
           </h6>
           <h6 class="history">
-            Partita contro tizio: 12/06/24 13.00 tizio ha vinto
+	      </h6>
+          <h6 class="history">
           </h6>
           <h6 class="history">
-            Partita contro caio: 13/06/24 13.00 mvolpi ha vinto
-          </h6>
-          <h6 class="history">
-            Partita contro Jino: 14/06/24 13.00 Jino ha vinto
           </h6>
 		  <h6 class="data wins">Wins: </h6>
 		  <h6 class="data losses">Losses: </h6>
@@ -227,12 +217,70 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
+	if (window.parent.userInstance && window.parent.userInstance.username) {
+		document.getElementById("player").innerText  = window.parent.userInstance.player;
+        document.getElementById("profile-image").src = window.parent.userInstance.image;
 
+        // Add the number of matches won and lost for Pong
+		var pongHistory = window.parent.userInstance.matchistory_pong;
+		var trisHistory = window.parent.userInstance.matchistory_tictactoe;
+
+		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
+		var pongHistoryElements = document.querySelectorAll('.pong .history');
+		var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+		// Replace the content of the pong history elements
+		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
+			var match = pongHistory[i];
+			var result = match.win ? 'W' : 'L';
+			pongHistoryElements[i].textContent = `vs ${match.user2}: ${match.date} ${result} (${match.score} - ${match.scoreplayer2})`;
+		}
+
+		// Replace the content of the tris history elements
+		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
+			var match = trisHistory[i];
+			var result = match.win ? 'W' : 'L';
+			trisHistoryElements[i].textContent = `vs ${match.user2}: ${match.date} ${result} `;
+		}
+		// Add the number of matches won and lost for Pong
+		var pongWins = document.querySelector('.pong .data.wins');
+        var pongLosses = document.querySelector('.pong .data.losses');
+        pongWins.textContent = 'Vinte: ' + window.parent.userInstance.wins_pong;
+        pongLosses.textContent = 'Perse: ' + window.parent.userInstance.loses_pong;
+
+        // Add the number of matches won and lost for Tris
+        var trisWins = document.querySelector('.tris .data.wins');
+        var trisLosses = document.querySelector('.tris .data.losses');
+        trisWins.textContent = 'Vinte: ' + window.parent.userInstance.wins_tictactoe;
+        trisLosses.textContent = 'Perse: ' + window.parent.userInstance.loses_tictactoe;
+	}
 	window.addEventListener('message', function(event) {
 		// Check the type of the message
 		if (event.data.type === 'loadProfile') {
-        document.getElementById("player").innerText  = window.parent.userInstance.player;
+			document.getElementById("player").innerText  = window.parent.userInstance.player;
         document.getElementById("profile-image").src = window.parent.userInstance.image;
+
+        // Add the number of matches won and lost for Pong
+		var pongHistory = window.parent.userInstance.matchistory_pong;
+		var trisHistory = window.parent.userInstance.matchistory_tictactoe;
+
+		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
+		var pongHistoryElements = document.querySelectorAll('.pong .history');
+		var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+		// Replace the content of the pong history elements
+		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
+			var match = pongHistory[i];
+			var result = match.win ? 'W' : 'L';
+			pongHistoryElements[i].textContent = `vs ${match.user2}: ${match.date} ${result} (${match.score} - ${match.scoreplayer2})`;
+		}
+
+		// Replace the content of the tris history elements
+		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
+			var match = trisHistory[i];
+			var result = match.win ? 'W' : 'L';
+			trisHistoryElements[i].textContent = `vs ${match.user2}: ${match.date} ${result} `;
+		}
 
         // Add the number of matches won and lost for Pong
         var pongWins = document.querySelector('.pong .data.wins');
@@ -245,7 +293,7 @@
         var trisLosses = document.querySelector('.tris .data.losses');
         trisWins.textContent = 'Vinte: ' + window.parent.userInstance.wins_tictactoe;
         trisLosses.textContent = 'Perse: ' + window.parent.userInstance.loses_tictactoe;
-    }
+		}
 	});
 
     document.getElementById("edit-icon").addEventListener("click", function () {
@@ -299,6 +347,7 @@
           var nicknameData = {
             player: newNickname,
           };
+		  window.parent.userInstance.player = newNickname;
           document.getElementById("player").textContent = newNickname;
           fetch("http://localhost:8001/main/nick/", {
             method: "POST",

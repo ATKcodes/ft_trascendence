@@ -177,7 +177,7 @@ def add_friend(request):
     try:
         friend_username = request.data["friend_username"]
         if not friend_username:
-            return HttpResponseBadRequest("friend_username is required")
+            return JsonResponse({"response": "friend_username is required"}, http_status=400)
         if friend_username == user.username:
             return JsonResponse(
                 {"error": "You cannot add yourself as a friend"}, status=400
@@ -185,6 +185,8 @@ def add_friend(request):
         new_friend = User.objects.get(username=friend_username)
     except User.DoesNotExist:
         return JsonResponse({"error": "User not found"}, status=404)
+    if new_friend in user.get_friends():
+        return JsonResponse({"error": "User is already a friend"}, status=400)	
     user.add_friend(new_friend)
     return JsonResponse({"response": "successful friend added"}, status=200)
 

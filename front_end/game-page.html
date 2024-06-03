@@ -522,7 +522,6 @@
 		document.addEventListener('DOMContentLoaded', (event) => {
 			const  savedLanguage = localStorage.getItem('language');
 			if (savedLanguage == 'IT') {
-				document.getElementById('userleft').innerText = 'Giocatore 1';
 				document.getElementById('userright').innerText = 'Giocatore 2';
 				document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
 				document.getElementById('submit-username').innerText = 'Invia';
@@ -539,7 +538,6 @@
 				document.getElementById('NextMatch').innerText = 'Prossima partita';
 				
 			} else if (savedLanguage == 'EN') {
-				document.getElementById('userleft').innerText = 'Player 1';
 				document.getElementById('userright').innerText = 'Player 2';
 				document.getElementById('player2-username').placeholder = 'Insert Player2 Nick'
 				document.getElementById('submit-username').innerText = 'Submit';
@@ -556,7 +554,6 @@
 				document.getElementById('NextMatch').innerText = 'Next Match';
 				
 			} else if (savedLanguage == 'ES') {
-				document.getElementById('userleft').innerText = 'Jugador 1';
 				document.getElementById('userright').innerText = 'Jugador 2';
 				document.getElementById('player2-username').placeholder = 'Introduce el nombre del jugador2'
 				document.getElementById('submit-username').innerText = 'Entregar';
@@ -1319,6 +1316,11 @@ document.getElementById("play-tris").addEventListener("click", function(){
 	window.parent.goToTris();
 });
 }
+if (window.parent.userInstance && window.parent.userInstance.username) {
+			console.log('User data already loaded');
+			document.getElementById('userleft').textContent = window.parent.userInstance.username;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+		}
 window.addEventListener('message', function(event) {
 	if (event.data.type === 'reset')
 	{
@@ -1345,8 +1347,6 @@ window.addEventListener('message', function(event) {
 		document.getElementById("userleft2").style.display = "none";
 		document.getElementById("avatar3").style.display = "none";
 		document.getElementById("avatar4").style.display = "none";
-		document.getElementById("userright").textContent = "Player 1";
-		document.getElementById("userleft").textContent = "Player 2";
 		document.getElementById("userright2").textContent = "Player 3";
 		document.getElementById("userleft2").textContent = "Player 4";
 		document.getElementById("player2-username").value = "";
@@ -1383,6 +1383,12 @@ window.addEventListener('message', function(event) {
         document.getElementById("userleft").innerText  = window.parent.userInstance.player;
         document.getElementById("go_to_profile").src = window.parent.userInstance.image;
     }
+	if (event.data.type === 'userDataLoaded') {
+        console.log('userDataLoaded event triggered');
+        // Access the userInstance from the parent window
+        document.getElementById('userleft').textContent = window.parent.userInstance.username;
+		document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+	}
 });
 </script>
 </html>
