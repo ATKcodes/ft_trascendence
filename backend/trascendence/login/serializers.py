@@ -4,8 +4,14 @@ from django.contrib.auth import authenticate
 from django import forms
 from rest_framework.serializers import ModelSerializer
 
+class FriendListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'status', 'profile_image', 'matchistory_pong', 'matchistory_tictactoe']
+
 
 class UserSerializer(serializers.ModelSerializer):
+    friendlist = FriendListSerializer(many=True, read_only=True)
     class Meta:
         model = User
         fields = [
