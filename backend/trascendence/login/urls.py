@@ -7,4 +7,5 @@ urlpatterns = [
     path ("info/", views.Info, name= "info"),
     path ("logout/", views.logout, name= "logout"),
     path ("token42/", views.get_42token, name= "token42"),
+    path ("friends_info/", views.friends_info, name= "friends_info"),
 ]

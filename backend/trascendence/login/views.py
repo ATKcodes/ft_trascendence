@@ -59,6 +59,19 @@ def Info(request):
 	token = CustomToken.objects.get(user=user)
 	return Response({"user": serializer.data,"token" : token.key})
 
+@api_view(['GET'])  
+@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def friends_info(request):
+    user = request.user
+    pal = request.data['friend']
+    friends = user.friendlist.all()
+    if not friends.filter(username=pal).exists():
+        return Response({"error": "You are not friends with this user"}, status=400)
+    pal_info = User.objects.get(username=pal)
+    pal_serializer = FriendSerializer(pal_info)
+    return Response({"pal": pal_serializer.data}, status=200)
+
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])

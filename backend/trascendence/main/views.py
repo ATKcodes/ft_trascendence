@@ -45,6 +45,7 @@ def Change_Player(request):
 def WinLose_pong(request):
     user = request.user
     user.player2 = request.data["player2"]
+    date = datetime.now().strftime('%d/%m/')
     if request.data["game"] == "pong":
         if request.data["win"] == "true":
             user.wins_pong += 1
@@ -52,10 +53,11 @@ def WinLose_pong(request):
             user.scoreplayer2 = request.data["scoreplayer2"]
             user.matchistory_pong.append(
                 {
-                    "game": "pong",
                     "win": "true",
                     "score": user.score,
                     "scoreplayer2": user.scoreplayer2,
+                    "user2": user.player2,
+                    "date" : date,
                 }
             )
         else:
@@ -64,15 +66,14 @@ def WinLose_pong(request):
             user.scoreplayer2 = request.data["scoreplayer2"]
             user.matchistory_pong.append(
                 {
-                    "game": "pong",
                     "win": "false",
                     "score": user.score,
                     "scoreplayer2": user.scoreplayer2,
+                    "user2": user.player2,
+                    "date" : date,
                 }
             )
         user.winrate_pong = user.wins_pong / (user.wins_pong + user.loses_pong) * 100
-        now = timezone.now()
-        user.date_played = now
         user.save()
         return Response(
             {
@@ -95,25 +96,23 @@ def WinLose_pong(request):
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def WinLose_tictac(request):
-    user = request.user
-    user.player2 = request.data["player2"]
-    if request.data["game"] == "tictactoe":
+        user = request.user
+        user.player2 = request.data["player2"]
+        date = datetime.now().strftime('%d/%m')
         if request.data["win"] == "true":
             user.wins_tictactoe += 1
-            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "true", "player2": user.player2})
+            user.matchistory_tictactoe.append({"win": "true", "player2": user.player2, "date": date})
         elif request.data["win"] == "false":
             user.loses_tictactoe += 1
-            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "false", "player2": user.player2})
+            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "false", "player2": user.player2, "date": date})
         else:
             user.draw_tictactoe += 1
-            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "draw", "player2": user.player2})
-        user.winrate_tictactoe = (
-            user.wins_tictactoe / (user.wins_tictactoe + user.loses_tictactoe) * 100
-        )
-        now = timezone.now()
-        user.date_played_tictactoe = now
+            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "draw", "player2": user.player2, "date": date})
+        if user.wins_tictactoe + user.loses_tictactoe != 0:
+            user.winrate_tictactoe = (
+                user.wins_tictactoe / (user.wins_tictactoe + user.loses_tictactoe) * 100
+            )
         user.save()
-
         return Response(
             {
                 "tictactoe": {
@@ -126,10 +125,7 @@ def WinLose_tictac(request):
             },
             status=status.HTTP_200_OK,
         )
-    else:
-        return Response(
-            {"error": "Game not found"}, status=status.HTTP_400_BAD_REQUEST
-        )
+
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, CustomTokenAuthentication])
@@ -177,7 +173,7 @@ def add_friend(request):
     try:
         friend_username = request.data["friend_username"]
         if not friend_username:
-            return JsonResponse({"response": "friend_username is required"}, http_status=400)
+            return HttpResponseBadRequest("friend_username is required")
         if friend_username == user.username:
             return JsonResponse(
                 {"error": "You cannot add yourself as a friend"}, status=400
@@ -186,7 +182,11 @@ def add_friend(request):
     except User.DoesNotExist:
         return JsonResponse({"error": "User not found"}, status=404)
     if new_friend in user.get_friends():
-        return JsonResponse({"error": "User is already a friend"}, status=400)	
+        return JsonResponse(
+            {"error": "You are already friends with this user"}, status=400)
+    if user.get_friends().count() > 10:
+        return JsonResponse(
+            {"error": "You cannot have more than 10 friends"}, status=400)
     user.add_friend(new_friend)
     return JsonResponse({"response": "successful friend added"}, status=200)
 

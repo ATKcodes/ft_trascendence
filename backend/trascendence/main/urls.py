@@ -10,5 +10,4 @@ urlpatterns = [
     path("add_friends/", views.add_friend, name="add_friend"),
     path("get_friends/", views.get_friends, name="get_friends"),
     path("delete_user/", views.delete_user, name="delete_friend"),
-	path("language/", views.language, name="language"),
 ]
