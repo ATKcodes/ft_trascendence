@@ -1,7 +1,7 @@
 CURL request for adding friends:
 
 curl -X POST -H "Content-Type: application/json" \
-     -H "Authorization: Token c9eb9f30facda4aab1726e3dc5508f1bc51f5f5ae52839bc5c7f4ffa025b6f0c" \
+     -H "Authorization: Token  pUB8fmKQUsMgjQNWNRmH3gzKvOR9Iq7qA4QoXb24DW1dYYT536sYpAEegGArebpnBpf3iBCAc54CHim8kF0CiriGXwBtBTkkFSBCMhvtogkLoikFwb4Z4nq7v4e0H3AS" \
      -d '{"friend_username":"<friend-username>"}' \
      http://localhost:8001/main/add_friends/
 
@@ -11,7 +11,7 @@ curl -X POST -H "Content-Type: application/json" \
 CURL for getting friends:
 
 curl -X GET -H "Content-Type: application/json" \
-     -H "Authorization: Token j8V3MBFp5dGXUOvLkf7lrXf599mVSQ8UD32Zo4RKnEirEU1x2GDlQIKQqcCk3mPRdPyVVbnTVv3wvtDC60hqorppAdDmeTYg2JMcFzI96MBshvQexJaB52PzbsgTU1bg" \
+     -H "Authorization: Token pUB8fmKQUsMgjQNWNRmH3gzKvOR9Iq7qA4QoXb24DW1dYYT536sYpAEegGArebpnBpf3iBCAc54CHim8kF0CiriGXwBtBTkkFSBCMhvtogkLoikFwb4Z4nq7v4e0H3AS" \
      http://localhost:8001/main/get_friends/
 
 
