@@ -303,6 +303,7 @@
     </div>
   </body>
   <script>
+	var friends;
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'userDataLoaded') {
 			console.log('userDataLoaded event triggered');
@@ -365,7 +366,6 @@
 			}
 		}
 		
-		var friends;
 		function populateFriendsList() {
 			var container = document.getElementById('friendsList');
 			container.innerHTML = ''; // Clear the container
@@ -400,7 +400,7 @@
 			console.log('User data already loaded');
 			document.getElementById('Username').textContent = window.parent.userInstance.username;
 			friends = window.parent.userInstance.friendlists;
-			console.log('Friends list:', friends[0].username);
+			// console.log('Friends list:', friends[0].username);
 			if (friends) {
 				console.log('Friends list:', friends);
 				populateFriendsList();

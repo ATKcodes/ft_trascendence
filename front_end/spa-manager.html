@@ -166,6 +166,7 @@
     });
 }
 		async function goToMainLogin() {
+			console.log("porcodio");
 		try {
 			await loadUserClass(); // Wait for the user class to load
 
@@ -175,6 +176,7 @@
 				mainPageIframe.style.display = "block";
 				// Change the URL to 'main-page.html'
 				history.pushState({page: 'main-page'}, null, 'main-page');
+				console.log("porcodio2");
 			}
 		} catch (error) {
 			// Handle any errors
@@ -419,7 +421,6 @@ function setPageBasedOnState(state) {
 				window.User = User;
 				window.userInstance = new User();
 				console.log("418 : User.js loaded", window.userInstance.username);
-				sendUserDataLoadedMessage();
 			} catch (error) {
 				console.log("Error loading User.js:", error);
 			}
@@ -428,6 +429,7 @@ function setPageBasedOnState(state) {
         window.fillUserData = function(data){
             if (data.user) {
                 window.userInstance.fillData(data.user);
+				sendUserDataLoadedMessage();
             } else {
                 window.userInstance.fillData(data);
             }

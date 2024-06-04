@@ -134,8 +134,8 @@
 				document.getElementById('repeatPassword').value = '';
 				document.getElementById('Registernick').value = '';
 				window.parent.fillUserData(data);
-				console.log(window.parent.userInstance.username); // Access the User instance
-				window.parent.goToMainLogin();
+				console.log("Login :"+ window.parent.userInstance.username); // Access the User instance
+				window.parent.goToMain();
 			} else if(data.detail) {
 				console.error('Error:', data.detail);
 			} else {
