@@ -36,13 +36,13 @@ curl -X DELETE -H "Content-Type: application/json" \
 
 CURL for update image 
 
-curl -X POST -H "Authorization: Token NE20xla26z8gAub02wYu2Y4R4vSUVLugbhFTkDN0f2qfWp0TEMqfnGsNRynps9lvwodpBMf7APgKEQtvQojJkyL3jzEa1kDy3vW3iTkuU7PCd300d3fp6OHL72V8U3kI" -F "image=@/nfs/homes/ldi-masc/Desktop/net_practice/download.jpeg" http://localhost:8001/main/profile_image/
+curl -X POST -H "Authorization: Token laBCo8gSlyfZtrzNCsyRegUqoPkWAnOmZCHkxpliD17RXMLvxtZ7H2iVqhSxUOvtC8cXPhV5Pe8ttRUPI5EidDWP63sbR416iaOs5C2bzUPHgbi2GqCIElwosOtUNFzE" -F "image=@/nfs/homes/ldi-masc/Desktop/net_practice/download.jpeg" http://localhost:8001/main/profile_image/
 
 
 
 CURL for getting path image
 
-curl -X GET -H "Authorization: Token NE20xla26z8gAub02wYu2Y4R4vSUVLugbhFTkDN0f2qfWp0TEMqfnGsNRynps9lvwodpBMf7APgKEQtvQojJkyL3jzEa1kDy3vW3iTkuU7PCd300d3fp6OHL72V8U3kI" http://localhost:8001/main/profile_image/
+curl -X GET -H "Authorization: Token laBCo8gSlyfZtrzNCsyRegUqoPkWAnOmZCHkxpliD17RXMLvxtZ7H2iVqhSxUOvtC8cXPhV5Pe8ttRUPI5EidDWP63sbR416iaOs5C2bzUPHgbi2GqCIElwosOtUNFzE" http://localhost:8001/main/profile_image/
 
 
 

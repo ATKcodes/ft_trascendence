@@ -18,11 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         return instance
 
-class ProfileImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['profile_image']
-
 
 class FriendSerializer(serializers.ModelSerializer):
     class Meta:

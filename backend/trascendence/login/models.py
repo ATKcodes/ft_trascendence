@@ -15,7 +15,7 @@ class User (AbstractUser):
     loses_tictactoe = models.IntegerField(default=0)
     draw_tictactoe = models.IntegerField(default=0)
     winrate_tictactoe = models.FloatField(default=0)
-    profile_image = models.ImageField(upload_to='profile_images/', default='profile_images/materazzi.jpeg')
+    profile_path = models.CharField(max_length=500, default='/media/default.')
     player = models.CharField(max_length=250, blank=True)
     player2 = models.CharField(max_length=250, blank=True)
     language = models.CharField(max_length=10, default="EN")

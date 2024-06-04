@@ -4,7 +4,7 @@ from .models import User, CustomToken, CustomTokenAuthentication
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, ProfileImageSerializer
+from .serializers import UserSerializer
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -30,7 +30,7 @@ from django.utils import timezone
 def Change_Player(request):
     user = request.user
     user.player = request.data["player"]
-    if user.player == "":
+    if not user.player:
         return Response(
             {"error": "Player name cannot be empty"}, status=status.HTTP_400_BAD_REQUEST
         )
@@ -45,50 +45,39 @@ def Change_Player(request):
 def WinLose_pong(request):
     user = request.user
     user.player2 = request.data["player2"]
+    win = request.data["win"]
+    if win not in ["true", "false"]:
+        return Response({"error": "Invalid win value."}, status=status.HTTP_400_BAD_REQUEST)
     date = datetime.now().strftime('%d/%m/')
-    if request.data["game"] == "pong":
-        if request.data["win"] == "true":
-            user.wins_pong += 1
-            user.score = request.data["score"]
-            user.scoreplayer2 = request.data["scoreplayer2"]
-            user.matchistory_pong.append(
-                {
-                    "win": "true",
-                    "score": user.score,
-                    "scoreplayer2": user.scoreplayer2,
-                    "user2": user.player2,
-                    "date" : date,
-                }
-            )
-        else:
-            user.loses_pong += 1
-            user.score = request.data["score"]
-            user.scoreplayer2 = request.data["scoreplayer2"]
-            user.matchistory_pong.append(
-                {
-                    "win": "false",
-                    "score": user.score,
-                    "scoreplayer2": user.scoreplayer2,
-                    "user2": user.player2,
-                    "date" : date,
-                }
-            )
-        user.winrate_pong = user.wins_pong / (user.wins_pong + user.loses_pong) * 100
-        user.save()
-        return Response(
+    if win == "true":
+        user.wins_pong += 1
+        user.score = request.data["score"]
+        user.scoreplayer2 = request.data["scoreplayer2"]
+    else:
+        user.loses_pong += 1
+        user.score = request.data["score"]
+        user.scoreplayer2 = request.data["scoreplayer2"]
+    user.matchistory_pong.append(
             {
-                "pong": {
+                "win": win,
+                "score": user.score,
+                "scoreplayer2": user.scoreplayer2,
+                "user2": user.player2,
+                "date" : date,
+            }
+        )
+    user.winrate_pong = user.wins_pong / (user.wins_pong + user.loses_pong) * 100
+    user.save()
+    return Response(
+        {
+            "pong": {
                     "wins": user.wins_pong,
                     "loses": user.loses_pong,
                     "winrate": user.winrate_pong,
                     "matchHistory": user.matchistory_pong,
                 }
             },
-            status=status.HTTP_200_OK,
-        )
-    else:
-        return Response(
-            {"error": "Game not found"}, status=status.HTTP_400_BAD_REQUEST
+        status=status.HTTP_200_OK,
         )
 
 
@@ -98,16 +87,20 @@ def WinLose_pong(request):
 def WinLose_tictac(request):
         user = request.user
         user.player2 = request.data["player2"]
+        win = request.data["win"]
+        if not player2 or not win:
+            return Response({"error": "Both player2 and win fields are required."}, status=status.HTTP_400_BAD_REQUEST)        
         date = datetime.now().strftime('%d/%m')
-        if request.data["win"] == "true":
+        if win == "true":
             user.wins_tictactoe += 1
-            user.matchistory_tictactoe.append({"win": "true", "player2": user.player2, "date": date})
-        elif request.data["win"] == "false":
+            game_result = "win"
+        elif win == "false":
             user.loses_tictactoe += 1
-            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "false", "player2": user.player2, "date": date})
+            game_result = "lose"
         else:
             user.draw_tictactoe += 1
-            user.matchistory_tictactoe.append({"game": "tictactoe", "win": "draw", "player2": user.player2, "date": date})
+            game_result = "draw"
+        user.matchistory_tictactoe.append({ "win": game_result, "player2": user.player2, "date": date})
         if user.wins_tictactoe + user.loses_tictactoe != 0:
             user.winrate_tictactoe = (
                 user.wins_tictactoe / (user.wins_tictactoe + user.loses_tictactoe) * 100
@@ -132,14 +125,9 @@ def WinLose_tictac(request):
 @permission_classes([IsAuthenticated])
 def update_profile_image(request):
     user = request.user
-    user.profile_image = request.data["image"]
+    user.profile_image = request.data["profile_path"]
     user.save()
-    serializer = ProfileImageSerializer(data=request.data, instance=request.user)
-    if serializer.is_valid():
-        serializer.save()
-        return JsonResponse({"response": "successful"})
-    else:
-        return JsonResponse({"response": "failed"})
+    return JsonResponse({"response": "successful"})
 
 
 @api_view(["POST"])
@@ -148,21 +136,11 @@ def update_profile_image(request):
 def language(request):
     user = request.user
     user.language = request.data["language"]
+    if not user.language:
+        return JsonResponse({"error": "Language cannot be empty"}, status=status.HTTP_400_BAD_REQUEST)
     user.save()
     return JsonResponse({"response": "successful"})
 
-
-@api_view(["POST"])
-@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
-@permission_classes([IsAuthenticated])
-def get_profile_image(request):
-    user = request.user
-    if hasattr(user, "profile_image"):
-        return JsonResponse(
-            {"profile_image_url": request.build_absolute_uri(user.profile_image.url)}
-        )
-    else:
-        return JsonResponse({"error": "No profile image found"}, status=404)
 
 
 @api_view(["POST"])
@@ -170,23 +148,22 @@ def get_profile_image(request):
 @permission_classes([IsAuthenticated])
 def add_friend(request):
     user = request.user
+    friend_username = request.data["friend_username"]
+    if not friend_username:
+        return JsonResponse({"friend_username is required"}, status=status.HTTP_400_BAD_REQUEST)
+    if friend_username == user.username:
+        return JsonResponse(
+            {"error": "You cannot add yourself as a friend"}, status=status.HTTP_400_BAD_REQUEST)
     try:
-        friend_username = request.data["friend_username"]
-        if not friend_username:
-            return HttpResponseBadRequest("friend_username is required")
-        if friend_username == user.username:
-            return JsonResponse(
-                {"error": "You cannot add yourself as a friend"}, status=400
-            )
         new_friend = User.objects.get(username=friend_username)
     except User.DoesNotExist:
-        return JsonResponse({"error": "User not found"}, status=404)
+        return JsonResponse({"error": "User not found"}, status=status.HTTP_400_BAD_REQUEST)
     if new_friend in user.get_friends():
         return JsonResponse(
-            {"error": "You are already friends with this user"}, status=400)
-    if user.get_friends().count() > 10:
+            {"error": "You are already friends with this user"}, status=status.HTTP_400_BAD_REQUEST)
+    if user.get_friends().count() >= 10:
         return JsonResponse(
-            {"error": "You cannot have more than 10 friends"}, status=400)
+            {"error": "You cannot have more than 10 friends"}, status=status.HTTP_400_BAD_REQUEST)
     user.add_friend(new_friend)
     return JsonResponse({"response": "successful friend added"}, status=200)
 

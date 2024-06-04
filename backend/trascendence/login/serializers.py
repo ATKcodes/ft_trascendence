@@ -7,7 +7,7 @@ from rest_framework.serializers import ModelSerializer
 class FriendListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'status', 'profile_image', 'matchistory_pong', 'matchistory_tictactoe']
+        fields = ['username', 'status', 'profile_path', 'matchistory_pong', 'matchistory_tictactoe']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "username",
-            "profile_image",
+            "profile_path",
             "player",
             "password",
             "friendlist",
@@ -40,8 +40,3 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-class ProfileImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["profile_image"]
