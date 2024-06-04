@@ -303,19 +303,51 @@
     </div>
   </body>
   <script>
-	var friends;
+
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'userDataLoaded') {
 			console.log('userDataLoaded event triggered');
 			document.getElementById('Username').textContent = window.parent.userInstance.username;
 			var languageSelect = document.getElementById('select-language');
 			languageSelect.value = window.parent.userInstance.language;
-			friends = window.parent.userInstance.friendlists;
+			friends = window.parent.userInstance.friendlist;
 			if (friends) {
             	populateFriendsList();
 	        }
 		}
 	});
+	var friends;
+	function populateFriendsList() {
+			var container = document.getElementById('friendsList');
+			container.innerHTML = ''; // Clear the container
+
+			if (friends && friends.length > 0) {
+				document.getElementById('noFriends').style.display = 'none';
+				var maxFriends = 10;
+				friends = friends.slice(0, maxFriends);
+
+				for (let i = 0; i < friends.length; i++) {
+					var friendElement = document.createElement('p');
+					friendElement.textContent = friends[i].username;
+
+					var statusIndicator = document.createElement('span');
+					statusIndicator.className = friends[i].status ? 'online' : 'offline';
+					statusIndicator.style.marginLeft = '10px';
+
+					friendElement.appendChild(statusIndicator);
+
+					friendElement.addEventListener('click', (function(i) {
+						return function() {
+							console.log("Friend clicked: " + friends[i].username);
+							window.parent.goToFriendProfile(i);
+						};
+					})(i));
+					container.appendChild(friendElement);
+				}
+			} else {
+				document.getElementById('noFriends').style.display = 'block';
+			}
+		}
   	document.addEventListener('DOMContentLoaded', (event) => {
 		var token = localStorage.getItem('userToken');
 		// Seleziona l'elemento select
@@ -365,41 +397,11 @@
 				}
 			}
 		}
-		
-		function populateFriendsList() {
-			var container = document.getElementById('friendsList');
-			container.innerHTML = ''; // Clear the container
-
-			if (friends && friends.length > 0) {
-				var maxFriends = 10;
-				friends = friends.slice(0, maxFriends);
-
-				for (let i = 0; i < friends.length; i++) {
-					var friendElement = document.createElement('p');
-					friendElement.textContent = friends[i].username;
-
-					var statusIndicator = document.createElement('span');
-					statusIndicator.className = friends[i].status ? 'online' : 'offline';
-					statusIndicator.style.marginLeft = '10px';
-
-					friendElement.appendChild(statusIndicator);
-
-					friendElement.addEventListener('click', (function(i) {
-						return function() {
-							goToFriendProfile(friends[i].id);
-						};
-					})(i));
-					container.appendChild(friendElement);
-				}
-			} else {
-				document.getElementById('noFriends').style.display = 'block';
-			}
-		}
 
 		if (window.parent.userInstance && window.parent.userInstance.username) {
 			console.log('User data already loaded');
 			document.getElementById('Username').textContent = window.parent.userInstance.username;
-			friends = window.parent.userInstance.friendlists;
+			friends = window.parent.userInstance.friendlist;
 			// console.log('Friends list:', friends[0].username);
 			if (friends) {
 				console.log('Friends list:', friends);
@@ -489,6 +491,22 @@
 	}
     document.getElementById("go_to_login").addEventListener("click", function() {
 		window.parent.userInstance.resetData();
+		token = localStorage.getItem('userToken');
+		fetch('http://localhost:8001/login/logout/', {
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+			}).then(response => {
+				if (response.ok) {
+					console.log('Logout sent successfully');
+				} else {
+					console.error('Error sending language change:', response.statusText);
+				}
+			}).catch(error => {
+				console.error('Network error:', error);
+			});
         localStorage.setItem('lastPage', "login");
 		localStorage.setItem('userToken', '');
         window.parent.goToLogin();

@@ -161,16 +161,20 @@
       }
     }
   </style>
-  <body>
+ <body>
     <h2 id = "go_to_main" class="div-title">PONG</h2>
     <div class="profile">
       <div class="img-fluid">
         <div class="image-container">
-          <img id="profile-image" src="download.jpeg" alt="Your Image" />
+          <img id="profile-image" src="" alt="Your Image" />
+          <i id="edit-icon" class="fas fa-edit edit-icon"></i>
         </div>
         <div class="nickname">
           <div>
-            <h2 id="player">Mvolpi</h2>
+            <h2 id="player">Player</h2>
+          </div>
+          <div class="modify">
+            <i id="modify-icon" class="fas fa-edit modify"></i>
           </div>
         </div>
       </div>
@@ -178,43 +182,35 @@
         <div class="pong">
           <h2 class="game_title">Pong</h2>
           <h6 class="history">
-            Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro pallino: 11/06/24 13.00 pallino ha vinto
           </h6>
           <h6 class="history">
-            Partita contro tizio: 12/06/24 13.00 tizio ha vinto
           </h6>
           <h6 class="history">
-            Partita contro caio: 13/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro Jino: 14/06/24 13.00 Jino ha vinto
           </h6>
-          <h6 class="data">Vinte</h6>
-          <h6 class="data">Perse</h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
+		  <h6 class="data winratePong">	Winrate: </h6>
         </div>
         <hr />
         <div class="tris">
           <h2 class="game_title">Tris</h2>
           <h6 class="history">
-            Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro pallino: 11/06/24 13.00 pallino ha vinto
           </h6>
           <h6 class="history">
-            Partita contro tizio: 12/06/24 13.00 tizio ha vinto
+	      </h6>
+          <h6 class="history">
           </h6>
           <h6 class="history">
-            Partita contro caio: 13/06/24 13.00 mvolpi ha vinto
           </h6>
-          <h6 class="history">
-            Partita contro Jino: 14/06/24 13.00 Jino ha vinto
-          </h6>
-          <h6 class="data">Vinte</h6>
-          <h6 class="data">Perse</h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
+		  <h6 class="data winrateTris">	Winrate: </h6>
         </div>
       </div>
     </div>
@@ -222,6 +218,121 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
+	// Access the friend's data
+	var friend = window.parent.userInstance.currentFriend;
+
+	// Use the friend's data
+	if (window.parent.userInstance && window.parent.userInstance.username) {
+		document.getElementById('player').textContent = friend.username;
+    	document.getElementById("profile-image").src = friend.profile_image;
+
+        // Add the number of matches won and lost for Pong
+		var pongHistory = friend.matchistory_pong;
+		var trisHistory = friend.matchistory_tictactoe;
+
+		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
+		var pongHistoryElements = document.querySelectorAll('.pong .history');
+		var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+		// Replace the content of the pong history elements
+		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
+			var match = pongHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			pongHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
+		}
+
+		// Replace the content of the tris history elements
+		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
+			var match = trisHistory[i];
+			var match = trisHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			trisHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result}`;
+		}
+        // Add the number of matches won and lost for Pong
+        var pongWins = document.querySelector('.pong .data.wins');
+        var pongLosses = document.querySelector('.pong .data.losses');
+		var pongWinrate = document.querySelector('.pong .data.winratePong');
+        pongWins.textContent = 'W: ' + friend.wins_pong;
+        pongLosses.textContent = 'L: ' + friend.loses_pong;
+		pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
+
+        // Add the number of matches won and lost for Tris
+        var trisWins = document.querySelector('.tris .data.wins');
+        var trisLosses = document.querySelector('.tris .data.losses');
+		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        trisWins.textContent = 'W: ' + friend.wins_tictactoe;
+        trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
+		trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
+	}
+	window.addEventListener('message', function(event) {
+		// Check the type of the message
+		if (event.data.type === 'loadProfile') {
+			document.getElementById("player").innerText  = friend.player;
+			document.getElementById("profile-image").src = friend.profile_image;
+			console.log ("user image: " + friend.profile_image);
+			console.log ("User : " + friend.username);
+
+        // Add the number of matches won and lost for Pong
+		var pongHistory = friend.matchistory_pong;
+		var trisHistory = friend.matchistory_tictactoe;
+
+		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
+		var pongHistoryElements = document.querySelectorAll('.pong .history');
+		var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+		// Replace the content of the pong history elements
+		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
+			console.log(pongHistory[i]);
+			var match = pongHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			pongHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
+		}
+
+		// Replace the content of the tris history elements
+		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
+			var match = trisHistory[i];
+			var match = trisHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			trisHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result}`;
+		}
+
+        // Add the number of matches won and lost for Pong
+        var pongWins = document.querySelector('.pong .data.wins');
+        var pongLosses = document.querySelector('.pong .data.losses');
+		var pongWinrate = document.querySelector('.pong .data.winratePong');
+        pongWins.textContent = 'W: ' + friend.wins_pong;
+        pongLosses.textContent = 'L: ' + friend.loses_pong;
+		pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
+
+        // Add the number of matches won and lost for Tris
+        var trisWins = document.querySelector('.tris .data.wins');
+        var trisLosses = document.querySelector('.tris .data.losses');
+		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        trisWins.textContent = 'W: ' + friend.wins_tictactoe;
+        trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
+		trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
+		}
+	});
 	document.getElementById("go_to_main").addEventListener("click", function() {
 			localStorage.setItem('lastPage', "main-page");
             window.parent.goToMain();

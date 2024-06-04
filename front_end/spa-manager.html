@@ -235,7 +235,9 @@
 			history.pushState({page: 'tris-tournament'}, null, 'tris-tournament');
 		}
 
-		function goToFriendProfile() {
+		function goToFriendProfile(i){
+			console.log("username : " + window.userInstance.friendlist[i].username);
+			window.userInstance.currentFriend = window.userInstance.friendlist[i];
 			friendProfileIframe.src = "friendProfile.html";
 			hidePages();
 			friendProfileIframe.style.display = "block";
