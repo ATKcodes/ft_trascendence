@@ -45,6 +45,15 @@
 			login42(code);
 		}
 		});
+		window.addEventListener('message', function(event) {
+		if (event.data.type === 'userDataLoaded') {
+			console.log('userDataLoaded event triggered');
+			goToMain();
+			if (friends) {
+            	populateFriendsList();
+	        }
+		}
+	});
 		function sendUserDataLoadedMessage() {
 			mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
 			gamePageWindow.postMessage({ type: 'loadProfile' }, '*');
@@ -165,24 +174,6 @@
         }
     });
 }
-		async function goToMainLogin() {
-			console.log("porcodio");
-		try {
-			await loadUserClass(); // Wait for the user class to load
-
-			mainPageIframe.src = "main-page.html";
-			mainPageIframe.onload = function() {
-				hidePages();
-				mainPageIframe.style.display = "block";
-				// Change the URL to 'main-page.html'
-				history.pushState({page: 'main-page'}, null, 'main-page');
-				console.log("porcodio2");
-			}
-		} catch (error) {
-			// Handle any errors
-			console.error('Error:', error);
-		}
-	}
 		function goToMain(){
 			mainPageIframe.src = "main-page.html";
 			mainPageIframe.onload = function() {
@@ -260,6 +251,8 @@
 						localStorage.setItem('userToken', data.token); // Correctly access and store the token
 						console.log('Login successful');
 						localStorage.setItem('lastPage', "main-page");
+						window.fillUserData(data);
+						console.log("Login :"+ window.userInstance.username);
 						window.goToMain();
 					} else if(data.detail) {
 						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
@@ -431,9 +424,12 @@ function setPageBasedOnState(state) {
         window.fillUserData = function(data){
             if (data.user) {
                 window.userInstance.fillData(data.user);
+				console.log("User.js loaded", window.userInstance.username);
 				sendUserDataLoadedMessage();
             } else {
+				console.error('Error:', data.detail);
                 window.userInstance.fillData(data);
+				sendUserDataLoadedMessage();
             }
         };
 	</script>

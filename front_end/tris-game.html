@@ -387,15 +387,17 @@
         getId("alert").style.display = "none";
         currentPlayer = Math.random() < 0.5 ? "X" : "O";
       }
-	if (window.parent.userInstance && window.parent.userInstance.username) {
+	  if (window.parent.userInstance && window.parent.userInstance.username) {
 			console.log('User data already loaded');
-			document.getElementById('userleft').innerText = window.parent.userInstance.player;
-			document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+			document.getElementById('userleft').textContent = window.parent.userInstance.player;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
 		}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
       	 	document.getElementById("userleft").innerText  = window.parent.userInstance.player;
-        	document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
   	  	}
 	});
     </script>

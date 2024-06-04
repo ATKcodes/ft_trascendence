@@ -1391,5 +1391,9 @@ window.addEventListener('message', function(event) {
 		document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
 	}
 });
+document.getElementById("go_to_profile").addEventListener("click", function() {
+	localStorage.setItem('lastPage', "profile");
+    window.parent.goToProfile();
+});
 </script>
 </html>

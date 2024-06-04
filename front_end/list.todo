@@ -77,13 +77,14 @@ bug:
   ✔ salvare cambialingua nel database @done (6/2/2024, 8:15:25 PM)
   ✔ chiamata per cambio immagine e cambio nick player(forse fatta) @done (6/3/2024, 4:59:15 PM)
   ✔ userleft cambia? gamepage probabilmente il reset la fotte. _ forse fixato @done (6/3/2024, 4:59:18 PM)
-  ☐ se refresho la pagina, la lista amici non si aggiorna
-  ☐ controllare se si resettano i campi della pagina tris
+  ✔ se refresho la pagina, la lista amici non si aggiorna @done (6/4/2024, 5:29:36 PM)
+  ✔ controllare se si resettano i campi della pagina tris @done (6/4/2024, 5:29:45 PM)
   ☐ Volendo non poter metter # in nick anche in backend.
-  ☐ show lista amici e status
-  ☐ caricare pagine profilo amici
+  ✔ show lista amici e status @done (6/4/2024, 6:11:25 PM)
+  ✔ caricare pagine profilo amici @done (6/4/2024, 6:11:26 PM)
   ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
   ✔ chiamate al backend per salvare le immagini di profilo da testare @done (6/4/2024, 3:21:33 PM)
   ☐ lingue varie
   ☐ pulsante 42 usare un env invece del token.
-  ☐ switchare a profile page se clicco sull'avatar di game page
+  ✔ switchare a profile page se clicco sull'avatar di game page @done (6/4/2024, 6:15:43 PM)
+  ☐ passare lo stesso tipo da login42 a login normale
