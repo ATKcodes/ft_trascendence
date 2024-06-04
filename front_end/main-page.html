@@ -303,6 +303,18 @@
     </div>
   </body>
   <script>
+	window.addEventListener('message', function(event) {
+		if (event.data.type === 'userDataLoaded') {
+			console.log('userDataLoaded event triggered');
+			document.getElementById('Username').textContent = window.parent.userInstance.username;
+			var languageSelect = document.getElementById('select-language');
+			languageSelect.value = window.parent.userInstance.language;
+			friends = window.parent.userInstance.friendlists;
+			if (friends) {
+            	populateFriendsList();
+	        }
+		}
+	});
   	document.addEventListener('DOMContentLoaded', (event) => {
 		var token = localStorage.getItem('userToken');
 		// Seleziona l'elemento select
@@ -394,20 +406,6 @@
 				populateFriendsList();
 			}
 }
-
-		window.addEventListener('message', function(event) {
-			if (event.data.type === 'userDataLoaded') {
-				console.log('userDataLoaded event triggered');
-				document.getElementById('Username').textContent = window.parent.userInstance.username;
-
-				var languageSelect = document.getElementById('select-language');
-				languageSelect.value = window.parent.userInstance.language;
-				
-				friends = window.parent.userInstance.friendlists;
-				if (friends) {
-            	populateFriendsList();
-        }
-			}
 		let loadUserClassPromise = null;
 				// Load the user class
 				async function loadUserClass() {
@@ -439,7 +437,6 @@
 					if(data.token) {
 						window.userInstance.fillData(data);
 						console.log("User.js loaded", window.userInstance.username);
-						mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
 						resolve(); // Resolve the Promise
 					} else {
 						reject('Token not found in response'); // Reject the Promise
@@ -490,7 +487,6 @@
 	if (savedLanguage) {
 		updateText(savedLanguage);
 	}
-	});
     document.getElementById("go_to_login").addEventListener("click", function() {
 		window.parent.userInstance.resetData();
         localStorage.setItem('lastPage', "login");

@@ -22,7 +22,7 @@ RUN chmod +x wait-for.sh
 EXPOSE 8001
 # RUN python3 trascendence/manage.py migrate
 # Imposta le variabili d'ambiente per Django
-ENV DJANGO_SETTINGS_MODULE=trascendence.settings
+
 
 # Avvia il server Django
 # CMD [ "./wait-for.sh", "db", "5432", "--", "python", "trascendence/manage.py", "runserver", "0.0.0.0:9000"]

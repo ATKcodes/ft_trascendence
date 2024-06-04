@@ -135,7 +135,7 @@
 				document.getElementById('Registernick').value = '';
 				window.parent.fillUserData(data);
 				console.log(window.parent.userInstance.username); // Access the User instance
-				window.parent.goToMain();
+				window.parent.goToMainLogin();
 			} else if(data.detail) {
 				console.error('Error:', data.detail);
 			} else {

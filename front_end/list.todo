@@ -83,6 +83,7 @@ bug:
   ☐ show lista amici e status
   ☐ caricare pagine profilo amici
   ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
-  ☐ chiamate al backend per salvare le immagini di profilo da testare
+  ✔ chiamate al backend per salvare le immagini di profilo da testare @done (6/4/2024, 3:21:33 PM)
   ☐ lingue varie
   ☐ pulsante 42 usare un env invece del token.
+  ☐ switchare a profile page se clicco sull'avatar di game page

@@ -209,7 +209,7 @@
     <div class="profile">
       <div class="img-fluid">
         <div class="image-container">
-          <img id="profile-image" src="media/silvietto.jpeg" alt="Your Image" />
+          <img id="profile-image" src="" alt="Your Image" />
           <i id="edit-icon" class="fas fa-edit edit-icon"></i>
         </div>
         <div class="nickname">
@@ -297,14 +297,14 @@
 		// Remove the base URL from the image src
 		var imagePath = this.src.replace('http://127.0.0.1:5501/front_end/', '');
 		// Send a fetch request to the backend
-		fetch('http://localhost:8001/main/profile_image', {
+		fetch('http://localhost:8001/main/profile_image/', {
 			method: 'POST',
 			headers: {
 				'Authorization' : 'Token ' + token,
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				imagePath: imagePath // Send the new image path to the backend
+				profile_path: imagePath // Send the new image path to the backend
 			}),
 		})
 		.then(response => response.json())
@@ -319,7 +319,9 @@
 	});
 	if (window.parent.userInstance && window.parent.userInstance.username) {
 		document.getElementById("player").innerText  = window.parent.userInstance.player;
-       // document.getElementById("profile-image").src = "http://localhost:8001" + window.parent.userInstance.image;
+    	document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
+		console.log ("user image: " + window.parent.userInstance.profile_image);
+		console.log ("User : " + window.parent.username);
 
         // Add the number of matches won and lost for Pong
 		var pongHistory = window.parent.userInstance.matchistory_pong;
@@ -374,7 +376,9 @@
 		// Check the type of the message
 		if (event.data.type === 'loadProfile') {
 			document.getElementById("player").innerText  = window.parent.userInstance.player;
-			//document.getElementById("profile-image").src = window.parent.userInstance.image;
+			document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
+			console.log ("user image: " + window.parent.userInstance.profile_image);
+			console.log ("User : " + window.parent.userInstance.username);
 
         // Add the number of matches won and lost for Pong
 		var pongHistory = window.parent.userInstance.matchistory_pong;

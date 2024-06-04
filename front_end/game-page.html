@@ -449,7 +449,7 @@
 	</style>
 </head>
 <body>
-    <img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
+    <img src="media/silvietto.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
     <h5 id = "userleft" style = "margin-left: 1%" class = "userleft">User1</h5>
 	<img src="media/Mattarella.jpg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
 	<h5 id = "userleft2" style = "margin-left: 1%; display:none" class = "userleft2">User3</h5>
@@ -1381,13 +1381,13 @@ window.addEventListener('message', function(event) {
 	// Check the type of the message
 	else if (event.data.type === 'loadProfile') {
         document.getElementById("userleft").innerText  = window.parent.userInstance.player;
-        document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+        document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
     }
 	if (event.data.type === 'userDataLoaded') {
         console.log('userDataLoaded event triggered');
         // Access the userInstance from the parent window
         document.getElementById('userleft').textContent = window.parent.userInstance.username;
-		document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+		document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
 	}
 });
 </script>

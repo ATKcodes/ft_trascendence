@@ -24,16 +24,22 @@ from django.utils.crypto import get_random_string
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({"response": "successful"})
-    
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({"response": "successful"})
+        else:
+            return Response({"response": "failed"})
+
+
 class LoginView(APIView):
     def post(self, request):
         username = request.data['username']
         password = request.data['password']
+        if not username or not password:
+            return Response({"detail": "Username and password are required"}, status=status.HTTP_400_BAD_REQUEST) 
+        if '#' in username:  
+            return Response({"detail": "Invalid username"}, status=status.HTTP_400_BAD_REQUEST)
         authenticate_user = authenticate(username=username, password=password)
-
         if authenticate_user is not None:
             user = User.objects.get(username=username)
             serializer = UserSerializer(user)

@@ -1,7 +1,7 @@
 // User.js
 export default class User {
 	username = 'username1';
-	profile_image = 'media/download.jpg';
+	profile_image = 'media/silvietto.jpeg';
 	player = 'Player1';
 	password = '';
 	friendlist = [];
@@ -44,7 +44,7 @@ export default class User {
 		this.username = 'username1';
 		this.player = 'Player1';
 		this.password = '';
-		this.profile_image = 'download.jpg';
+		this.profile_image = 'media/silvietto.jpeg';
 		this.friendlist = [];
 		this.language = 'EN';
 		this.matchistory_pong = [];

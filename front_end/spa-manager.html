@@ -45,6 +45,13 @@
 			login42(code);
 		}
 		});
+		function sendUserDataLoadedMessage() {
+			mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
+			gamePageWindow.postMessage({ type: 'loadProfile' }, '*');
+			profileWindow.postMessage({ type: 'loadProfile' }, '*');
+			trisGameWindow.postMessage({ type: 'loadProfile' }, '*');
+			trisTournamentWindow.postMessage({ type: 'loadProfile' }, '*');
+		}
 		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game', 'spa-manager', 'tris-tournament', 'friend-profile'];
 		// Handle the back and forward navigation
 		window.onpopstate = function(event) {
@@ -105,75 +112,65 @@
 			}
 			setPageBasedOnState(event.state);
 		};
-		let loadUserClassPromise = null;
-		// Load the user class
-		async function loadUserClass() {
-			if (loadUserClassPromise) {
-				// If loadUserClass is already running, wait for it to finish
-				return loadUserClassPromise;
-			}
+	async function loadUserClass() {
+    return new Promise((resolve, reject) => {
+        window.onload = async function() {
+            try {
+                const module = await import("./User.js");
+                const User = module.default;
+                window.User = User;
+                window.userInstance = new User();
 
-			loadUserClassPromise = new Promise(async (resolve, reject) => {
-        try {
-            const module = await import("./User.js");
-            const User = module.default;
-            window.User = User;
-            window.userInstance = new User();
-            console.log("User.js loaded", window.userInstance.username);
+                const tokenData = {
+                    token: localStorage.getItem('userToken'),
+                };
 
-            const tokenData = {
-                token: localStorage.getItem('userToken'),
-            };
-
-			const response = await fetch('http://127.0.0.1:8001/login/info/', {
-				method: 'POST',
-				headers: {
-					'Authorization' : 'Token ' + localStorage.getItem('userToken'),
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(tokenData),
-			});
-
-            const data = await response.json(); // Parse the JSON response
-
-            if(data.token) {
-                window.userInstance.fillData(data);
-                console.log('Dispatching userDataLoaded event');
-                mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
-                resolve(); // Resolve the Promise
-            } else {
-                reject('Token not found in response'); // Reject the Promise
+                fetch('http://127.0.0.1:8001/login/info/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(tokenData),
+                })
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    console.log('Success:', data);
+                    if(data.token) {
+                        try {
+                            window.userInstance.fillData(data);
+                            console.log("285: User.js loaded", window.userInstance.username);
+                            sendUserDataLoadedMessage();
+                            resolve(); // Resolve the promise
+                        } catch (error) {
+                            console.error('Error calling fillData:', error);
+                            reject(error); // Reject the promise
+                        }
+                    } else if(data.detail) {
+                        console.error('Error:', data.detail);
+                        reject(new Error(data.detail)); // Reject the promise
+                    } else {
+                        console.error('Token not found in response');
+                        reject(new Error('Token not found in response')); // Reject the promise
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    reject(error); // Reject the promise
+                });
+            } catch (error) {
+                console.log("Error loading User.js:", error);
+                reject(error); // Reject the promise
             }
-        } catch (error) {
-            console.log("Error loading User.js:", error);
-            reject(error); // Reject the Promise
         }
     });
-	try {
-        await loadUserClassPromise;
-    } catch (error) {
-        console.error('Error:', error);
-    } finally {
-        loadUserClassPromise = null;
-    }
-
-    return loadUserClassPromise;
 }
-
-		function goTo404() {
-			hidePages();
-			notFoundIframe.style.display = "block";
-			notFoundWindow.src = "404.html";
-			history.replaceState({page: '404'}, null, '404');
-		}
-		async function goToMain() {
+		async function goToMainLogin() {
 		try {
 			await loadUserClass(); // Wait for the user class to load
 
 			mainPageIframe.src = "main-page.html";
 			mainPageIframe.onload = function() {
-				// Send the postMessage after the iframe has finished loading
-				mainPageIframe.contentWindow.postMessage({ type: 'userDataLoaded' }, '*');
 				hidePages();
 				mainPageIframe.style.display = "block";
 				// Change the URL to 'main-page.html'
@@ -184,6 +181,20 @@
 			console.error('Error:', error);
 		}
 	}
+		function goToMain(){
+			mainPageIframe.src = "main-page.html";
+			mainPageIframe.onload = function() {
+				hidePages();
+				mainPageIframe.style.display = "block";
+				history.pushState({page: 'main-page'}, null, 'main-page');
+			}
+		}
+		function goTo404() {
+			hidePages();
+			notFoundIframe.style.display = "block";
+			notFoundWindow.src = "404.html";
+			history.replaceState({page: '404'}, null, '404');
+		}
 		function goToProfile() {
 			profileIframe.src = "profile.html";
 			profileIframe.onload = function() {
@@ -283,12 +294,8 @@
 			if(data.token) {
 				try {
 					window.userInstance.fillData(data);
-					console.log("User.js loaded", window.userInstance.username);
-					mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
-					gamePageWindow.postMessage({ type: 'loadProfile' }, '*');
-					profileWindow.postMessage({ type: 'loadProfile' }, '*');
-					trisGameWindow.postMessage({ type: 'loadProfile' }, '*');
-					trisTournamentWindow.postMessage({ type: 'loadProfile' }, '*');
+					console.log("285: User.js loaded", window.userInstance.username);
+					sendUserDataLoadedMessage();
 				} catch (error) {
 					console.error('Error calling fillData:', error);
 				}
@@ -404,15 +411,15 @@ function setPageBasedOnState(state) {
 		document.getElementById("tris-tournament").style.display = "none";
 		document.getElementById("friend-profile").style.display = "none";
 	}
-	</script>
-	<script>
+		
 		(async function() {
 			try {
 				const module = await import("./User.js");
 				const User = module.default;
 				window.User = User;
 				window.userInstance = new User();
-				console.log("User.js loaded", window.userInstance.username);
+				console.log("418 : User.js loaded", window.userInstance.username);
+				sendUserDataLoadedMessage();
 			} catch (error) {
 				console.log("Error loading User.js:", error);
 			}
