@@ -106,10 +106,19 @@ def get_42token(request):
         if not User.objects.filter(username=username).exists():
             serializer = UserSerializer(data={'username': username, 'password': get_random_string(length=40)})
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
-        user = User.objects.get(username=username)
-        user.save()
-        token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
-        return JsonResponse({'token': token.key, 'user': UserSerializer(user).data})
+                user = serializer.save()
+                response_data = {
+                    "user": serializer.data
+                }
+                token, created = CustomToken.objects.get_or_create(user=User.objects.get(username=username))
+        else:
+            user = User.objects.get(username=username)
+            response_data = {
+                "user": UserSerializer(user).data
+            }
+            token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
+        
+        user.save()    
+        return JsonResponse({'token': token.key, 'user': response_data})
     else:
         return JsonResponse({'error': 'Failed to get access token'}, status=400)

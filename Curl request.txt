@@ -28,10 +28,12 @@ curl -X POST -H "Content-Type: application/json" \
 CURL for delete accout from the database:
 
 curl -X DELETE -H "Content-Type: application/json" \
-     -H "Authorization: Token 3lmSf0aJSEvdk9tDgzY2tIDaMPX3JywvIechkkuEFqvo90GqQhoKuaCxUWmOiqoPVnwFaNWeoOhVmzwGHPfjFCDr83o2mCQ72HcnlcR7RSZukEv0BiCDAT6SNKQBJCNN" \
+     -H "Authorization: Token hKOcHR7b7GrnIt2EazoelmMpciDsCQtrBegwm5Ym87sG8ImzARVaNdrEqD7ka2v2MCO1mB6UsatB0jK0xnSZUUOPZcvlmCEeUK7qa3sh7nE2QbQUhCI4Hm6ywbi7yBri" \
      http://localhost:8001/main/delete_user/
 
 
+
+cbb07b0773a147b4b24be59342d7a01379de2568384e99e46eae45144685cb75
 
 
 CURL for update image 
