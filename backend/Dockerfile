@@ -24,8 +24,6 @@ EXPOSE 8001
 # Imposta le variabili d'ambiente per Django
 ENV DJANGO_SETTINGS_MODULE=trascendence.settings
 
-COPY trascendence/media/materazzi.jpeg /app/media/
-
 # Avvia il server Django
 # CMD [ "./wait-for.sh", "db", "5432", "--", "python", "trascendence/manage.py", "runserver", "0.0.0.0:9000"]
 # CMD [ "./wait-for.sh", "db", "5432", "--", "python", "trascendence/manage.py", "migrate", "runserver", "0.0.0.0:9000"]

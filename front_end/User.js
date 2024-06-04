@@ -1,7 +1,7 @@
 // User.js
 export default class User {
 	username = 'username1';
-	profile_image = 'download.jpg';
+	profile_image = 'media/download.jpg';
 	player = 'Player1';
 	password = '';
 	friendlist = [];

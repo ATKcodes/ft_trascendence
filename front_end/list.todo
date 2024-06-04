@@ -78,12 +78,11 @@ bug:
   ✔ chiamata per cambio immagine e cambio nick player(forse fatta) @done (6/3/2024, 4:59:15 PM)
   ✔ userleft cambia? gamepage probabilmente il reset la fotte. _ forse fixato @done (6/3/2024, 4:59:18 PM)
   ☐ se refresho la pagina, la lista amici non si aggiorna
-  ☐ controllare se si resettano i campi della pagnia tris
+  ☐ controllare se si resettano i campi della pagina tris
   ☐ Volendo non poter metter # in nick anche in backend.
   ☐ show lista amici e status
   ☐ caricare pagine profilo amici
-  ☐ immagine profilo default definita dal backend.
-  ☐ chiamate al backend per salvare le immagini di profilo
-  ☐ verificare le dimensioni delle immagini
-  ☐ capire come passare la user class dell'amico alla pagina profilo
-  ☐ cambiare tutte le informazioni della pagina profilo alle informazioni dell'amico
+  ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
+  ☐ chiamate al backend per salvare le immagini di profilo da testare
+  ☐ lingue varie
+  ☐ pulsante 42 usare un env invece del token.
