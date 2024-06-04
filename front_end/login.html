@@ -134,7 +134,7 @@
 				document.getElementById('repeatPassword').value = '';
 				document.getElementById('Registernick').value = '';
 				window.parent.fillUserData(data);
-				console.log(window.parent.userInstance.username); // Access the User instance
+				console.log("Login :"+ window.parent.userInstance.username); // Access the User instance
 				window.parent.goToMain();
 			} else if(data.detail) {
 				console.error('Error:', data.detail);
@@ -198,6 +198,9 @@
                 placeholder="Repeat Password"
                 maxlength="16"
               />
+			  <p id="RegisterError" style="display: none; color: red">
+                The Username can't contain a '#'.
+              </p>
               <p id="successMessage" style="display: none; color: green">
                 Registration successful.
               </p>
@@ -237,7 +240,10 @@
           document.getElementById("passwordError").style.display = "none";
           document.getElementById("passwordInvalid").style.display = "none";
           document.getElementById("successMessage").style.display = "none";
-          if (!validatePassword(Registerpassword)) {
+		  document.getElementById("RegisterError").style.display = "none";
+          if (RegisterNick.includes('#')) {
+			document.getElementById("RegisterError").style.display = "block";
+		  } else if (!validatePassword(Registerpassword)) {
                 document.getElementById("passwordInvalid").style.display = "block";  
           }
           else if (Registerpassword !== repeatPassword) {
@@ -298,7 +304,8 @@
   }
   // function changeLanguage() {
 	const savedLanguage = localStorage.getItem('language');
-  if (savedLanguage== 'IT') {    
+  if (savedLanguage== 'IT') {
+	document.getElementById('RegisterError').innerText = 'Il nome utente non può contenere un \'#\'.';    
     document.getElementById('go_to_main').innerText = 'Accedi';
     document.getElementById('Register').innerText = 'Registrati';
     document.getElementById('login-error').innerText = 'Accesso non riuscito. Per favore riprova.'
@@ -317,6 +324,7 @@
     document.getElementById('nickInput').placeholder = 'Nome Utente';
     
   } else if (savedLanguage == 'EN') {
+	document.getElementById('RegisterError').innerText = 'The Username can\'t contain a \'#\'.';
     document.getElementById('go_to_main').innerText = 'Login';
     document.getElementById('Register').innerText = 'Register';
     document.getElementById('login-error').innerText = 'Login unsuccessful. Please try again.'
@@ -337,6 +345,7 @@
     
     
   } else if (savedLanguage == 'ES') {
+	document.getElementById('RegisterError').innerText = 'El nombre de usuario no puede contener un \'#\'.';
     document.getElementById('go_to_main').innerText = 'Acceder';
     document.getElementById('Register').innerText = 'Registrarse';
     document.getElementById('login-error').innerText = 'No se ha podido iniciar sesión. Inténtalo de nuevo.'

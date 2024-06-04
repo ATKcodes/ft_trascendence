@@ -159,16 +159,58 @@
         font-size: 24px;
         cursor: pointer;
       }
+	  .modal {
+		display: none;
+		position: fixed;
+		z-index: 1;
+		padding-top: 100px;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(0,0,0);
+		background-color: rgba(0,0,0,0.4);
+		}
+
+		.modal-content {
+		background-color: #f4dc9e;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 50%;
+		height: 40%;
+		}
+
+		.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+		}
+
+		.image-preview img {
+		width: 200px; /* Increase the width */
+		height: 200px; /* Increase the height */
+		margin: 5px;
+		cursor: pointer; 
+	}
     }
   </style>
   <body>
-    <h2 class="div-title">PONG</h2>
+    <h2 id = "go_to_main" class="div-title">PONG</h2>
     <div class="profile">
       <div class="img-fluid">
         <div class="image-container">
-          <img id="profile-image" src="download.jpeg" alt="Your Image" />
+          <img id="profile-image" src="" alt="Your Image" />
           <i id="edit-icon" class="fas fa-edit edit-icon"></i>
-          <input type="file" id="image-upload" style="display: none" />
         </div>
         <div class="nickname">
           <div>
@@ -179,47 +221,47 @@
           </div>
         </div>
       </div>
+	  <div id="myModal" class="modal">
+		<div class="modal-content">
+		  <span class="close">&times;</span>
+		  <div class="image-preview">
+			<!-- Images will be added here by JavaScript -->
+		  </div>
+		</div>
+	  </div>
       <div class="statistics">
         <div class="pong">
           <h2 class="game_title">Pong</h2>
           <h6 class="history">
-            Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro pallino: 11/06/24 13.00 pallino ha vinto
           </h6>
           <h6 class="history">
-            Partita contro tizio: 12/06/24 13.00 tizio ha vinto
           </h6>
           <h6 class="history">
-            Partita contro caio: 13/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro Jino: 14/06/24 13.00 Jino ha vinto
           </h6>
-          <h6 class="data">Vinte</h6>
-          <h6 class="data">Perse</h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
+		  <h6 class="data winratePong">	Winrate: </h6>
         </div>
         <hr />
         <div class="tris">
           <h2 class="game_title">Tris</h2>
           <h6 class="history">
-            Partita contro pinco: 10/06/24 13.00 mvolpi ha vinto
           </h6>
           <h6 class="history">
-            Partita contro pallino: 11/06/24 13.00 pallino ha vinto
           </h6>
           <h6 class="history">
-            Partita contro tizio: 12/06/24 13.00 tizio ha vinto
+	      </h6>
+          <h6 class="history">
           </h6>
           <h6 class="history">
-            Partita contro caio: 13/06/24 13.00 mvolpi ha vinto
           </h6>
-          <h6 class="history">
-            Partita contro Jino: 14/06/24 13.00 Jino ha vinto
-          </h6>
-          <h6 class="data">Vinte</h6>
-          <h6 class="data">Perse</h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
+		  <h6 class="data winrateTris">	Winrate: </h6>
         </div>
       </div>
     </div>
@@ -227,45 +269,177 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
+	var modal = document.getElementById("myModal");
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+
+	window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+	}
+
+	var imagePreview = document.querySelector('.image-preview');
+	var imagePaths = ['Mattarella.jpg', 'mikeTyson.png', 'carletto.jpg', 'ultimate_muscle.jpg', 'lebowski.png', 'Jacobs.png', 'gricia.jpg', 'ai.jpg', 'silvietto.jpeg', 'blade_runner.jpeg'];
+
+	imagePaths.forEach(function(path) {
+		var img = document.createElement('img');
+		img.src = 'media/' + path;
+		img.style.flex = "0 1 calc(20% - 10px)"; // This will make the image take up 20% of the container width minus 10px for margins
+		//Call to the back-end to update user  data.
+		img.onclick = function() {
+		document.getElementById('profile-image').src = this.src;
+		modal.style.display = "none";
+		var token = localStorage.getItem('userToken');
+		// Remove the base URL from the image src
+		var imagePath = this.src.replace('http://127.0.0.1:5501/front_end/', '');
+		// Send a fetch request to the backend
+		fetch('http://localhost:8001/main/profile_image/', {
+			method: 'POST',
+			headers: {
+				'Authorization' : 'Token ' + token,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				profile_path: imagePath // Send the new image path to the backend
+			}),
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log('Success:', data);
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
+		}
+		imagePreview.appendChild(img);
+	});
+	if (window.parent.userInstance && window.parent.userInstance.username) {
+		document.getElementById("player").innerText  = window.parent.userInstance.player;
+    	document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
+		console.log ("user image: " + window.parent.userInstance.profile_image);
+		console.log ("User : " + window.parent.username);
+
+        // Add the number of matches won and lost for Pong
+		var pongHistory = window.parent.userInstance.matchistory_pong;
+		var trisHistory = window.parent.userInstance.matchistory_tictactoe;
+
+		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
+		var pongHistoryElements = document.querySelectorAll('.pong .history');
+		var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+		// Replace the content of the pong history elements
+		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
+			console.log(pongHistory[i]);
+			var match = pongHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			pongHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
+		}
+
+		// Replace the content of the tris history elements
+		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
+			var match = trisHistory[i];
+			var match = trisHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			trisHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result}`;
+		}
+        // Add the number of matches won and lost for Pong
+        var pongWins = document.querySelector('.pong .data.wins');
+        var pongLosses = document.querySelector('.pong .data.losses');
+		var pongWinrate = document.querySelector('.pong .data.winratePong');
+        pongWins.textContent = 'W: ' + window.parent.userInstance.wins_pong;
+        pongLosses.textContent = 'L: ' + window.parent.userInstance.loses_pong;
+		pongWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_pong + '%';
+
+        // Add the number of matches won and lost for Tris
+        var trisWins = document.querySelector('.tris .data.wins');
+        var trisLosses = document.querySelector('.tris .data.losses');
+		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        trisWins.textContent = 'W: ' + window.parent.userInstance.wins_tictactoe;
+        trisLosses.textContent = 'L: ' + window.parent.userInstance.loses_tictactoe;
+		trisWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_tictactoe + '%';
+	}
+	window.addEventListener('message', function(event) {
+		// Check the type of the message
+		if (event.data.type === 'loadProfile') {
+			document.getElementById("player").innerText  = window.parent.userInstance.player;
+			document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
+			console.log ("user image: " + window.parent.userInstance.profile_image);
+			console.log ("User : " + window.parent.userInstance.username);
+
+        // Add the number of matches won and lost for Pong
+		var pongHistory = window.parent.userInstance.matchistory_pong;
+		var trisHistory = window.parent.userInstance.matchistory_tictactoe;
+
+		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
+		var pongHistoryElements = document.querySelectorAll('.pong .history');
+		var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+		// Replace the content of the pong history elements
+		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
+			console.log(pongHistory[i]);
+			var match = pongHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			pongHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
+		}
+
+		// Replace the content of the tris history elements
+		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
+			var match = trisHistory[i];
+			var match = trisHistory[i];
+			var result;
+			if (match.win === "true") {
+				result = 'W';
+			} else if (match.win === "false"){
+				result = 'L';
+			}
+			trisHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result}`;
+		}
+
+        // Add the number of matches won and lost for Pong
+        var pongWins = document.querySelector('.pong .data.wins');
+        var pongLosses = document.querySelector('.pong .data.losses');
+		var pongWinrate = document.querySelector('.pong .data.winratePong');
+        pongWins.textContent = 'W: ' + window.parent.userInstance.wins_pong;
+        pongLosses.textContent = 'L: ' + window.parent.userInstance.loses_pong;
+		pongWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_pong + '%';
+
+        // Add the number of matches won and lost for Tris
+        var trisWins = document.querySelector('.tris .data.wins');
+        var trisLosses = document.querySelector('.tris .data.losses');
+		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        trisWins.textContent = 'W: ' + window.parent.userInstance.wins_tictactoe;
+        trisLosses.textContent = 'L: ' + window.parent.userInstance.loses_tictactoe;
+		trisWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_tictactoe + '%';
+		}
+	});
+
     document.getElementById("edit-icon").addEventListener("click", function () {
-      document.getElementById("image-upload").click();
+		modal.style.display = "block";
     });
 
-    document
-      .getElementById("image-upload")
-      .addEventListener("change", function () {
-        let inputElement = document.getElementById("image-upload");
-        let file = inputElement.files[0];
-        let url = "http://localhost:8001/main/profile_image/";
-        let token = localStorage.getItem("userToken");
-
-        if (file) {
-          console.log("inputElement: ", inputElement, "  file: ", file, "  url: ", url, "  token: ", token);
-
-          let formData = new FormData();
-          formData.append("image", file);
-
-          console.log("formData: ", formData);
-
-          fetch(url, {
-            method: "POST",
-            headers: {
-              Authorization: "Token " + token,
-            },
-            body: formData,
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              // Optionally update the profile image
-              document.getElementById("profile-image").src =
-                URL.createObjectURL(file);
-            })
-            .catch((error) => console.error("Error:", error));
-        } else {
-          console.log("No file selected");
-        }
-      });
+	document.getElementById("go_to_main").addEventListener("click", function() {
+			localStorage.setItem('lastPage', "main-page");
+            window.parent.goToMain();
+        });
 
     document
       .getElementById("modify-icon")
@@ -275,6 +449,7 @@
           var nicknameData = {
             player: newNickname,
           };
+		  window.parent.userInstance.player = newNickname;
           document.getElementById("player").textContent = newNickname;
           fetch("http://localhost:8001/main/nick/", {
             method: "POST",

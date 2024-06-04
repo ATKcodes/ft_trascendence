@@ -20,7 +20,7 @@ COPY nginx.crt /etc/nginx/ssl/
 
 COPY Despairs-X3Wxo.ttf /usr/share/nginx/html/
 
-COPY download.jpeg /usr/share/nginx/html/
+COPY media/ /usr/share/nginx/html/media
 
 COPY *.js /usr/share/nginx/html/
 

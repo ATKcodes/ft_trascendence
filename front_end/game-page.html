@@ -53,57 +53,57 @@
 		background-color: #B6A999;
 	}
 	.avatar {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
 		left: 2%;
-		top: 1.5%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 	}
 	.avatar2 {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
 		right: 2%;
-		top: 1.5%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 	}
 	.avatar3 {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
-		left: 17%;
-		top: 1.5%;
+		left: 15%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
 	}
 	.avatar4 {
-		width: 50px;
-		height: 50px;
+		width: 125px;
+		height: 125px;
 		border-radius: 50%;
 		font-weight: lighter;
 		font-size :110%;
 		color: #ffffff;
 		position: absolute;
-		right: 17%;
-		top: 1.5%;
+		right: 15%;
+		top: 0.3%;
 		padding : 0.5%;
 		margin: 0 auto;
 		text-align: center;
@@ -449,10 +449,10 @@
 	</style>
 </head>
 <body>
-    <img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
-    <h5 id = "userleft" class = "userleft">User1</h5>
-	<img src="download.jpeg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
-	<h5 id = "userleft2" class = "userleft2" style = "display:none">User3</h5>
+    <img src="media/silvietto.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
+    <h5 id = "userleft" style = "margin-left: 1%" class = "userleft">User1</h5>
+	<img src="media/Mattarella.jpg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
+	<h5 id = "userleft2" style = "margin-left: 1%; display:none" class = "userleft2">User3</h5>
     <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     <script>
         document.getElementById("go_to_main").addEventListener("click", function() {
@@ -463,10 +463,10 @@
             window.parent.goToMain();
         });
     </script>
-    <img src="download.jpeg" alt="Avatar" class="avatar2" id = "avatar2">
-    <h5 id = "userright"class = "userright">User2</h5>
-	<img src="download.jpeg" alt="Avatar" class="avatar4" id = "avatar4" style = "display:none">
-	<h5 id = "userright2" class = "userright2" style = "display:none">User4</h5>
+    <img src="media/carletto.jpg" alt="Avatar" class="avatar2" id = "avatar2">
+    <h5 id = "userright" style = "margin-right: 1%" class = "userright">User2</h5>
+	<img src="media/Jacobs.png" alt="Avatar" class="avatar4" id = "avatar4" style = "display:none">
+	<h5 id = "userright2" style = "margin-right: 1%; display:none" class = "userright2" style = "display:none">User4</h5>
     <div id="pong-game">
         <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
             <div><span id="scoreA" style="font-size: 24px; color: white; display:none">0</span></div>
@@ -522,7 +522,6 @@
 		document.addEventListener('DOMContentLoaded', (event) => {
 			const  savedLanguage = localStorage.getItem('language');
 			if (savedLanguage == 'IT') {
-				document.getElementById('userleft').innerText = 'Giocatore 1';
 				document.getElementById('userright').innerText = 'Giocatore 2';
 				document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
 				document.getElementById('submit-username').innerText = 'Invia';
@@ -539,7 +538,6 @@
 				document.getElementById('NextMatch').innerText = 'Prossima partita';
 				
 			} else if (savedLanguage == 'EN') {
-				document.getElementById('userleft').innerText = 'Player 1';
 				document.getElementById('userright').innerText = 'Player 2';
 				document.getElementById('player2-username').placeholder = 'Insert Player2 Nick'
 				document.getElementById('submit-username').innerText = 'Submit';
@@ -556,7 +554,6 @@
 				document.getElementById('NextMatch').innerText = 'Next Match';
 				
 			} else if (savedLanguage == 'ES') {
-				document.getElementById('userleft').innerText = 'Jugador 1';
 				document.getElementById('userright').innerText = 'Jugador 2';
 				document.getElementById('player2-username').placeholder = 'Introduce el nombre del jugador2'
 				document.getElementById('submit-username').innerText = 'Entregar';
@@ -608,6 +605,7 @@
 		balllimitfaster: 2,
 		matchdatasent : 0,
 		tournamentStatus: 0,
+		running: false,
 		aiInterval: null,
 		tournamentGame1Win: "player1",
 		tournamentGame2Win: "player3",
@@ -967,8 +965,13 @@
 	this.paddleD.style.top = this.paddleDPos.y + 'px';
 },
 
+
 	loop: function(currentTime) {
-        requestAnimationFrame(pongGame.loop);
+		if (!pongGame.running)
+		{
+			return;
+		}
+        pongGame.animationFrameId = requestAnimationFrame(pongGame.loop);
 
         let elapsedTime = currentTime - pongGame.lastTime;
 
@@ -981,9 +984,11 @@
     },
 
 	stop: function() {
+		pongGame.running = false;
 		cancelAnimationFrame(this.animationFrameId);
 	},
     start: function() {
+		pongGame.running = true;
         pongGame.loop();
     }
 };
@@ -1114,6 +1119,7 @@ document.getElementById("play-vs-ia").addEventListener("click", function(){
 	document.getElementById("avatar3").style.display = "none";
 	document.getElementById("avatar4").style.display = "none";
 	document.getElementById("userright").textContent = "IA";
+	document.getElementByID("avatar2").src = "media/ai.png";
 	document.getElementById("play-1v1").style.display = "none";
     document.getElementById("play-4players").style.display = "none";
     document.getElementById("play-vs-ia").style.display = "none";
@@ -1311,6 +1317,11 @@ document.getElementById("play-tris").addEventListener("click", function(){
 	window.parent.goToTris();
 });
 }
+if (window.parent.userInstance && window.parent.userInstance.username) {
+			console.log('User data already loaded');
+			document.getElementById('userleft').textContent = window.parent.userInstance.username;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.image;
+		}
 window.addEventListener('message', function(event) {
 	if (event.data.type === 'reset')
 	{
@@ -1337,8 +1348,6 @@ window.addEventListener('message', function(event) {
 		document.getElementById("userleft2").style.display = "none";
 		document.getElementById("avatar3").style.display = "none";
 		document.getElementById("avatar4").style.display = "none";
-		document.getElementById("userright").textContent = "Player 1";
-		document.getElementById("userleft").textContent = "Player 2";
 		document.getElementById("userright2").textContent = "Player 3";
 		document.getElementById("userleft2").textContent = "Player 4";
 		document.getElementById("player2-username").value = "";
@@ -1346,6 +1355,9 @@ window.addEventListener('message', function(event) {
 		document.getElementById("player4-username").value = "";
 		document.getElementById("scoreA").style.display = "none";
 		document.getElementById("scoreB").style.display = "none";
+		document.getElementById("firstplace-text").style.display = "none";
+		document.getElementById("secondplace-text").style.display = "none";
+		document.getElementById("thirdplace-text").style.display = "none";
 		document.getElementById("ball").style.display = "none";
 		document.getElementById("paddleA").style.display = "none";
 		document.getElementById("paddleB").style.display = "none";
@@ -1359,6 +1371,7 @@ window.addEventListener('message', function(event) {
 		document.getElementById("ThirdPlace").style.display = "none";
 		document.getElementById("ThirdPlace2").style.display = "none";
 		document.getElementById("EndTournament").style.display = "none";
+		document.querySelector('.open_text').style.display = "none";
 		pongGame.tournamentStatus = 0;
 		pongGame.bouncecounter = 0;
 		pongGame.balllimitfaster = 2;
@@ -1366,6 +1379,21 @@ window.addEventListener('message', function(event) {
 		pongGame.scoreB = 0;
 		console.log("entrato");
 	}
+	// Check the type of the message
+	else if (event.data.type === 'loadProfile') {
+        document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+        document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+    }
+	if (event.data.type === 'userDataLoaded') {
+        console.log('userDataLoaded event triggered');
+        // Access the userInstance from the parent window
+        document.getElementById('userleft').textContent = window.parent.userInstance.username;
+		document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+	}
+});
+document.getElementById("go_to_profile").addEventListener("click", function() {
+	localStorage.setItem('lastPage', "profile");
+    window.parent.goToProfile();
 });
 </script>
 </html>

@@ -1,7 +1,7 @@
 // User.js
 export default class User {
 	username = 'username1';
-	profile_image = 'download.jpg';
+	profile_image = 'media/silvietto.jpeg';
 	player = 'Player1';
 	password = '';
 	friendlist = [];
@@ -37,11 +37,14 @@ export default class User {
 		this.winrate_pong = data.user.winrate_pong;
 		this.winrate_tictactoe = data.user.winrate_tictactoe;
 	}
+	changeLanguage(language){
+		this.language = language;
+	}
 	resetData(){
 		this.username = 'username1';
 		this.player = 'Player1';
 		this.password = '';
-		this.profile_image = 'download.jpg';
+		this.profile_image = 'media/silvietto.jpeg';
 		this.friendlist = [];
 		this.language = 'EN';
 		this.matchistory_pong = [];

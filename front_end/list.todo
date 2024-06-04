@@ -1,12 +1,11 @@
 front:
   ✔ rendere sito responsive @done (5/23/2024, 6:34:48 PM)
-  ☐ token in ogni chiamata A
   ✔ tasti indietro ovunque @done (5/23/2024, 6:34:59 PM)
   ✔ classe user? resettare quando logout A @done (6/1/2024, 5:40:29 PM)
   ✔ quando entro nella pagina vedere localstorage se c'e' token entrare @done (5/23/2024, 6:35:07 PM)
   ✔ utilizzare variabile ambiente per IP V @done (5/31/2024, 12:14:26 PM)
   ✔ fix paddle 4 players. @done (6/1/2024, 5:40:32 PM)
-  ☐ bugfix 42 login
+  ✔ bugfix 42 login @done (6/2/2024, 8:16:51 PM)
 
   registrazione/login html:
     ✔ controlli password e id ? A @done (5/26/2024, 3:17:30 PM)
@@ -21,19 +20,15 @@ front:
   profilo nel main-menu:
     ✔ Pagina profilo da rifare, diviso per tris e per pong, con statistiche e match history. Pulsante per cambiare Nick e Foto M @done (5/31/2024, 12:14:37 PM)
     amici:
-      ☐ o socket o chiamata ogni tot secondi L
-      ☐ se chiamata ogni tot, chiedete lista tutte le persone, se ci sono nuovi amici perche qualcuno mi ha aggiunto L
-      ☐ tasto aggiungi amici dove cerco e aggiungo Dialog M
-
-    vedere profilo amici:
-      ☐ se clicco sul profilo di un amico lo apre e richiesta di prendere immagine e stat partite. IN DUBBIO
+      ✔ o socket o chiamata ogni tot secondi L @done (6/2/2024, 8:15:55 PM)
+      ✔ se chiamata ogni tot, chiedete lista tutte le persone, se ci sono nuovi amici perche qualcuno mi ha aggiunto L @done (6/2/2024, 8:15:57 PM)
 
   profilo html:
     history:
       ✔ 1v1 pong A @done (5/31/2024, 12:14:47 PM)
       ✔ torneo pong A @done (5/31/2024, 5:20:42 PM)
       ✔ 1v1 tris M @done (5/31/2024, 12:15:43 PM)
-      ☐ torneo tris M
+      ✔ torneo tris M @done (6/3/2024, 4:57:25 PM)
     ✔ immagine defalut @done (5/23/2024, 6:36:38 PM)
     ✔ immagine che posso cambiare // in base 64, facendo controlli che sia un file jpg o png, controllare grandezza in kilobyte M @done (5/31/2024, 12:14:59 PM)
     ✔ nick che posso cambiare M @done (5/31/2024, 12:14:58 PM)
@@ -55,34 +50,41 @@ front:
       ✔ contro altre persone e ai? @done (5/31/2024, 12:15:13 PM)
 
 back:
-  ☐ lista id - nome
-  ☐ se ti chiedo un id/nome mi passi immagini, stat
-  ☐ se mi registro con kzak e entro 42 kzak?
+  ✔ lista id - nome @done (6/2/2024, 8:17:02 PM)
+  ✔ se ti chiedo un id/nome mi passi immagini, stat @done (6/2/2024, 8:17:06 PM)
+  ✔ se mi registro con kzak e entro 42 kzak? @done (6/2/2024, 8:17:08 PM)
 
-  ☐ vedere front e vedere che chiamate servono
+  ✔ vedere front e vedere che chiamate servono @done (6/2/2024, 8:17:14 PM)
 
 docker:
   ✔ IP_ADDR: localhost // 10.11.10.1 @done (5/31/2024, 12:15:19 PM)
   ✔ https? @done (5/31/2024, 12:15:20 PM)
 
-chiedere:
-  ☐ mostrare profilo
-  ✔ cosa si intende matchmaking secondo gioco @done (5/31/2024, 12:15:30 PM)
-
 bug:
-
-  ☐ se refresho il nick non rimane
-  ☐ se torno indietro dopo che finisce la partita, continua a fare chiamate al backend
-  ☐ torneo tris da collegare
-  ☐ eliminare chiamata torneo pong
-  ☐ quando torno indietro da torneo pong, si mischiano i placement
-  ☐ chiamate al backend per salvare le immagini di profilo
-  ☐ chiamate al backend per salvare gli amici
-  ☐ chiamate al backend per salvare match history
-  ☐ pulsanto pong pagina profilo
-  ☐ salvare cambialingua nel database
-  ☐ verificare le dimensioni delle immagini
-
-
-
-  1G9R3CFhmXgqKsLgZyTRYVQUbuUDjjbIAre15ZlF0luqzBP8FExjJyHkzoq1cJFdVOm10IoCkQ3RKf8hrR1V2pjzidBeHVXbWqKo2a287hsEkHWUvtynahwYqKHdoSqS
+  ✔ non poter metter # in nick fixato front@done (6/2/2024, 8:28:00 PM)
+  ✔ debuggare la matchHistory @done (6/3/2024, 7:01:16 PM)
+  ✔ chiamata tasto aggiungi amici @done (6/3/2024, 4:58:47 PM)
+  ✔ status amici per il backend? come funziona @done (6/3/2024, 4:58:48 PM)
+  ✔ controllare bene tutte le chiamate per l'aggiornamento della match history @done (6/3/2024, 7:52:16 PM)
+  ✔ se refresho il nick non rimane @done (6/2/2024, 8:14:25 PM)
+  ✔ se torno indietro dopo che finisce la partita, continua a fare chiamate al backend @done (6/2/2024, 8:14:27 PM)
+  ✔ torneo tris da collegare @done (6/3/2024, 4:58:55 PM)
+  ✔ eliminare chiamata torneo pong @done (6/2/2024, 8:14:30 PM)
+  ✔ quando torno indietro da torneo pong, si mischiano i placement @done (6/2/2024, 8:14:33 PM)
+  ✔ chiamate al backend per salvare gli amici @done (6/3/2024, 7:52:26 PM)
+  ✔ chiamate al backend per salvare match history @done (6/3/2024, 4:59:10 PM)
+  ✔ pulsante pong pagina profilo deve tornare indietro @done (6/2/2024, 8:27:59 PM)
+  ✔ salvare cambialingua nel database @done (6/2/2024, 8:15:25 PM)
+  ✔ chiamata per cambio immagine e cambio nick player(forse fatta) @done (6/3/2024, 4:59:15 PM)
+  ✔ userleft cambia? gamepage probabilmente il reset la fotte. _ forse fixato @done (6/3/2024, 4:59:18 PM)
+  ✔ se refresho la pagina, la lista amici non si aggiorna @done (6/4/2024, 5:29:36 PM)
+  ✔ controllare se si resettano i campi della pagina tris @done (6/4/2024, 5:29:45 PM)
+  ☐ Volendo non poter metter # in nick anche in backend.
+  ✔ show lista amici e status @done (6/4/2024, 6:11:25 PM)
+  ✔ caricare pagine profilo amici @done (6/4/2024, 6:11:26 PM)
+  ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
+  ✔ chiamate al backend per salvare le immagini di profilo da testare @done (6/4/2024, 3:21:33 PM)
+  ☐ lingue varie
+  ☐ pulsante 42 usare un env invece del token.
+  ✔ switchare a profile page se clicco sull'avatar di game page @done (6/4/2024, 6:15:43 PM)
+  ☐ passare lo stesso tipo da login42 a login normale

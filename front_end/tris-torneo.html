@@ -12,10 +12,12 @@
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* Black screen */
-      .gameDashboard {
+            /* Black screen */
+			.gameDashboard {
         border-radius: 16px;
         background: black;
         position: relative;
+		margin-top: 10%;
         width: 100%;
         height: 85%;
         display: flex;
@@ -69,17 +71,47 @@
       .alert-box-actions {
         text-align: right;
       }
+
+	  .avatar {
+		width: 125px;
+		height: 125px;
+		border-radius: 50%;
+		font-weight: lighter;
+		font-size :110%;
+		color: #ffffff;
+		position: absolute;
+		left: 2%;
+		top: 0.3%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.userleft{
+		position: absolute;
+		left: 5%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.div-title {
+		font-family: 'font-Despairs';
+		font-size: 420%;
+		position: absolute;
+		left: 45.69%; /* Change this to move the div horizontally */
+		right: 2%;
+		top: 0%; /* Change this to move the div vertically */
+		width: 15%;
+		padding : 1%;
+		color: black;
+		}
     </style>
   </head>
 
   <body>
-    <div class="header d-flex justify-content-center align-items-center">
-      <h1
-        id="go-to-main2"
-        style="text-align: center; font-family: font-Despairs"
-      >
-        PONG
-      </h1>
+	<img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
+    <h5 id = "userleft" style = "margin-left: 1%" class = "userleft">User1</h5>
+    <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
     </div>
 
     <div class="container">
@@ -230,17 +262,11 @@
     </div>
     <!-- <script src="tris-torneo.js"></script> -->
     <script>
+
       document.addEventListener("DOMContentLoaded", function () {
-        resetTris();
+        //resetTris();
         document
           .getElementById("go-to-main")
-          .addEventListener("click", function () {
-            localStorage.setItem("lastPage", "main-page");
-            window.parent.goToMain();
-          });
-
-        document
-          .getElementById("go-to-main2")
           .addEventListener("click", function () {
             localStorage.setItem("lastPage", "main-page");
             window.parent.goToMain();
@@ -251,7 +277,7 @@
         return document.getElementById(id);
       }
 
-      getId("User1").value = "Get from User";
+      getId("User1").value = "";
       let player1 = getId("User1").value;
       let player2 = "";
       let player3 = "";
@@ -472,7 +498,21 @@
           getId("nickPlayer2").textContent = final[1];
         }
       }
-
+	  if (window.parent.userInstance && window.parent.userInstance.username) {
+			console.log('User data already loaded');
+			document.getElementById("User1").innerText = window.parent.userInstance.player;
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+			document.getElementById('userleft').textContent = window.parent.userInstance.player;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+		}
+	window.addEventListener('message', function(event) {
+		if (event.data.type === 'loadProfile') {
+			document.getElementById("User1").innerText = window.parent.userInstance.player;
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+      	 	document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+			   document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+  	  	}
+	});
       // function resetTris() {
       //   getId("insertNick").style.display = "block";
       //   getId("alert").style.display = "none";

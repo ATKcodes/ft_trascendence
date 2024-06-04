@@ -46,23 +46,21 @@ def WinLose_pong(request):
     user = request.user
     user.player2 = request.data["player2"]
     win = request.data["win"]
+    score = request.data["score"]
+    scoreplayer2 = request.data["scoreplayer2"]
     if win not in ["true", "false"]:
         return Response({"error": "Invalid win value."}, status=status.HTTP_400_BAD_REQUEST)
     date = datetime.now().strftime('%d/%m/')
     if win == "true":
         user.wins_pong += 1
-        user.score = request.data["score"]
-        user.scoreplayer2 = request.data["scoreplayer2"]
     else:
         user.loses_pong += 1
-        user.score = request.data["score"]
-        user.scoreplayer2 = request.data["scoreplayer2"]
     user.matchistory_pong.append(
             {
                 "win": win,
-                "score": user.score,
-                "scoreplayer2": user.scoreplayer2,
-                "user2": user.player2,
+                "score": score,
+                "scoreplayer2": scoreplayer2,
+                "player2": user.player2,
                 "date" : date,
             }
         )
