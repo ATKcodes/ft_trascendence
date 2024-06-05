@@ -392,13 +392,28 @@
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
 			document.getElementById('userleft').textContent = window.parent.userInstance.player;
 			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      if (savedLanguage = "IT")
+      {
+        //bottoncini
+      }
+      else if (savedLanguage = "EN")
+      {
+        //bottoncini
+      }
+      else if (savedLanguage = "ES")
+      {
+        //bottoncini
+      }
 		}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
-      	 	document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+      document.getElementById("userleft").innerText  = window.parent.userInstance.player;
 			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
-  	  	}
+      var savedLanguage = window.parent.userInstance.language;
+      //RICOPIA LA STRUTTURA DEGLI IF
+    }
 	});
     </script>
   </body>

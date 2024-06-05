@@ -305,13 +305,13 @@
     </div>
   </body>
   <script>
-
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'userDataLoaded') {
 			console.log('userDataLoaded event triggered');
 			document.getElementById('Username').textContent = window.parent.userInstance.username;
 			var languageSelect = document.getElementById('select-language');
 			languageSelect.value = window.parent.userInstance.language;
+			updateText();
 			friends = window.parent.userInstance.friendlist;
 			if (friends) {
             	populateFriendsList();
@@ -356,6 +356,7 @@
 		// Get the user's language
 		var userLanguage = window.parent.userInstance.language;
 		selectLanguage = document.querySelector('.select-language');
+		updateText();
 		// Select the option that matches the user's language
 		selectLanguage.value = userLanguage;
 		// Seleziona l'elemento select
@@ -387,7 +388,7 @@
 				console.error('Network error:', error);
 			});
 		// Aggiorna il testo sulla pagina
-		updateText(this.value);
+		updateText();
   	});
 	  async function fetchWithRetry(url, options, retries = 3) {
 			for (let i = 0; i < retries; i++) {
@@ -468,7 +469,8 @@
 		}
 		});
 
-	function updateText(language) {
+	function updateText() {
+		language = window.parent.userInstance.language;
 		if (language == 'IT') {
 		document.getElementById('addFriend').innerText = 'Aggiungi Amico';
 		document.getElementById('go_to_profile').innerText = 'Profilo';
@@ -491,11 +493,6 @@
 		document.getElementById('go_to_game').innerText = 'Jugar';
 		document.getElementById('noFriends').innerText = 'Aún no tienes amigos :\(';
 		}
-	}
-	// Aggiorna il testo sulla pagina con la lingua salvata nel localStorage quando la pagina viene caricata
-	if (savedLanguage) {
-		var savedLanguage = window.parent.userInstance.language;
-		updateText(savedLanguage);
 	}
     document.getElementById("go_to_login").addEventListener("click", function() {
 		window.parent.userInstance.resetData();

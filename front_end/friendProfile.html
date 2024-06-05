@@ -206,6 +206,7 @@
           </h6>
 		  <h6 class="data wins">Wins: </h6>
 		  <h6 class="data losses">Losses: </h6>
+      <h6 class="data ties">Ties:</h6>
 		  <h6 class="data winrateTris">	Winrate: </h6>
         </div>
       </div>
@@ -216,7 +217,12 @@
   <script>
 
 	// Use the friend's data
-  if (window.parent.userInstance && window.parent.userInstance.username && window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')]) {
+  document.addEventListener('DOMContentLoaded', (event) => {
+  let friendIndex = localStorage.getItem('friendIndex');
+  console.log('friendIndex:', friendIndex);  // Log the friendIndex
+  if (window.parent.userInstance && window.parent.userInstance.username && window.parent.userInstance.friendlist && window.parent.userInstance.friendlist[friendIndex]) {
+    console.log('friendlist: boia dio', window.parent.userInstance.friendlist);  // Log the friendlist
+    console.log("boia dio User data already loaded");
     var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
     document.getElementById('player').textContent = friend.player;
     document.getElementById("profile-image").src = friend.profile_image;
@@ -246,29 +252,34 @@
 			var match = trisHistory[i];
 			var match = trisHistory[i];
 			var result;
-			if (match.win === "true") {
+			if (match.win === "win") {
 				result = 'W';
-			} else if (match.win === "false"){
+			} else if (match.win === "lose"){
 				result = 'L';
-			}
+      }else if (match.win === "draw"){
+        result = 'T';
+      }
 			trisHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result}`;
 		}
         // Add the number of matches won and lost for Pong
         var pongWins = document.querySelector('.pong .data.wins');
         var pongLosses = document.querySelector('.pong .data.losses');
-		var pongWinrate = document.querySelector('.pong .data.winratePong');
+		    var pongWinrate = document.querySelector('.pong .data.winratePong');
         pongWins.textContent = 'W: ' + friend.wins_pong;
         pongLosses.textContent = 'L: ' + friend.loses_pong;
-		pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
+		    pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
 
         // Add the number of matches won and lost for Tris
         var trisWins = document.querySelector('.tris .data.wins');
         var trisLosses = document.querySelector('.tris .data.losses');
-		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+		    var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        var trisTies = document.querySelector('.tris .data.ties');
         trisWins.textContent = 'W: ' + friend.wins_tictactoe;
         trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
-		trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
+        trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
+		    trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
 	}
+});
 	window.addEventListener('message', function(event) {
 		// Check the type of the message
 		if (event.data.type === 'loadProfile') {
@@ -305,29 +316,31 @@
 			var match = trisHistory[i];
 			var match = trisHistory[i];
 			var result;
-			if (match.win === "true") {
+			if (match.win === "win") {
 				result = 'W';
-			} else if (match.win === "false"){
+			} else if (match.win === "lose"){
 				result = 'L';
-			}
+      }else if (match.win === "draw"){
+        result = 'T';
+      }
 			trisHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result}`;
 		}
 
-        // Add the number of matches won and lost for Pong
         var pongWins = document.querySelector('.pong .data.wins');
         var pongLosses = document.querySelector('.pong .data.losses');
-		var pongWinrate = document.querySelector('.pong .data.winratePong');
+		    var pongWinrate = document.querySelector('.pong .data.winratePong');
         pongWins.textContent = 'W: ' + friend.wins_pong;
         pongLosses.textContent = 'L: ' + friend.loses_pong;
-		pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
+		    pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
 
-        // Add the number of matches won and lost for Tris
         var trisWins = document.querySelector('.tris .data.wins');
         var trisLosses = document.querySelector('.tris .data.losses');
-		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+		    var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        var trisTies = document.querySelector('.tris .data.ties');
         trisWins.textContent = 'W: ' + friend.wins_tictactoe;
         trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
-		trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
+        trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
+		    trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
 		}
 	});
 	document.getElementById("go_to_main").addEventListener("click", function() {

@@ -519,8 +519,8 @@
 	<button id="ThirdPlace2" style="display:none" class="btn btn-thirdplace2 btn-lg btn-block">Third Place</button>
 	<button id="EndTournament" style="display:none" class="btn btn-endtournament btn-lg btn-block">End Tournament</button>
 	<script>
-		document.addEventListener('DOMContentLoaded', (event) => {
-			const  savedLanguage = localStorage.getItem('language');
+		function updateLanguage(){
+			savedLanguage = window.parent.userInstance.language;
 			if (savedLanguage == 'IT') {
 				document.getElementById('userright').innerText = 'Giocatore 2';
 				document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
@@ -569,7 +569,7 @@
 				document.getElementById('play-tournament').innerText = 'Jugar torneo';
 				document.getElementById('NextMatch').innerText = 'Próximo partido';
 			}
-		});
+		}
 	</script>		
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -1382,12 +1382,15 @@ window.addEventListener('message', function(event) {
 	else if (event.data.type === 'loadProfile') {
         document.getElementById("userleft").innerText  = window.parent.userInstance.player;
         document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+		updateLanguage();
+
     }
 	if (event.data.type === 'userDataLoaded') {
         console.log('userDataLoaded event triggered');
         // Access the userInstance from the parent window
         document.getElementById('userleft').textContent = window.parent.userInstance.username;
 		document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+		updateLanguage();
 	}
 });
 document.getElementById("go_to_profile").addEventListener("click", function() {

@@ -4,7 +4,7 @@ from .models import User, CustomToken, CustomTokenAuthentication
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserSerializer42
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
@@ -104,7 +104,7 @@ def get_42token(request):
         username = response2.json()['login'] + '#42'
         token42 = response.json()['access_token']
         if not User.objects.filter(username=username).exists():
-            serializer = UserSerializer(data={'username': username, 'password': get_random_string(length=40)})
+            serializer = UserSerializer42(data={'username': username, 'password': get_random_string(length=40)})
             if serializer.is_valid(raise_exception=True):
                 user = serializer.save()
                 response_data = {
@@ -114,7 +114,7 @@ def get_42token(request):
         else:
             user = User.objects.get(username=username)
             response_data = {
-                "user": UserSerializer(user).data
+                "user": UserSerializer42(user).data
             }
             token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
         user.status = True

@@ -265,13 +265,15 @@
 
       document.addEventListener("DOMContentLoaded", function () {
         //resetTris();
-        document
-          .getElementById("go-to-main")
-          .addEventListener("click", function () {
+        document.getElementById("go-to-main").addEventListener("click", function () {
             localStorage.setItem("lastPage", "main-page");
             window.parent.goToMain();
           });
-      });
+      document.getElementById("go_to_main").addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
+        });
 
       function getId(id) {
         return document.getElementById(id);

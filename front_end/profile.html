@@ -261,6 +261,7 @@
           </h6>
 		  <h6 class="data wins">Wins: </h6>
 		  <h6 class="data losses">Losses: </h6>
+      <h6 class="data ties">Ties:</h6>
 		  <h6 class="data winrateTris">	Winrate: </h6>
         </div>
       </div>
@@ -354,25 +355,27 @@
 			} else if (match.win === "lose"){
 				result = 'L';
 			} else if (match.win === "draw"){
-        result = 'Tie';
+        result = 'T';
       }
 			trisHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result}`;
 		}
         // Add the number of matches won and lost for Pong
         var pongWins = document.querySelector('.pong .data.wins');
         var pongLosses = document.querySelector('.pong .data.losses');
-		var pongWinrate = document.querySelector('.pong .data.winratePong');
+		    var pongWinrate = document.querySelector('.pong .data.winratePong');
         pongWins.textContent = 'W: ' + window.parent.userInstance.wins_pong;
         pongLosses.textContent = 'L: ' + window.parent.userInstance.loses_pong;
-		pongWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_pong + '%';
+		    pongWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_pong + '%';
 
         // Add the number of matches won and lost for Tris
         var trisWins = document.querySelector('.tris .data.wins');
         var trisLosses = document.querySelector('.tris .data.losses');
-		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        var trisTies = document.querySelector('.tris .data.ties');
+	    	var trisWinrate = document.querySelector('.tris .data.winrateTris');
         trisWins.textContent = 'W: ' + window.parent.userInstance.wins_tictactoe;
         trisLosses.textContent = 'L: ' + window.parent.userInstance.loses_tictactoe;
-		trisWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_tictactoe + '%';
+        trisTies.textContent = 'T: ' + (trisHistory.length - window.parent.userInstance.wins_tictactoe - window.parent.userInstance.loses_tictactoe);
+        trisWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_tictactoe + '%';
 	}
 	window.addEventListener('message', function(event) {
 		// Check the type of the message
@@ -418,21 +421,22 @@
 			trisHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result}`;
 		}
 
-        // Add the number of matches won and lost for Pong
         var pongWins = document.querySelector('.pong .data.wins');
         var pongLosses = document.querySelector('.pong .data.losses');
-		var pongWinrate = document.querySelector('.pong .data.winratePong');
+		    var pongWinrate = document.querySelector('.pong .data.winratePong');
         pongWins.textContent = 'W: ' + window.parent.userInstance.wins_pong;
         pongLosses.textContent = 'L: ' + window.parent.userInstance.loses_pong;
-		pongWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_pong + '%';
+		    pongWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_pong + '%';
 
         // Add the number of matches won and lost for Tris
         var trisWins = document.querySelector('.tris .data.wins');
         var trisLosses = document.querySelector('.tris .data.losses');
-		var trisWinrate = document.querySelector('.tris .data.winrateTris');
+        var trisTies = document.querySelector('.tris .data.ties');
+	    	var trisWinrate = document.querySelector('.tris .data.winrateTris');
         trisWins.textContent = 'W: ' + window.parent.userInstance.wins_tictactoe;
         trisLosses.textContent = 'L: ' + window.parent.userInstance.loses_tictactoe;
-		trisWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_tictactoe + '%';
+        trisTies.textContent = 'T: ' + (trisHistory.length - window.parent.userInstance.wins_tictactoe - window.parent.userInstance.loses_tictactoe);
+        trisWinrate.textContent = 'Winrate: ' + window.parent.userInstance.winrate_tictactoe + '%';
 		}
 	});
 

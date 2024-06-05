@@ -55,6 +55,7 @@
 		}
 	});
 		function sendUserDataLoadedMessage() {
+			friendProfileWindow.postMessage({ type: 'loadProfile' }, '*');
 			mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
 			gamePageWindow.postMessage({ type: 'loadProfile' }, '*');
 			profileWindow.postMessage({ type: 'loadProfile' }, '*');
