@@ -167,14 +167,10 @@
       <div class="img-fluid">
         <div class="image-container">
           <img id="profile-image" src="" alt="Your Image" />
-          <i id="edit-icon" class="fas fa-edit edit-icon"></i>
         </div>
         <div class="nickname">
           <div>
             <h2 id="player">Player</h2>
-          </div>
-          <div class="modify">
-            <i id="modify-icon" class="fas fa-edit modify"></i>
           </div>
         </div>
       </div>
@@ -218,13 +214,12 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
-	// Access the friend's data
-	var friend = window.parent.userInstance.currentFriend;
 
 	// Use the friend's data
-	if (window.parent.userInstance && window.parent.userInstance.username) {
-		document.getElementById('player').textContent = friend.username;
-    	document.getElementById("profile-image").src = friend.profile_image;
+  if (window.parent.userInstance && window.parent.userInstance.username && window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')]) {
+    var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
+    document.getElementById('player').textContent = friend.player;
+    document.getElementById("profile-image").src = friend.profile_image;
 
         // Add the number of matches won and lost for Pong
 		var pongHistory = friend.matchistory_pong;
@@ -277,10 +272,12 @@
 	window.addEventListener('message', function(event) {
 		// Check the type of the message
 		if (event.data.type === 'loadProfile') {
+      var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
+      console.log(window.parent.userInstance.username + " is viewing " + friend.username + "'s profile");
 			document.getElementById("player").innerText  = friend.player;
 			document.getElementById("profile-image").src = friend.profile_image;
 			console.log ("user image: " + friend.profile_image);
-			console.log ("User : " + friend.username);
+			console.log ("User : " + friend.player);
 
         // Add the number of matches won and lost for Pong
 		var pongHistory = friend.matchistory_pong;

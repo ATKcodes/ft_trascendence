@@ -79,12 +79,16 @@ bug:
   ✔ userleft cambia? gamepage probabilmente il reset la fotte. _ forse fixato @done (6/3/2024, 4:59:18 PM)
   ✔ se refresho la pagina, la lista amici non si aggiorna @done (6/4/2024, 5:29:36 PM)
   ✔ controllare se si resettano i campi della pagina tris @done (6/4/2024, 5:29:45 PM)
-  ☐ Volendo non poter metter # in nick anche in backend.
+  ✔ Volendo non poter metter # in nick anche in backend. @done (6/5/2024, 11:41:11 AM)
   ✔ show lista amici e status @done (6/4/2024, 6:11:25 PM)
   ✔ caricare pagine profilo amici @done (6/4/2024, 6:11:26 PM)
   ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
   ✔ chiamate al backend per salvare le immagini di profilo da testare @done (6/4/2024, 3:21:33 PM)
   ☐ lingue varie
-  ☐ pulsante 42 usare un env invece del token.
   ✔ switchare a profile page se clicco sull'avatar di game page @done (6/4/2024, 6:15:43 PM)
-  ☐ passare lo stesso tipo da login42 a login normale
+  ✔ passare lo stesso tipo da login42 a login normale @done (6/5/2024, 3:12:03 PM)
+  ☐ aggiorna profile page meglio
+  ☐ matchHistory mostrare le ultime 5 partite e levare le barre
+  ✔ cambiare User1 nella pagina torneo tris @done (6/5/2024, 4:00:38 PM)
+  ✔ pulsantini cambio nick/immagine profilo amico @done (6/5/2024, 4:00:47 PM)
+  ☐ aggiornare profilo amico quando fa una partita

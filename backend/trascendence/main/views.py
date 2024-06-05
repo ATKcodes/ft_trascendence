@@ -84,7 +84,7 @@ def WinLose_pong(request):
 @permission_classes([IsAuthenticated])
 def WinLose_tictac(request):
         user = request.user
-        user.player2 = request.data["player2"]
+        player2 = request.data["player2"]
         win = request.data["win"]
         if not player2 or not win:
             return Response({"error": "Both player2 and win fields are required."}, status=status.HTTP_400_BAD_REQUEST)        
@@ -98,7 +98,7 @@ def WinLose_tictac(request):
         else:
             user.draw_tictactoe += 1
             game_result = "draw"
-        user.matchistory_tictactoe.append({ "win": game_result, "player2": user.player2, "date": date})
+        user.matchistory_tictactoe.append({ "win": game_result, "player2": player2, "date": date})
         if user.wins_tictactoe + user.loses_tictactoe != 0:
             user.winrate_tictactoe = (
                 user.wins_tictactoe / (user.wins_tictactoe + user.loses_tictactoe) * 100
@@ -111,6 +111,7 @@ def WinLose_tictac(request):
                     "loses": user.loses_tictactoe,
                     "winrate": user.winrate_tictactoe,
                     "draws": user.draw_tictactoe,
+                    "win": game_result,
                     "matchHistory": user.matchistory_tictactoe,
                 }
             },

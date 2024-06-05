@@ -128,7 +128,7 @@
                 style="max-width: 150px; margin-bottom: 20px"
                 type="text"
                 placeholder="User1"
-                readonly
+                maxlength="8"
               />
               <input
                 id="User2"
@@ -277,8 +277,7 @@
         return document.getElementById(id);
       }
 
-      getId("User1").value = "";
-      let player1 = getId("User1").value;
+      let player1 = "";
       let player2 = "";
       let player3 = "";
       let player4 = "";
@@ -314,20 +313,24 @@
       }
 
       // parte inserisci input
-      let input = getId("User2");
-      let input2 = getId("User3");
-      let input3 = getId("User4");
+      let input = getId("User1");
+      let input2 = getId("User2");
+      let input3 = getId("User3");
+      let input4 = getId("User4");
       let button = getId("playButton");
       button.disabled = true;
+
       input.addEventListener("input", checkInputs);
       input2.addEventListener("input", checkInputs);
       input3.addEventListener("input", checkInputs);
+      input4.addEventListener("input", checkInputs);
 
       function checkInputs() {
         if (
           input.value.trim() !== "" &&
           input2.value.trim() !== "" &&
-          input3.value.trim() !== ""
+          input3.value.trim() !== "" &&
+          input4.value.trim() !== ""
         ) {
           button.disabled = false;
         } else {
@@ -336,12 +339,14 @@
       }
 
       playButton.addEventListener("click", function () {
-        player2 = input.value;
-        player3 = input2.value;
-        player4 = input3.value;
+        player1 = input.value;
+        player2 = input2.value;
+        player3 = input3.value;
+        player4 = input4.value;
         input.value = "";
         input2.value = "";
         input3.value = "";
+        input4.value = "";
 
         players = [player1, player2, player3, player4];
 
@@ -500,18 +505,16 @@
       }
 	  if (window.parent.userInstance && window.parent.userInstance.username) {
 			console.log('User data already loaded');
-			document.getElementById("User1").innerText = window.parent.userInstance.player;
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
 			document.getElementById('userleft').textContent = window.parent.userInstance.player;
 			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
 		}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
-			document.getElementById("User1").innerText = window.parent.userInstance.player;
-			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
-      	 	document.getElementById("userleft").innerText  = window.parent.userInstance.player;
-			   document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
-  	  	}
+			  document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+      	document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+			  document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+  	  }
 	});
       // function resetTris() {
       //   getId("insertNick").style.display = "block";

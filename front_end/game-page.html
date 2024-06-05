@@ -650,7 +650,7 @@
     } else {
         this.futureBallPos.y = this.ballPos.y + this.futureEdgeHit;
     }
-	let AIdifficulty = 99;
+	let AIdifficulty = 199;
 	let randomOffset = { x: (Math.random() - 0.5) * AIdifficulty, y: (Math.random() - 0.5) * AIdifficulty };
     this.futureBallPos.x += randomOffset.x;
     this.futureBallPos.y += randomOffset.y;
@@ -807,8 +807,6 @@
 	this.paddleD.style.display = "none";
 	document.getElementById("scoreA").style.display = "none";
     document.getElementById("scoreB").style.display = "none";
-	this.scoreA = 0;
-	this.scoreB = 0;
 	this.winorlose = "true";
 	if (winner === document.querySelector('.userleft').textContent)
 	{
@@ -826,6 +824,7 @@
         scoreplayer2: this.scoreB,
    		player2: document.querySelector('.userright').textContent, // Get User2 name
     };
+	console.log(matchData);
     var jsonMatchData = JSON.stringify(matchData);
 	this.scoreA = 0;
 	this.scoreB = 0;
@@ -1119,7 +1118,7 @@ document.getElementById("play-vs-ia").addEventListener("click", function(){
 	document.getElementById("avatar3").style.display = "none";
 	document.getElementById("avatar4").style.display = "none";
 	document.getElementById("userright").textContent = "IA";
-	document.getElementByID("avatar2").src = "media/ai.png";
+	document.getElementById("avatar2").src = "media/ai.jpg";
 	document.getElementById("play-1v1").style.display = "none";
     document.getElementById("play-4players").style.display = "none";
     document.getElementById("play-vs-ia").style.display = "none";

@@ -7,7 +7,7 @@ from rest_framework.serializers import ModelSerializer
 class FriendListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'status', 'profile_image', 'matchistory_pong', 'matchistory_tictactoe', 'wins_pong', 'loses_pong', 'winrate_pong', 'wins_tictactoe', 'loses_tictactoe', 'winrate_tictactoe']
+        fields = ['username', 'status', 'player', 'profile_image', 'matchistory_pong', 'matchistory_tictactoe', 'wins_pong', 'loses_pong', 'winrate_pong', 'wins_tictactoe', 'loses_tictactoe', 'winrate_tictactoe']
 
 
 class UserSerializer(serializers.ModelSerializer):

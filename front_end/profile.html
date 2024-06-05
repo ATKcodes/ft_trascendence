@@ -349,11 +349,13 @@
 			var match = trisHistory[i];
 			var match = trisHistory[i];
 			var result;
-			if (match.win === "true") {
+			if (match.win === "win") {
 				result = 'W';
-			} else if (match.win === "false"){
+			} else if (match.win === "lose"){
 				result = 'L';
-			}
+			} else if (match.win === "draw"){
+        result = 'Tie';
+      }
 			trisHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result}`;
 		}
         // Add the number of matches won and lost for Pong
@@ -406,11 +408,13 @@
 			var match = trisHistory[i];
 			var match = trisHistory[i];
 			var result;
-			if (match.win === "true") {
+			if (match.win === "win") {
 				result = 'W';
-			} else if (match.win === "false"){
+			} else if (match.win === "lose"){
 				result = 'L';
-			}
+			}  else if (match.win === "draw"){
+        result = 'Tie';
+      }
 			trisHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result}`;
 		}
 

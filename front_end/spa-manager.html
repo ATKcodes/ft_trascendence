@@ -196,6 +196,7 @@
 			hidePages();
 			profileIframe.style.display = "block";
 			history.pushState({page: 'profile'}, null, 'profile');
+			window.location.reload();
   		}
 		  function goToGame() {
 			gamePageIframe.src = "game-page.html";
@@ -227,6 +228,7 @@
 		}
 
 		function goToFriendProfile(i){
+			localStorage.setItem('friendIndex', i);
 			console.log("username : " + window.userInstance.friendlist[i].username);
 			window.userInstance.currentFriend = window.userInstance.friendlist[i];
 			friendProfileIframe.src = "friendProfile.html";
@@ -261,7 +263,7 @@
 					}
 				})
 				.catch(error => console.error('Error:', error));
-			}
+		}
 
 	window.onload = async function() {
 		try {

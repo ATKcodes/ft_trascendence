@@ -117,7 +117,7 @@ def get_42token(request):
                 "user": UserSerializer(user).data
             }
             token, created = CustomToken.objects.get_or_create(user=user, defaults={'key': token42})
-        
+        user.status = True
         user.save()    
         return JsonResponse({'token': token.key, 'user': response_data})
     else:
