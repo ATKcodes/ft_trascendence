@@ -94,6 +94,7 @@ bug:
   ☐ aggiornare profilo amico quando fa una partita
   ✔ controllo lingua sull'utente e non sul localstorage @done (6/5/2024, 7:05:38 PM)
   ☐ aggiungere "amico aggiunto" in verde
+  ☐ prima volta che si accede non si vede la friendlist con accesso 42
   ✔ controllare refresh nella pagina dell'amico @done (6/5/2024, 6:45:36 PM)
   ✔ inserire il tie nella pagina dell'amico in tris @done (6/5/2024, 6:45:39 PM)
   ✔ tasto pong torneo tris non funziona @done (6/5/2024, 5:52:39 PM)
