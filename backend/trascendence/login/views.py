@@ -101,10 +101,11 @@ def get_42token(request):
         'redirect_uri': 'https://localhost:8443/spa-manager.html',
     }
     response = requests.post('https://api.intra.42.fr/oauth/token', json=data)
+    token_data = response.json()
     if response.status_code == 200:
-        response2 = requests.get('https://api.intra.42.fr/v2/me', headers={'Authorization': 'Bearer ' + response.json()['access_token']})
+        response2 = requests.get('https://api.intra.42.fr/v2/me', headers={'Authorization': 'Bearer ' + token_data['access_token']})
         username = response2.json()['login'] + '#42'
-        token42 = response.json()['access_token']
+        token42 = token_data['access_token']
         if not User.objects.filter(username=username).exists():
             serializer = UserSerializer42(data={'username': username, 'password': get_random_string(length=40)})
             if serializer.is_valid(raise_exception=True):
@@ -124,3 +125,4 @@ def get_42token(request):
         return JsonResponse({'token': token.key, 'user': response_data})
     else:
         return JsonResponse({'error': 'Failed to get access token'}, status=400)
+        

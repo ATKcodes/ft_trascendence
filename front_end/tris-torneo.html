@@ -505,18 +505,36 @@
           getId("nickPlayer2").textContent = final[1];
         }
       }
+    
+    function updateLanguage(savedLanguage){
+      if (savedLanguage = "IT")
+      {
+        document.getElementById("playButton").innerText = "Gioca";
+      }
+      else if (savedLanguage = "EN")
+      {
+        document.getElementById("playButton").innerText = "Play";
+      }
+      else if (savedLanguage = "ES")
+      {
+        document.getElementById("playButton").innerText = "Jugar";
+      }
+    }
 	  if (window.parent.userInstance && window.parent.userInstance.username) {
 			console.log('User data already loaded');
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
 			document.getElementById('userleft').textContent = window.parent.userInstance.player;
-			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      updateLanguage(savedLanguage);
 		}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
-			  document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
-      	document.getElementById("userleft").innerText  = window.parent.userInstance.player;
-			  document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
-  	  }
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+      document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      updateLanguage(savedLanguage)
+    }
 	});
       // function resetTris() {
       //   getId("insertNick").style.display = "block";

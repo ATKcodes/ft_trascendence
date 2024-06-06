@@ -239,6 +239,7 @@
 		}
 
 		function login42(code){
+				console.log("Login42 function called");
 				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
 					method: 'GET',
 				})
@@ -436,5 +437,21 @@ function setPageBasedOnState(state) {
             }
         };
 	</script>
-  </body>
+	<!-- <script>
+		$(document).onload(function () {
+			function change_iframe() {
+				let url = window.location.href;
+				let param = url.split('?')[0];
+				let param_clean = param.split('/').pop();
+
+				if (param_clean === "status=42") {
+					localStorage.setItem('lastPage', "main-page");
+					window.fillUserData(data);
+					goToMain();
+				}
+			}
+		});
+	</script> -->
+
+	</body>
 </html>

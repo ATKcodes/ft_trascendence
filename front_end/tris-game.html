@@ -387,24 +387,26 @@
         getId("alert").style.display = "none";
         currentPlayer = Math.random() < 0.5 ? "X" : "O";
       }
+      function updateLanguage(savedLanguage){
+      if (savedLanguage = "IT")
+      {
+        document.getElementById("playButton").innerText = "Gioca";
+      }
+      else if (savedLanguage = "EN")
+      {
+        document.getElementById("playButton").innerText = "Play";
+      }
+      else if (savedLanguage = "ES")
+      {
+        document.getElementById("playButton").innerText = "Jugar";
+      }
+    }
 	  if (window.parent.userInstance && window.parent.userInstance.username) {
 			console.log('User data already loaded');
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
 			document.getElementById('userleft').textContent = window.parent.userInstance.player;
-			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
       var savedLanguage = window.parent.userInstance.language;
-      if (savedLanguage = "IT")
-      {
-        //bottoncini
-      }
-      else if (savedLanguage = "EN")
-      {
-        //bottoncini
-      }
-      else if (savedLanguage = "ES")
-      {
-        //bottoncini
-      }
+      updateLanguage(savedLanguage);
 		}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
@@ -412,7 +414,7 @@
       document.getElementById("userleft").innerText  = window.parent.userInstance.player;
 			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
       var savedLanguage = window.parent.userInstance.language;
-      //RICOPIA LA STRUTTURA DEGLI IF
+      updateLanguage(savedLanguage)
     }
 	});
     </script>

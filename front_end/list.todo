@@ -84,7 +84,7 @@ bug:
   ✔ caricare pagine profilo amici @done (6/4/2024, 6:11:26 PM)
   ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
   ✔ chiamate al backend per salvare le immagini di profilo da testare @done (6/4/2024, 3:21:33 PM)
-  ☐ lingue varie
+  ☐ lingue pagina tris e tris torneo + check vari
   ✔ switchare a profile page se clicco sull'avatar di game page @done (6/4/2024, 6:15:43 PM)
   ✔ passare lo stesso tipo da login42 a login normale @done (6/5/2024, 3:12:03 PM)
   ☐ matchHistory mostrare le ultime 5 partite e levare le barre
@@ -93,7 +93,7 @@ bug:
   ✔ aggiornare profilo amico quando fa una partita @done (6/6/2024, 3:15:59 PM)
   ✔ controllo lingua sull'utente e non sul localstorage @done (6/5/2024, 7:05:38 PM)
   ☐ aggiungere "amico aggiunto" in verde, e login se sbagli non ti dice nulla.
-  ☐ allert cambio nickname limite caratteri
+  ☐ alert cambio nickname limite caratteri
   ☐ prima volta che si accede non si vede la friendlist con accesso 42
   ☐ aggiorna profile page meglio
   ✔ controllare refresh nella pagina dell'amico @done (6/5/2024, 6:45:36 PM)
