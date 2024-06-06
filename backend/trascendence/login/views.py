@@ -71,6 +71,8 @@ def Info(request):
 def friends_info(request):
     user = request.user
     pal = request.data['friend']
+    if not pal:
+        return Response({"error": "Friend username is required"}, status=400)
     friends = user.friendlist.all()
     if not friends.filter(username=pal).exists():
         return Response({"error": "You are not friends with this user"}, status=400)

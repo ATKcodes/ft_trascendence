@@ -453,7 +453,7 @@
       .getElementById("modify-icon")
       .addEventListener("click", function () {
         var newNickname = prompt("Inserisci il nuovo nickname:");
-        if (newNickname) {
+        if (newNickname && newNickname.length < 16 ) {
           var nicknameData = {
             player: newNickname,
           };

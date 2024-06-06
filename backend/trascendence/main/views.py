@@ -178,11 +178,3 @@ def get_friends(request):
     ]
     return JsonResponse({"friends": friends_list}, status=200)
 
-
-@api_view(["DELETE"])
-@authentication_classes([SessionAuthentication, CustomTokenAuthentication])
-@permission_classes([IsAuthenticated])
-def delete_user(request):
-    user = request.user
-    user.delete()
-    return Response({"message": "User deleted successfully"}, status=status.HTTP_200_OK)
