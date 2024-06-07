@@ -149,7 +149,7 @@ def add_friend(request):
     user = request.user
     friend_username = request.data["friend_username"]
     if not friend_username:
-        return JsonResponse({"friend_username is required"}, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({'error': "friend_username is required"}, status=status.HTTP_400_BAD_REQUEST)
     if friend_username == user.username:
         return JsonResponse(
             {"error": "You cannot add yourself as a friend"}, status=status.HTTP_400_BAD_REQUEST)
