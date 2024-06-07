@@ -320,7 +320,6 @@ function loadFriendProfile(){
   let friendIndex = localStorage.getItem('friendIndex');
   console.log('friendIndex:', friendIndex);  // Log the friendIndex
   if (window.parent.userInstance && window.parent.userInstance.username && window.parent.userInstance.friendlist && window.parent.userInstance.friendlist[friendIndex]) {
-    console.log('friendlist: boia dio', window.parent.userInstance.friendlist);  // Log the friendlist
     console.log("boia dio User data already loaded");
     var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
     document.getElementById('player').textContent = friend.player;

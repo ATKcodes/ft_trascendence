@@ -1344,7 +1344,6 @@ window.addEventListener('message', function(event) {
 		pongGame.ballSpeed.x = 0;
 		pongGame.ballSpeed.y = 0;
 		pongGame.stop();
-		console.log("entra?");
 		document.getElementById("play-pong").style.display = "block";
 		document.getElementById("play-tris").style.display = "block";
 		document.getElementById("play-1v1").style.display = "none";
@@ -1392,7 +1391,6 @@ window.addEventListener('message', function(event) {
 		pongGame.balllimitfaster = 2;
 		pongGame.scoreA = 0;
 		pongGame.scoreB = 0;
-		console.log("entrato");
 	}
 	// Check the type of the message
 	else if (event.data.type === 'loadProfile') {

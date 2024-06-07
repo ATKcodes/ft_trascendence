@@ -310,7 +310,6 @@
 		console.log('User data already loaded');
 		document.getElementById('Username').textContent = window.parent.userInstance.username;
 		friends = window.parent.userInstance.friendlist;
-		// console.log('Friends list:', friends[0].username);
 		if (friends) {
 			console.log('Friends list:', friends);
 			populateFriendsList();
@@ -589,7 +588,6 @@
   
     document.getElementById('amici').addEventListener('click', function() {
       variabileBooleana = !variabileBooleana;
-      console.log(variabileBooleana);
   });
     </script>
 </html>
