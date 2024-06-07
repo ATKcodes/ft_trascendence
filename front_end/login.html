@@ -83,7 +83,6 @@
 	
 		nickInput.addEventListener('input', (event) => {
 			const nickValue = event.target.value;
-			console.log(nickValue);
 		});
 	</script>
       <input
@@ -98,7 +97,6 @@
 	
 			passwordInput.addEventListener('input', (event) => {
 			const passwordValue = event.target.value;
-			console.log(passwordValue);
 		});
 	  </script>
       <button id = "go_to_main" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
@@ -123,10 +121,8 @@
 		})
 		.then(response => response.json()) // Parse the JSON response
 		.then(data => {
-			console.log('Success:', data);
+			console.log('Success');
 			if(data.token) {
-				localStorage.setItem('userToken', data.token);
-				console.log('Login successful');
 				localStorage.setItem('lastPage', "main-page");
 				document.getElementById('nickInput').value = '';
 				document.getElementById('passwordInput').value = '';
@@ -134,7 +130,6 @@
 				document.getElementById('repeatPassword').value = '';
 				document.getElementById('Registernick').value = '';
 				window.parent.fillUserData(data);
-				console.log("Login :"+ window.parent.userInstance.username); // Access the User instance
 				window.parent.goToMain();
 			} else if(data.detail) {
 				console.error('Error:', data.detail);
@@ -262,7 +257,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
+                console.log('Success');
                 // Check if register is successful
                 if (data.response === 'successful') {
                   document.getElementById("successMessage").style.display = "block";

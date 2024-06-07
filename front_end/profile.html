@@ -317,7 +317,7 @@
 		})
 		.then(response => response.json())
 		.then(data => {
-			console.log('Success:', data);
+			console.log('Success');
 		})
 		.catch((error) => {
 			console.error('Error:', error);
@@ -383,8 +383,6 @@
 	if (window.parent.userInstance && window.parent.userInstance.username) {
 		document.getElementById("player").innerText  = window.parent.userInstance.player;
     document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
-		console.log ("user image: " + window.parent.userInstance.profile_image);
-		console.log ("User : " + window.parent.username);
 		loadMatchHistory();
 	}
 	window.addEventListener('message', function(event) {
@@ -392,8 +390,6 @@
 		if (event.data.type === 'loadProfile') {
 			document.getElementById("player").innerText  = window.parent.userInstance.player;
 			document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
-			console.log ("user image: " + window.parent.userInstance.profile_image);
-			console.log ("User : " + window.parent.userInstance.username);
       loadMatchHistory();
   }
 	});
@@ -427,7 +423,7 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("Success:", data);
+              console.log("Success");
             })
             .catch((error) => {
               console.error("Error:", error);

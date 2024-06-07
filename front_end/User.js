@@ -21,7 +21,6 @@ export default class User {
 			console.error('Data or data.user is undefined');
 			return;
 		}
-		console.log("filling user data.")
 		this.username = data.user.username;
 		this.player = data.user.player;
 		this.password = data.user.password;

@@ -307,18 +307,14 @@
   <script>
 	var friends;
 	if (window.parent.userInstance && window.parent.userInstance.username) {
-		console.log('User data already loaded');
 		document.getElementById('Username').textContent = window.parent.userInstance.username;
 		friends = window.parent.userInstance.friendlist;
-		// console.log('Friends list:', friends[0].username);
 		if (friends) {
-			console.log('Friends list:', friends);
 			populateFriendsList();
 		}
 	}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'userDataLoaded') {
-			console.log('userDataLoaded event triggered');
 			document.getElementById('Username').textContent = window.parent.userInstance.username;
 			var languageSelect = document.getElementById('select-language');
 			languageSelect.value = window.parent.userInstance.language;
@@ -350,7 +346,6 @@
 
 					friendElement.addEventListener('click', (function(i) {
 						return function() {
-							console.log("Friend clicked: " + friends[i].username);
 							localStorage.setItem('lastPage', "friend-profile");
 							window.parent.goToFriendProfile(i);
 						};
@@ -376,9 +371,7 @@
 		selectLanguage.addEventListener('change', function() {
 		// Quando l'utente seleziona una nuova lingua, salvala nel localStorage
 		localStorage.setItem('language', this.value);
-		console.log('Language changed to:', this.value);
 		window.parent.userInstance.changeLanguage(this.value);
-		console.log("User language = "+window.parent.userInstance.language);
 		var language = JSON.stringify( {language: this.value})
 
 		fetch('http://localhost:8001/main/language/', {
@@ -446,7 +439,6 @@
 
 					if(data.token) {
 						window.userInstance.fillData(data);
-						console.log("User.js loaded", window.userInstance.username);
 						resolve(); // Resolve the Promise
 					} else {
 						reject('Token not found in response'); // Reject the Promise
@@ -589,7 +581,6 @@
   
     document.getElementById('amici').addEventListener('click', function() {
       variabileBooleana = !variabileBooleana;
-      console.log(variabileBooleana);
   });
     </script>
 </html>

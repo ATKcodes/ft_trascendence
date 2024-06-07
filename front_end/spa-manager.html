@@ -35,11 +35,8 @@
 		let trisGameWindow = trisGameIframe.contentWindow;
 		let trisTournamentWindow = trisTournamentIframe.contentWindow;
 		let friendProfileWindow = friendProfileIframe.contentWindow;
-		console.log("Script loaded");
 		document.addEventListener('DOMContentLoaded', (event) => {
-		console.log("Window loaded");
 		let pippo = new URL(window.location.href);
-		console.log(pippo);
 		let code = pippo.searchParams.get("code")
 		if (code) {
 			login42(code);
@@ -47,7 +44,6 @@
 		});
 		window.addEventListener('message', function(event) {
 		if (event.data.type === 'userDataLoaded') {
-			console.log('userDataLoaded event triggered');
 			goToMain();
 			if (friends) {
             	populateFriendsList();
@@ -87,8 +83,6 @@
 			history.replaceState({page: 'login'}, null, '/login');
 			document.getElementById("login").style.display = "block";
 		}
-		console.log('onpopstate event triggered');
-			console.log(event.state);
         	if (event.state) {
             	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
             	if (event.state.page === 'spa-manager') {
@@ -145,11 +139,10 @@
                 })
                 .then(response => response.json()) // Parse the JSON response
                 .then(data => {
-                    console.log('Success:', data);
+                    console.log('Success');
                     if(data.token) {
                         try {
                             window.userInstance.fillData(data);
-                            console.log("285: User.js loaded", window.userInstance.username);
                             sendUserDataLoadedMessage();
                             resolve(); // Resolve the promise
                         } catch (error) {
@@ -230,7 +223,6 @@
 
 		function goToFriendProfile(i){
 			localStorage.setItem('friendIndex', i);
-			console.log("username : " + window.userInstance.friendlist[i].username);
 			window.userInstance.currentFriend = window.userInstance.friendlist[i];
 			friendProfileIframe.src = "friendProfile.html";
 			hidePages();
@@ -239,7 +231,7 @@
 		}
 
 		function login42(code){
-				console.log("Login42 function called");
+				("Login42 function called");
 				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
 					method: 'GET',
 				})
@@ -250,13 +242,12 @@
 					return response.json();
 				})
 				.then(data => {
-					console.log('Success:', data); // Debugging: Log the data to see its structure
+					console.log('Success'); // Debugging: Log the data to see its structure
 					if(data.token) {
 						localStorage.setItem('userToken', data.token); // Correctly access and store the token
 						console.log('Login successful');
 						localStorage.setItem('lastPage', "main-page");
 						window.fillUserData(data);
-						console.log("Login :"+ window.userInstance.username);
 						window.goToMain();
 					} else if(data.detail) {
 						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
@@ -291,11 +282,10 @@
 		})
 		.then(response => response.json()) // Parse the JSON response
 		.then(data => {
-			console.log('Success:', data);
+			console.log('Success');
 			if(data.token) {
 				try {
 					window.userInstance.fillData(data);
-					console.log("285: User.js loaded", window.userInstance.username);
 					sendUserDataLoadedMessage();
 				} catch (error) {
 					console.error('Error calling fillData:', error);
@@ -329,7 +319,6 @@
 				// If the game page is being shown, reset the game
 				if (pageId === 'game-page') {
 					gamePageWindow.postMessage({ type: 'reset' }, '*');
-					console.log("reset chiamata");
 				}
 			}
 
@@ -347,7 +336,6 @@
 					showPage("profile");
 				} else if (url.includes('game-page')) {
 					gamePageWindow.postMessage({ type: 'reset' }, '*');
-					console.log("reset chiamata");
 					showPage("game-page");
 				} else if (url.includes('login')) {
 					showPage("login");
@@ -419,7 +407,6 @@ function setPageBasedOnState(state) {
 				const User = module.default;
 				window.User = User;
 				window.userInstance = new User();
-				console.log("418 : User.js loaded", window.userInstance.username);
 			} catch (error) {
 				console.log("Error loading User.js:", error);
 			}
@@ -428,7 +415,6 @@ function setPageBasedOnState(state) {
         window.fillUserData = function(data){
             if (data.user) {
                 window.userInstance.fillData(data.user);
-				console.log("User.js loaded", window.userInstance.username);
 				sendUserDataLoadedMessage();
             } else {
 				console.error('Error:', data.detail);

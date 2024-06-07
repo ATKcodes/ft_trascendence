@@ -248,7 +248,6 @@
     }
   };
       if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
 			document.getElementById('userleft').textContent = window.parent.userInstance.player;
       document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
@@ -329,7 +328,6 @@
         let input = getId("nicknameInput");
         player2 = input.value;
         input.value = "";
-        console.log("player1: ", player1, "player2: ", player2);
         getId("nickPlayer1").textContent = player1;
         getId("nickPlayer2").textContent = player2;
         moveArround("game");
@@ -408,7 +406,6 @@
         function sendBack() {
           matchData.win = result;
           matchData.player2 = player2;
-          console.log("matchData: ", matchData);
           fetch("http://localhost:8001/main/tictactoe_result/", {
             method: "POST",
             headers: {
@@ -419,7 +416,7 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("Success:", data);
+              console.log("Success");
             })
             .catch((error) => {
               console.error("Error:", error);

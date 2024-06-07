@@ -691,7 +691,6 @@
 			this.frameRate = this.frameCount;
 			this.frameCount = 0;
 			this.accumulatedTime -= 1000;
-			console.log('Frame rate:', this.frameRate);
 		}
 
 		document.getElementById("scoreA").style.display = "block";
@@ -836,7 +835,6 @@
         scoreplayer2: this.scoreB,
    		player2: document.querySelector('.userright').textContent, // Get User2 name
     };
-	console.log(matchData);
     var jsonMatchData = JSON.stringify(matchData);
 	this.scoreA = 0;
 	this.scoreB = 0;
@@ -1107,7 +1105,6 @@ document.getElementById("play-1v1").addEventListener("click", function(){
 });
 //Funzione per cambiare il nick dell'user2.
 document.getElementById("submit-username").addEventListener("click", function() {
-	console.log("Submit username clicked"); // Add this line
 	var username = document.getElementById("player2-username").value;
 	if (username) {
 		// Save the username for player 2
@@ -1333,7 +1330,6 @@ document.getElementById("play-tris").addEventListener("click", function(){
 });
 }
 if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
 			document.getElementById('userleft').textContent = window.parent.userInstance.username;
 			document.getElementById("go_to_profile").src = window.parent.userInstance.image;
 		}
@@ -1344,7 +1340,6 @@ window.addEventListener('message', function(event) {
 		pongGame.ballSpeed.x = 0;
 		pongGame.ballSpeed.y = 0;
 		pongGame.stop();
-		console.log("entra?");
 		document.getElementById("play-pong").style.display = "block";
 		document.getElementById("play-tris").style.display = "block";
 		document.getElementById("play-1v1").style.display = "none";
@@ -1392,7 +1387,6 @@ window.addEventListener('message', function(event) {
 		pongGame.balllimitfaster = 2;
 		pongGame.scoreA = 0;
 		pongGame.scoreB = 0;
-		console.log("entrato");
 	}
 	// Check the type of the message
 	else if (event.data.type === 'loadProfile') {
@@ -1402,7 +1396,6 @@ window.addEventListener('message', function(event) {
 
     }
 	if (event.data.type === 'userDataLoaded') {
-        console.log('userDataLoaded event triggered');
         // Access the userInstance from the parent window
         document.getElementById('userleft').textContent = window.parent.userInstance.username;
 		document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;

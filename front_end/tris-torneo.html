@@ -325,7 +325,6 @@
     }
   };
       if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
 			document.getElementById('userleft').textContent = window.parent.userInstance.player;
       document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
@@ -421,17 +420,6 @@
         input4.value = "";
 
         players = [player1, player2, player3, player4];
-
-        console.log(
-          "player1: ",
-          player1,
-          "player2: ",
-          player2,
-          "player3: ",
-          player3,
-          "player4: ",
-          player4
-        );
         createMatch();
 
         moveArround("tournament");
@@ -456,7 +444,6 @@
         firstMatch.textContent = `${match1[0]} vs ${match1[1]}`;
         firstMatch.style.color = "green";
         secondMatch.textContent = `${match2[0]} vs ${match2[1]}`;
-        console.log("match1: ", match1, "match2: ", match2);
       }
 
       let currentGame = 1;
