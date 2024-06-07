@@ -84,10 +84,10 @@ bug:
   ✔ caricare pagine profilo amici @done (6/4/2024, 6:11:26 PM)
   ✔ immagine profilo default definita dal backend. @done (6/4/2024, 1:15:08 PM)
   ✔ chiamate al backend per salvare le immagini di profilo da testare @done (6/4/2024, 3:21:33 PM)
-  ☐ lingue pagina tris e tris torneo + check vari
+  ☐ lingue check vari
   ✔ switchare a profile page se clicco sull'avatar di game page @done (6/4/2024, 6:15:43 PM)
   ✔ passare lo stesso tipo da login42 a login normale @done (6/5/2024, 3:12:03 PM)
-  ☐ matchHistory mostrare le ultime 5 partite e levare le barre
+  ✔ matchHistory mostrare le ultime 5 partite e levare le barre @done (6/7/2024, 1:41:26 PM)
   ✔ cambiare User1 nella pagina torneo tris @done (6/5/2024, 4:00:38 PM)
   ✔ pulsantini cambio nick/immagine profilo amico @done (6/5/2024, 4:00:47 PM)
   ✔ aggiornare profilo amico quando fa una partita @done (6/6/2024, 3:15:59 PM)
@@ -100,3 +100,4 @@ bug:
   ✔ inserire il tie nella pagina dell'amico in tris @done (6/5/2024, 6:45:39 PM)
   ✔ tasto pong torneo tris non funziona @done (6/5/2024, 5:52:39 PM)
   ✔ vedere perche' il draw di tris va a -2 se non ci sono partite @done (6/5/2024, 4:34:32 PM)
+  

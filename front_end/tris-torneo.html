@@ -172,19 +172,19 @@
         <!-- tournament grafic page -->
         <div id="tournament" style="display: none">
           <div class="d-flex flex-column" style="height: 80vh">
-            <div
+            <div id = "semifinal"
               class="d-flex flex-column justify-content-center align-items-center"
               style="flex: 1"
             >
-              <p>semifinale</p>
+              <p id = "semifinalgame">semifinale</p>
               <p id="firstMatch">??? Vs ???</p>
               <p id="secondMatch">??? Vs ???</p>
             </div>
-            <div
+            <div id = "finalgame" 
               class="d-flex flex-column justify-content-center align-items-center"
               style="flex: 1"
             >
-              <p>finale</p>
+              <p id = "finalGame">finale</p>
               <p id="final">??? Vs ???</p>
             </div>
             <div
@@ -204,7 +204,7 @@
               style="flex: 1"
             >
               <h1 id="nickPlayer1"></h1>
-              <p>Player 1 is X</p>
+              <p>X</p>
             </div>
 
             <div class="tris-grid" style="flex: 3">
@@ -224,7 +224,7 @@
               style="flex: 1"
             >
               <h1 id="nickPlayer2"></h1>
-              <p>Player 2 is O</p>
+              <p>O</p>
             </div>
           </div>
         </div>
@@ -262,6 +262,76 @@
     </div>
     <!-- <script src="tris-torneo.js"></script> -->
     <script>
+      function updateLanguage(savedLanguage){
+      if (savedLanguage === "IT")
+      {
+        document.getElementById("playButton").innerText = "Gioca";
+        document.getElementById("semifinal").value = "semifinale";
+        document.getElementById("firstMatch").value = "??? contro ???";
+        document.getElementById("secondMatch").value = "??? contro ???";
+        document.getElementById("final").value = "??? contro ???";
+        document.getElementById("playAgain").innerText = "Gioca di nuovo";
+        document.getElementById("nextMatch").innerText = "Prossima partita";
+        document.getElementById("User1").placeholder = "Giocatore1";
+        document.getElementById("User2").placeholder = "Giocatore2";
+        document.getElementById("User3").placeholder = "Giocatore3";
+        document.getElementById("User4").placeholder = "Giocatore4";
+        document.getElementById("go-to-main").innerText = "Torna al menu principale";
+        document.getElementById("semifinalgame").value = "semifinale";
+        document.getElementById("finalGame").innerText = "finale";
+        document.getElementById("finalGame").innerText = "final";
+        document.getElementById("playMatch").innerText = "Gioca";
+  
+      }
+      else if (savedLanguage === "EN")
+      {
+        document.getElementById("playButton").innerText = "Play";;
+        document.getElementById("semifinal").value = "semifinal";
+        document.getElementById("firstMatch").value = "??? vs ???";
+        document.getElementById("secondMatch").value = "??? vs ???";
+        document.getElementById("final").value = "??? vs ???";
+        document.getElementById("playAgain").innerText = "Play Again";
+        document.getElementById("nextMatch").innerText = "Next Match";
+        document.getElementById("User1").placeholder = "Player1";
+        document.getElementById("User2").placeholder = "Player2";
+        document.getElementById("User3").placeholder = "Player3";
+        document.getElementById("User4").placeholder = "Player4";
+        document.getElementById("go-to-main").innerText = "Go To Main Menu";
+        document.getElementById("semifinalgame").innerText = "semifinal";
+        document.getElementById("finalGame").innerText = "final";
+        document.getElementById("playMatch").innerText = "Play";
+    
+       
+      }
+      else if (savedLanguage === "ES")
+      {
+        document.getElementById("playButton").innerText = "Jugar";;
+        document.getElementById("semifinal").value = "semifinal";
+        document.getElementById("firstMatch").value = "??? contra ???";
+        document.getElementById("secondMatch").value = "??? contra ???";
+        document.getElementById("final").value = "??? contra ???";
+        document.getElementById("playAgain").innerText = "Jugar de nuevo";
+        document.getElementById("nextMatch").innerText = "Próximo partido";
+        document.getElementById("User1").placeholder = "Jugador1";
+        document.getElementById("User2").placeholder = "Jugador2";
+        document.getElementById("User3").placeholder = "Jugador3";
+        document.getElementById("User4").placeholder = "Jugador4";
+        document.getElementById("go-to-main").innerText = "Ir al menú principal";
+        document.getElementById("semifinalgame").innerText = "semifinal";
+        document.getElementById("finalGame").innerText = "final";
+        document.getElementById("playMatch").innerText = "Jugar";
+  
+     
+    }
+  };
+      if (window.parent.userInstance && window.parent.userInstance.username) {
+			console.log('User data already loaded');
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+			document.getElementById('userleft').textContent = window.parent.userInstance.player;
+      document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      updateLanguage(savedLanguage);
+		}
 
       document.addEventListener("DOMContentLoaded", function () {
         //resetTris();
@@ -418,7 +488,7 @@
         e.target.textContent = currentPlayer;
         if (checkWin(currentPlayer)) {
           getId("alert").style.display = "block";
-          getId("aler-message").textContent = `${playerWins()} wins!`;
+          getId("aler-message").textContent = `${playerWins()} W!`;
           if (currentGame === 1) {
             currentGame++;
             nextMatch.style.display = "block";
@@ -433,7 +503,7 @@
           }
         } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
           getId("alert").style.display = "block";
-          getId("aler-message").textContent = `It's a draw!`;
+          getId("aler-message").textContent = `T!`;
           playAgain.style.display = "block";
           playAgain.addEventListener("click", function () {
             resetMatchVariable();
@@ -505,29 +575,7 @@
           getId("nickPlayer2").textContent = final[1];
         }
       }
-    
-    function updateLanguage(savedLanguage){
-      if (savedLanguage = "IT")
-      {
-        document.getElementById("playButton").innerText = "Gioca";
-      }
-      else if (savedLanguage = "EN")
-      {
-        document.getElementById("playButton").innerText = "Play";
-      }
-      else if (savedLanguage = "ES")
-      {
-        document.getElementById("playButton").innerText = "Jugar";
-      }
-    }
-	  if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
-			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
-			document.getElementById('userleft').textContent = window.parent.userInstance.player;
-      var savedLanguage = window.parent.userInstance.language;
-      updateLanguage(savedLanguage);
-		}
-	window.addEventListener('message', function(event) {
+  window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
       document.getElementById("userleft").innerText  = window.parent.userInstance.player;

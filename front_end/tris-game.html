@@ -177,7 +177,7 @@
               style="flex: 1"
             >
               <h1 id="nickPlayer1"></h1>
-              <p>Player 1 is X</p>
+              <p> X</p>
             </div>
 
             <div class="tris-grid" style="flex: 3">
@@ -197,7 +197,7 @@
               style="flex: 1"
             >
               <h1 id="nickPlayer2"></h1>
-              <p>Player 2 is O</p>
+              <p>O</p>
             </div>
           </div>
         </div>
@@ -215,6 +215,46 @@
       </div>
     </div>
     <script>
+    function updateLanguage(savedLanguage){
+      if (savedLanguage === "IT")
+      {
+        document.getElementById("playButton").innerText = "Gioca";
+        document.getElementById("btn1v1").innerText = "1 contro 1";
+        document.getElementById("go_to_trisTournament").innerText = "Torneo";
+        document.getElementById("go-to-main").innerText = "Vai al Menu";
+        document.getElementById("backChose").innerText = "Indietro";
+        document.getElementById("nicknameInput").value = "Giocatore 2";
+  
+      }
+      else if (savedLanguage === "EN")
+      {
+        document.getElementById("playButton").innerText = "Play";
+        document.getElementById("btn1v1").innerText = "1 v 1";
+        document.getElementById("go_to_trisTournament").innerText = "Tournament";
+        document.getElementById("go-to-main").innerText = "Go To Main Menu";
+        document.getElementById("backChose").innerText = "Back";
+        document.getElementById("nicknameInput").value = "Player 2";
+       
+      }
+      else if (savedLanguage === "ES")
+      {
+        document.getElementById("playButton").innerText = "Jugar";
+        document.getElementById("btn1v1").innerText = "1 contra 1";
+        document.getElementById("go_to_trisTournament").innerText = "Torneo";
+        document.getElementById("go-to-main").innerText = "Ir al menú principal";
+        document.getElementById("backChose").innerText = "Atrás";
+        document.getElementById("nicknameInput").value = "Jugador 2";
+     
+    }
+  };
+      if (window.parent.userInstance && window.parent.userInstance.username) {
+			console.log('User data already loaded');
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+			document.getElementById('userleft').textContent = window.parent.userInstance.player;
+      document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      updateLanguage(savedLanguage);
+		}
       document.addEventListener("DOMContentLoaded", function () {
       resetTris();
         document.getElementById("go-to-main").addEventListener("click", function () {
@@ -306,12 +346,12 @@
           }
           sendBack();
           getId("alert").style.display = "block";
-          getId("aler-message").textContent = `${playerWins()} wins!`;
+          getId("aler-message").textContent = `${playerWins()} W!`;
         } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
           result = "draw";
           sendBack();
           getId("alert").style.display = "block";
-          getId("aler-message").textContent = `It's a draw!`;
+          getId("aler-message").textContent = `T :/`;
           currentPlayer = "X";
         } else {
           currentPlayer = currentPlayer === "X" ? "O" : "X";
@@ -320,11 +360,14 @@
       }
 
       function highlightPlayer() {
-        getId("nickPlayer1").style.color =
-          currentPlayer === "X" ? "green" : "white";
-        getId("nickPlayer2").style.color =
-          currentPlayer === "O" ? "green" : "white";
+      if (currentPlayer === "X") {
+        getId("nickPlayer1").style.color = "green";
+        getId("nickPlayer2").style.color = "white";
+      } else {
+        getId("nickPlayer1").style.color = "white";
+        getId("nickPlayer2").style.color = "green";
       }
+    }
 
       function playerWins() {
         return currentPlayer === "X" ? player1 : player2;
@@ -387,27 +430,6 @@
         getId("alert").style.display = "none";
         currentPlayer = Math.random() < 0.5 ? "X" : "O";
       }
-      function updateLanguage(savedLanguage){
-      if (savedLanguage = "IT")
-      {
-        document.getElementById("playButton").innerText = "Gioca";
-      }
-      else if (savedLanguage = "EN")
-      {
-        document.getElementById("playButton").innerText = "Play";
-      }
-      else if (savedLanguage = "ES")
-      {
-        document.getElementById("playButton").innerText = "Jugar";
-      }
-    }
-	  if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
-			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
-			document.getElementById('userleft').textContent = window.parent.userInstance.player;
-      var savedLanguage = window.parent.userInstance.language;
-      updateLanguage(savedLanguage);
-		}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;

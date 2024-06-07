@@ -216,6 +216,59 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
 
+function loadFriendProfile(){
+    var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
+    var pongHistory = friend.matchistory_pong;
+    var trisHistory = friend.matchistory_tictactoe;
+
+    var pongHistoryElements = document.querySelectorAll('.pong .history');
+    var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+    var startPongIndex = pongHistory.length > 5 ? pongHistory.length - 5 : 0;
+    for (var i = startPongIndex, j = 0; i < pongHistory.length; i++, j++) {
+        var match = pongHistory[i];
+        var result;
+        if (match.win === "true") {
+            result = 'W';
+        } else if (match.win === "false"){
+            result = 'L';
+        }
+        var date = match.date.slice(0, -1);
+        pongHistoryElements[j].textContent = `${date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
+    }
+
+    var startTrisIndex = trisHistory.length > 5 ? trisHistory.length - 5 : 0;
+    for (var i = startTrisIndex, j = 0; i < trisHistory.length; i++, j++) {
+        var match = trisHistory[i];
+        var result;
+        if (match.win === "win") {
+            result = 'W';
+        } else if (match.win === "lose"){
+            result = 'L';
+        } else if (match.win === "draw"){
+            result = 'T';
+        }
+        trisHistoryElements[j].textContent = `${match.date}  vs ${match.player2} : ${result}`;
+    }
+
+    var pongWins = document.querySelector('.pong .data.wins');
+    var pongLosses = document.querySelector('.pong .data.losses');
+    var pongWinrate = document.querySelector('.pong .data.winratePong');
+    pongWins.textContent = 'W: ' + friend.wins_pong;
+    pongLosses.textContent = 'L: ' + friend.loses_pong;
+    var winrate = parseFloat(friend.winrate_pong).toFixed(2);
+    pongWinrate.textContent = 'Winrate: ' + winrate + '%';
+
+    var trisWins = document.querySelector('.tris .data.wins');
+    var trisLosses = document.querySelector('.tris .data.losses');
+    var trisTies = document.querySelector('.tris .data.ties');
+    var trisWinrate = document.querySelector('.tris .data.winrateTris');
+    trisWins.textContent = 'W: ' + friend.wins_tictactoe;
+    trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
+    trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
+    var winrateTris = parseFloat(friend.winrate_tictactoe).toFixed(2);
+    trisWinrate.textContent = 'Winrate: ' + winrateTris + '%';
+}
 	// Use the friend's data
   document.addEventListener('DOMContentLoaded', (event) => {
   let friendIndex = localStorage.getItem('friendIndex');
@@ -226,59 +279,8 @@
     var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
     document.getElementById('player').textContent = friend.player;
     document.getElementById("profile-image").src = friend.profile_image;
-
-        // Add the number of matches won and lost for Pong
-		var pongHistory = friend.matchistory_pong;
-		var trisHistory = friend.matchistory_tictactoe;
-
-		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
-		var pongHistoryElements = document.querySelectorAll('.pong .history');
-		var trisHistoryElements = document.querySelectorAll('.tris .history');
-
-		// Replace the content of the pong history elements
-		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
-			var match = pongHistory[i];
-			var result;
-			if (match.win === "true") {
-				result = 'W';
-			} else if (match.win === "false"){
-				result = 'L';
-			}
-			pongHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
-		}
-
-		// Replace the content of the tris history elements
-		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
-			var match = trisHistory[i];
-			var match = trisHistory[i];
-			var result;
-			if (match.win === "win") {
-				result = 'W';
-			} else if (match.win === "lose"){
-				result = 'L';
-      }else if (match.win === "draw"){
-        result = 'T';
-      }
-			trisHistoryElements[i].textContent = `${match.date}  vs ${match.player2} : ${result}`;
-		}
-        // Add the number of matches won and lost for Pong
-        var pongWins = document.querySelector('.pong .data.wins');
-        var pongLosses = document.querySelector('.pong .data.losses');
-		    var pongWinrate = document.querySelector('.pong .data.winratePong');
-        pongWins.textContent = 'W: ' + friend.wins_pong;
-        pongLosses.textContent = 'L: ' + friend.loses_pong;
-		    pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
-
-        // Add the number of matches won and lost for Tris
-        var trisWins = document.querySelector('.tris .data.wins');
-        var trisLosses = document.querySelector('.tris .data.losses');
-		    var trisWinrate = document.querySelector('.tris .data.winrateTris');
-        var trisTies = document.querySelector('.tris .data.ties');
-        trisWins.textContent = 'W: ' + friend.wins_tictactoe;
-        trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
-        trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
-		    trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
-	}
+    loadFriendProfile();
+  }
 });
 	window.addEventListener('message', function(event) {
 		// Check the type of the message
@@ -289,59 +291,8 @@
 			document.getElementById("profile-image").src = friend.profile_image;
 			console.log ("user image: " + friend.profile_image);
 			console.log ("User : " + friend.player);
-
-        // Add the number of matches won and lost for Pong
-		var pongHistory = friend.matchistory_pong;
-		var trisHistory = friend.matchistory_tictactoe;
-
-		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
-		var pongHistoryElements = document.querySelectorAll('.pong .history');
-		var trisHistoryElements = document.querySelectorAll('.tris .history');
-
-		// Replace the content of the pong history elements
-		for (var i = 0; i < pongHistoryElements.length && i < pongHistory.length; i++) {
-			console.log(pongHistory[i]);
-			var match = pongHistory[i];
-			var result;
-			if (match.win === "true") {
-				result = 'W';
-			} else if (match.win === "false"){
-				result = 'L';
-			}
-			pongHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
-		}
-
-		// Replace the content of the tris history elements
-		for (var i = 0; i < trisHistoryElements.length && i < trisHistory.length; i++) {
-			var match = trisHistory[i];
-			var match = trisHistory[i];
-			var result;
-			if (match.win === "win") {
-				result = 'W';
-			} else if (match.win === "lose"){
-				result = 'L';
-      }else if (match.win === "draw"){
-        result = 'T';
-      }
-			trisHistoryElements[i].textContent = `${match.date} vs ${match.player2} : ${result}`;
-		}
-
-        var pongWins = document.querySelector('.pong .data.wins');
-        var pongLosses = document.querySelector('.pong .data.losses');
-		    var pongWinrate = document.querySelector('.pong .data.winratePong');
-        pongWins.textContent = 'W: ' + friend.wins_pong;
-        pongLosses.textContent = 'L: ' + friend.loses_pong;
-		    pongWinrate.textContent = 'Winrate: ' + friend.winrate_pong + '%';
-
-        var trisWins = document.querySelector('.tris .data.wins');
-        var trisLosses = document.querySelector('.tris .data.losses');
-		    var trisWinrate = document.querySelector('.tris .data.winrateTris');
-        var trisTies = document.querySelector('.tris .data.ties');
-        trisWins.textContent = 'W: ' + friend.wins_tictactoe;
-        trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
-        trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
-		    trisWinrate.textContent = 'Winrate: ' + friend.winrate_tictactoe + '%';
-		}
+      loadFriendProfile();
+    }
 	});
 	document.getElementById("go_to_main").addEventListener("click", function() {
 			localStorage.setItem('lastPage', "main-page");
