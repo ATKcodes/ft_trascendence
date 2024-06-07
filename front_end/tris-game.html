@@ -223,7 +223,7 @@
         document.getElementById("go_to_trisTournament").innerText = "Torneo";
         document.getElementById("go-to-main").innerText = "Vai al Menu";
         document.getElementById("backChose").innerText = "Indietro";
-        document.getElementById("nicknameInput").value = "Giocatore 2";
+        document.getElementById("nicknameInput").placeholder = "Giocatore 2";
   
       }
       else if (savedLanguage === "EN")
@@ -233,7 +233,7 @@
         document.getElementById("go_to_trisTournament").innerText = "Tournament";
         document.getElementById("go-to-main").innerText = "Go To Main Menu";
         document.getElementById("backChose").innerText = "Back";
-        document.getElementById("nicknameInput").value = "Player 2";
+        document.getElementById("nicknameInput").placeholder = "Player 2";
        
       }
       else if (savedLanguage === "ES")
@@ -243,7 +243,7 @@
         document.getElementById("go_to_trisTournament").innerText = "Torneo";
         document.getElementById("go-to-main").innerText = "Ir al menú principal";
         document.getElementById("backChose").innerText = "Atrás";
-        document.getElementById("nicknameInput").value = "Jugador 2";
+        document.getElementById("nicknameInput").placeholder = "Jugador 2";
      
     }
   };
@@ -256,7 +256,6 @@
       updateLanguage(savedLanguage);
 		}
       document.addEventListener("DOMContentLoaded", function () {
-      resetTris();
         document.getElementById("go-to-main").addEventListener("click", function () {
             localStorage.setItem("lastPage", "main-page");
             window.parent.goToMain();
@@ -270,16 +269,27 @@
             localStorage.setItem("lastPage", "tris-game");
             window.parent.goToTrisTournament();
           });
-      });
-
-      // Variables
+        function getId(id) {
+        return document.getElementById(id);
+      }
+           // Variables
       let player1 = "";
       let player2 = "";
       let result = "";
-
-      function getId(id) {
-        return document.getElementById(id);
-      }
+      function resetTris() {
+          player1 = "";
+          player2 = "";
+          result = "";
+          getId("nickPlayer1").textContent = "";
+          getId("nickPlayer2").textContent = "";
+          const cells = document.querySelectorAll(".cell");
+          cells.forEach((cell) => {
+            cell.textContent = "";
+          });
+          getId("alert").style.display = "none";
+          currentPlayer = Math.random() < 0.5 ? "X" : "O";
+        }
+        resetTris();
 
       // Move in the page
       let path = ["chosePlay", "insertNick", "game"];
@@ -324,112 +334,99 @@
         getId("nickPlayer2").textContent = player2;
         moveArround("game");
       });
-
-      // Game
-      let currentPlayer = Math.random() < 0.5 ? "X" : "O";
-      const cells = document.querySelectorAll(".cell");
-
-      cells.forEach((cell) => {
-        cell.addEventListener("click", handleClick, { once: true });
-      });
-
-      highlightPlayer();
-
-      function handleClick(e) {
-        if (e.target.textContent !== "") return;
-        e.target.textContent = currentPlayer;
-        if (checkWin(currentPlayer)) {
-          if (playerWins() === player1) {
-            result = "true";
-          } else {
-            result = "false";
-          }
-          sendBack();
-          getId("alert").style.display = "block";
-          getId("aler-message").textContent = `${playerWins()} W!`;
-        } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
-          result = "draw";
-          sendBack();
-          getId("alert").style.display = "block";
-          getId("aler-message").textContent = `T :/`;
-          currentPlayer = "X";
-        } else {
-          currentPlayer = currentPlayer === "X" ? "O" : "X";
-        }
+      window.onload = function(){
+        // Game
+        let currentPlayer = Math.random() < 0.5 ? "X" : "O";
         highlightPlayer();
-      }
-
-      function highlightPlayer() {
-      if (currentPlayer === "X") {
-        getId("nickPlayer1").style.color = "green";
-        getId("nickPlayer2").style.color = "white";
-      } else {
-        getId("nickPlayer1").style.color = "white";
-        getId("nickPlayer2").style.color = "green";
-      }
-    }
-
-      function playerWins() {
-        return currentPlayer === "X" ? player1 : player2;
-      }
-
-      function checkWin(player) {
-        const winningCombinations = [
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8],
-          [0, 4, 8],
-          [2, 4, 6],
-        ];
-
-        return winningCombinations.some((combination) =>
-          combination.every((index) => cells[index].textContent === player)
-        );
-      }
-
-      var matchData = {
-        game: "tictactoe",
-        win: result, // true false draw
-        player2: player2, // Get User2 name
-      };
-
-      function sendBack() {
-        matchData.win = result;
-        matchData.player2 = player2;
-        console.log("matchData: ", matchData);
-        fetch("http://localhost:8001/main/tictactoe_result/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Token " + localStorage.getItem("userToken"),
-          },
-          body: JSON.stringify(matchData),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      }
-
-      function resetTris() {
-        player1 = "";
-        player2 = "";
-        result = "";
-        getId("nickPlayer1").textContent = "";
-        getId("nickPlayer2").textContent = "";
         const cells = document.querySelectorAll(".cell");
+
         cells.forEach((cell) => {
-          cell.textContent = "";
+          cell.addEventListener("click", handleClick, { once: true });
         });
-        getId("alert").style.display = "none";
-        currentPlayer = Math.random() < 0.5 ? "X" : "O";
+
+        function handleClick(e) {
+          if (e.target.textContent !== "") return;
+          e.target.textContent = currentPlayer;
+          if (checkWin(currentPlayer)) {
+            if (playerWins() === player1) {
+              result = "true";
+            } else {
+              result = "false";
+            }
+            sendBack();
+            getId("alert").style.display = "block";
+            getId("aler-message").textContent = `${playerWins()} W!`;
+          } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
+            result = "draw";
+            sendBack();
+            getId("alert").style.display = "block";
+            getId("aler-message").textContent = `T :/`;
+            currentPlayer = "X";
+          } else {
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+          }
+          highlightPlayer();
+        }
+
+        function highlightPlayer() {
+        if (currentPlayer === "X") {
+          getId("nickPlayer1").style.color = "green";
+          getId("nickPlayer2").style.color = "white";
+        } else {
+          getId("nickPlayer1").style.color = "white";
+          getId("nickPlayer2").style.color = "green";
+        }
       }
+
+        function playerWins() {
+          return currentPlayer === "X" ? player1 : player2;
+        }
+
+        function checkWin(player) {
+          const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+          ];
+
+          return winningCombinations.some((combination) =>
+            combination.every((index) => cells[index].textContent === player)
+          );
+        }
+
+        var matchData = {
+          game: "tictactoe",
+          win: result, // true false draw
+          player2: player2, // Get User2 name
+        };
+
+        function sendBack() {
+          matchData.win = result;
+          matchData.player2 = player2;
+          console.log("matchData: ", matchData);
+          fetch("http://localhost:8001/main/tictactoe_result/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Token " + localStorage.getItem("userToken"),
+            },
+            body: JSON.stringify(matchData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        }
+      }
+      });
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'loadProfile') {
 			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;

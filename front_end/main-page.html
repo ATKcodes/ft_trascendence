@@ -305,6 +305,17 @@
     </div>
   </body>
   <script>
+	var friends;
+	if (window.parent.userInstance && window.parent.userInstance.username) {
+		console.log('User data already loaded');
+		document.getElementById('Username').textContent = window.parent.userInstance.username;
+		friends = window.parent.userInstance.friendlist;
+		// console.log('Friends list:', friends[0].username);
+		if (friends) {
+			console.log('Friends list:', friends);
+			populateFriendsList();
+		}
+	}
 	window.addEventListener('message', function(event) {
 		if (event.data.type === 'userDataLoaded') {
 			console.log('userDataLoaded event triggered');
@@ -318,7 +329,6 @@
 	        }
 		}
 	});
-	var friends;
 	function populateFriendsList() {
 			var container = document.getElementById('friendsList');
 			container.innerHTML = ''; // Clear the container
@@ -406,17 +416,6 @@
 				}
 			}
 		}
-
-		if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
-			document.getElementById('Username').textContent = window.parent.userInstance.username;
-			friends = window.parent.userInstance.friendlist;
-			// console.log('Friends list:', friends[0].username);
-			if (friends) {
-				console.log('Friends list:', friends);
-				populateFriendsList();
-			}
-}
 		let loadUserClassPromise = null;
 				// Load the user class
 				async function loadUserClass() {
@@ -471,6 +470,7 @@
 
 	function updateText() {
 		language = window.parent.userInstance.language;
+		localStorage.setItem('language', language);
 		if (language == 'IT') {
 		document.getElementById('addFriend').innerText = 'Aggiungi Amico';
 		document.getElementById('go_to_profile').innerText = 'Profilo';
