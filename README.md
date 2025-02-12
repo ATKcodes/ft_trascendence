@@ -8,6 +8,22 @@ Il progetto è diviso in due parti principali:
 1. **Parte Obbligatoria**: Abbiamo creato un sito web che permetta agli utenti di giocare a Pong in tempo reale, con un'interfaccia utente intuitiva e funzionalità di base come la registrazione degli utenti e la gestione dei tornei.
 2. **Moduli Opzionali**: Una volta completata la parte obbligatoria, potevamo scegliere tra diversi moduli per migliorare il progetto, come l'integrazione di un backend con framework avanzati, l'aggiunta di un avversario AI, e molto altro.
 
+## 📸 **Screenshot del Sito**
+Di seguito sono riportati alcuni screenshot delle principali funzionalità del sito:
+
+### Homepage: 
+![Homepage](screenshots/homepage.png)
+La pagina principale, con un menu a tendina per gestire gli amici e muoversi agilmente nel sito
+
+Pagina di Registrazione: Un modulo di registrazione intuitivo che permette ai nuovi utenti di creare un account.
+Registrazione
+
+Pagina di Accesso: Una semplice interfaccia per l'autenticazione degli utenti esistenti.
+Accesso
+
+Partita in Corso: Una schermata di gioco in tempo reale di Pong, con i punteggi aggiornati in tempo reale.
+Partita
+
 ## 🛠️ **Tecnologie e Requisiti**
 
 - **Frontend**: Vanilla JavaScript.
