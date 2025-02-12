@@ -14,10 +14,6 @@ Di seguito sono riportati alcuni screenshot delle principali funzionalità del s
 ## 📸 **Screenshot del Sito**
 Di seguito sono riportati alcuni screenshot delle principali funzionalità del sito:
 
-### Homepage: 
-![Homepage](screenshots/main-page.png)
-La pagina principale, con un menu a tendina per gestire gli amici e muoversi agilmente nel sito
-
 ### Pagina di Accesso:
 ![Login](screenshots/pong.png)
 Una semplice interfaccia per l'autenticazione degli utenti esistenti.
@@ -25,6 +21,10 @@ Una semplice interfaccia per l'autenticazione degli utenti esistenti.
 ### Pagina di Registrazione:
 ![Register](screenshots/register.png)
 Un modulo di registrazione intuitivo che permette ai nuovi utenti di creare un account.
+
+### Homepage: 
+![Homepage](screenshots/main-page.png)
+La pagina principale, con un menu a tendina per gestire gli amici e muoversi agilmente nel sito
 
 ### Partita in Corso: 
 ![4 Player Game](screenshots/game-vs-Ia.png)
