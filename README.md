@@ -11,9 +11,6 @@ Il progetto è diviso in due parti principali:
 ## 📸 **Screenshot del Sito**
 Di seguito sono riportati alcuni screenshot delle principali funzionalità del sito:
 
-## 📸 **Screenshot del Sito**
-Di seguito sono riportati alcuni screenshot delle principali funzionalità del sito:
-
 ### Pagina di Accesso:
 ![Login](screenshots/pong.png)
 Una semplice interfaccia per l'autenticazione degli utenti esistenti.
