@@ -11,18 +11,24 @@ Il progetto è diviso in due parti principali:
 ## 📸 **Screenshot del Sito**
 Di seguito sono riportati alcuni screenshot delle principali funzionalità del sito:
 
+## 📸 **Screenshot del Sito**
+Di seguito sono riportati alcuni screenshot delle principali funzionalità del sito:
+
 ### Homepage: 
-![Homepage](screenshots/homepage.png)
+![Homepage](screenshots/main-page.png)
 La pagina principale, con un menu a tendina per gestire gli amici e muoversi agilmente nel sito
 
-Pagina di Registrazione: Un modulo di registrazione intuitivo che permette ai nuovi utenti di creare un account.
-Registrazione
+### Pagina di Accesso:
+![Login](screenshots/pong.png)
+Una semplice interfaccia per l'autenticazione degli utenti esistenti.
 
-Pagina di Accesso: Una semplice interfaccia per l'autenticazione degli utenti esistenti.
-Accesso
+### Pagina di Registrazione:
+![Register](screenshots/register.png)
+Un modulo di registrazione intuitivo che permette ai nuovi utenti di creare un account.
 
-Partita in Corso: Una schermata di gioco in tempo reale di Pong, con i punteggi aggiornati in tempo reale.
-Partita
+### Partita in Corso: 
+![4 Player Game](screenshots/images.png)
+Una schermata di gioco in tempo reale di Pong, con i punteggi aggiornati in tempo reale, e nella modalita 4 giocatori.
 
 ## 🛠️ **Tecnologie e Requisiti**
 
