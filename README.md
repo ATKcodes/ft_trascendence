@@ -28,7 +28,7 @@ Un modulo di registrazione intuitivo che permette ai nuovi utenti di creare un a
 
 ### Partita in Corso: 
 ![4 Player Game](screenshots/game-vs-Ia.png)
-Una schermata di gioco in tempo reale di Pong, con i punteggi aggiornati in tempo reale, e nella modalita 4 giocatori.
+Una schermata di gioco in tempo reale di Pong, con i punteggi aggiornati in tempo reale, e nella modalita contro l'IA.
 
 ## 🛠️ **Tecnologie e Requisiti**
 
