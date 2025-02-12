@@ -27,7 +27,7 @@ Una semplice interfaccia per l'autenticazione degli utenti esistenti.
 Un modulo di registrazione intuitivo che permette ai nuovi utenti di creare un account.
 
 ### Partita in Corso: 
-![4 Player Game](screenshots/images.png)
+![4 Player Game](screenshots/.png)
 Una schermata di gioco in tempo reale di Pong, con i punteggi aggiornati in tempo reale, e nella modalita 4 giocatori.
 
 ## 🛠️ **Tecnologie e Requisiti**
